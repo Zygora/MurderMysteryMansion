@@ -30,7 +30,7 @@ public class Movement : MonoBehaviour {
 			onGround = true;
 		}
 
-		move = new Vector3 (Input.GetAxis ("Horizontal"), Input.GetAxis ("Vertical"), 0);
+		move = new Vector3 (Input.GetAxis ("Horizontal"), 0, 0);
 
 		transform.position += move * speed * Time.deltaTime;
 
