@@ -1,9 +1,0 @@
-diff a/Assets/Scripts/Movement.cs b/Assets/Scripts/Movement.cs	(rejected hunks)
-@@ -86,6 +86,7 @@
- 			}
- 		}
- 	}
-+<<<<<<< Updated upstream
- 
- 	void OnTriggerEnter2D(Collider2D other)
- 	{
