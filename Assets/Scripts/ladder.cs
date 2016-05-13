@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ladder : MonoBehaviour {
 	public GameObject playerObject;
-	bool canClimb;
+	public bool canClimb;
 	float speed = 1;
 
 	// Use this for initialization
