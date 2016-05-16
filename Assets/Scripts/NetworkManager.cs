@@ -53,7 +53,7 @@ public class NetworkManager : MonoBehaviour {
     void SpawnMyPlayer()
     {
         GameObject MyPlayerGO = (GameObject)PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
-        ((MonoBehaviour)MyPlayerGO.GetComponent("Movement")).enabled = true;
+        ((MonoBehaviour)MyPlayerGO.GetComponent("Controls")).enabled = true;
 
     }
 
