@@ -13,7 +13,8 @@ public class NetworkManager : MonoBehaviour {
     void Connect()
     {
         Debug.Log("Connect()");
-        PhotonNetwork.ConnectUsingSettings("1.0.0");
+        PhotonNetwork.ConnectUsingSettings("1.01.0");
+        Debug.Log("Connect2()");
     }
 
     void OnGUI()
@@ -30,6 +31,7 @@ public class NetworkManager : MonoBehaviour {
     void OnConnectedToMaster()
     {
 
+        PhotonNetwork.JoinRandomRoom();
         Debug.Log("OnConnectedToMaster");
     }
 
