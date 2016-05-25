@@ -4,7 +4,8 @@ using System.Collections;
 public class NetworkManager : MonoBehaviour {
     int currentRoom = 0;
     string[] roomList;
-
+    public GameObject spawnpoint;
+    
     // Use this for initialization
     void Start()
     {
@@ -68,7 +69,8 @@ public class NetworkManager : MonoBehaviour {
 
     void SpawnMyPlayer()
     {
-        GameObject MyPlayerGO = (GameObject)PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
+        Vector3 spawnposition = spawnpoint.transform.position;
+        GameObject MyPlayerGO = (GameObject)PhotonNetwork.Instantiate("Player", spawnposition, Quaternion.identity, 0);
         ((MonoBehaviour)MyPlayerGO.GetComponent("Controls")).enabled = true;
     }
 
