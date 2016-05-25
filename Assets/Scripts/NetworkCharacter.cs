@@ -13,6 +13,7 @@ public class NetworkCharacter : Photon.MonoBehaviour {
     // Use this for initialization
     void Start () {
       //  realPosition = transform.position;
+      
 	}
 	
 	// Update is called once per frame
