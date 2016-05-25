@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 public class Controls : MonoBehaviour {
     // Tweakable variables
@@ -27,10 +29,18 @@ public class Controls : MonoBehaviour {
     public bool canGoUp;
     public bool canGoDown;
     public bool onTop;
+    public SpriteRenderer GateHighlight;
+    public Camera Camera;
+    public GameObject OptionsRoom;
+    public GameObject PlayerCustomizationRoom;
+    Animator Animator;
+    private bool moveCameraLeft;
+    private bool moveCameraRight;
 
     void Start () {
         // Get rigidbody of the player at start
         rb = GetComponent<Rigidbody2D>();
+        Animator = GetComponent<Animator>();
     }
 	
 	void Update () {
@@ -62,6 +72,28 @@ public class Controls : MonoBehaviour {
         move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
         // Move the player
         transform.position += move * playerSpeed * Time.deltaTime;
+
+        //play animations and chaneg sprite rotation
+        if (Input.GetAxis("Horizontal") > -0.5f && Input.GetAxis("Horizontal") < 0.5f)
+        {
+            Animator.SetBool("Running", false);
+            Animator.SetBool("Idle", true);
+        }
+
+        if (Input.GetAxis("Horizontal") < -0.1f)
+        {
+            Animator.SetBool("Running", true);
+            Animator.SetBool("Idle", false);
+            this.transform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
+
+        if (Input.GetAxis("Horizontal") > 0.1f)
+        {
+            Animator.SetBool("Running", true);
+            Animator.SetBool("Idle", false);
+            this.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+
         // If player is on ground and space button hit -> jump
         if (Input.GetKeyDown(KeyCode.Space) && (onGround)&&(!onNoJumpArea))
         {
@@ -82,6 +114,34 @@ public class Controls : MonoBehaviour {
                 redBackground.SetActive(true);
                 return;
             }
+        }
+
+        //go to main menu
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(1);
+        }
+
+        //pan camera on main menu screen
+        if (moveCameraLeft == true)
+        {
+            Camera.transform.position = Vector3.MoveTowards(Camera.transform.position, OptionsRoom.transform.position, 1 * Time.deltaTime);
+        }
+
+        if (moveCameraRight == true)
+        {
+            Camera.transform.position = Vector3.MoveTowards(Camera.transform.position, OptionsRoom.transform.position, 1 * Time.deltaTime);
+        }
+
+        //test death animation
+        if (Input.GetKey(KeyCode.Q))
+        {
+            Animator.SetBool("Dead", true);
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            Animator.SetBool("Dead", false);
         }
     }
 
@@ -104,6 +164,16 @@ public class Controls : MonoBehaviour {
             canGoUp = true;
             onLadder = true;
             Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), topPlatform.GetComponent<Collider2D>(), true);
+        }
+
+        //change highlight on play button and change level on button input
+        if (other.gameObject.tag == "Gate")
+        {
+            GateHighlight.enabled = true;
+            if (Input.GetKey(KeyCode.Space))
+            {
+                SceneManager.LoadScene(2);
+            }
         }
     }
 
@@ -135,6 +205,17 @@ public class Controls : MonoBehaviour {
             canGoDown = false;
             canGoUp = true;
         }
+
+        //set bools to start panning
+        if (other.gameObject.tag == "OptionsRoom")
+        {
+            moveCameraLeft = true;
+        }
+
+        if (other.gameObject.tag == "OptionsRoom")
+        {
+            moveCameraRight = true;
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -164,6 +245,10 @@ public class Controls : MonoBehaviour {
             Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), topPlatform.GetComponent<Collider2D>(), false);
             rb.gravityScale = 1;
         }
+
+        GateHighlight.enabled = false;
     }
+
+
 
 }
