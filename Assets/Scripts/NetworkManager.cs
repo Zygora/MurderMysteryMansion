@@ -53,8 +53,8 @@ public class NetworkManager : MonoBehaviour {
         Debug.Log("OnPhotonRandomJoinFailed");
         Debug.Log(PhotonNetwork.ServerAddress);
         //PhotonNetwork.GetRoomList();
-        RoomOptions roomOptions = new RoomOptions() { isVisible = false, maxPlayers = 1}; //Set max players
-        PhotonNetwork.CreateRoom("Room" + currentRoom, roomOptions, TypedLobby.Default);
+        //RoomOptions roomOptions = new RoomOptions() { isVisible = false, maxPlayers = 2}; //Set max players
+        PhotonNetwork.CreateRoom("Room" + currentRoom);
 
     }
     
@@ -63,6 +63,7 @@ public class NetworkManager : MonoBehaviour {
     {
         Debug.Log("OnJoinedRoom" + PhotonNetwork.room.name);
         SpawnMyPlayer();
+        Debug.Log("Name:"+PhotonNetwork.playerName);
     }
 
     void SpawnMyPlayer()
