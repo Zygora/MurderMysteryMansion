@@ -94,14 +94,14 @@ public class Controls : MonoBehaviour {
             {
                 Animator.SetBool("Running", true);
                 Animator.SetBool("Idle", false);
-                this.transform.localRotation = Quaternion.Euler(0, 180, 0);
+                GetComponent<SpriteRenderer>().flipX = true;
             }
 
             if (Input.GetAxis("Horizontal") > 0.1f)
             {
                 Animator.SetBool("Running", true);
                 Animator.SetBool("Idle", false);
-                this.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                GetComponent<SpriteRenderer>().flipX = false;
             }
         }
 
