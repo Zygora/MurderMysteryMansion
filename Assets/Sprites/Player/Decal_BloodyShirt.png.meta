@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: c08dcdec6a0cebd4da47ba714b0f3934
-timeCreated: 1464379411
+guid: d04e515e06f1d3e4080e31357fafb922
+timeCreated: 1464371534
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Character_RunSpriteSheet_0
-    21300002: Character_RunSpriteSheet_1
-    21300004: Character_RunSpriteSheet_2
-    21300006: Character_RunSpriteSheet_3
+    21300000: Decal_BloodyShirt_0
+    21300002: Decal_BloodyShirt_1
+    21300004: Decal_BloodyShirt_2
+    21300006: Decal_BloodyShirt_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -54,46 +54,46 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Character_RunSpriteSheet_0
+    - name: Decal_BloodyShirt_0
       rect:
         serializedVersion: 2
-        x: 17
-        y: 14
-        width: 27
-        height: 48
+        x: 27
+        y: 36
+        width: 12
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Character_RunSpriteSheet_1
+    - name: Decal_BloodyShirt_1
       rect:
         serializedVersion: 2
-        x: 52
-        y: 14
-        width: 22
-        height: 48
+        x: 56
+        y: 36
+        width: 12
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Character_RunSpriteSheet_2
+    - name: Decal_BloodyShirt_2
       rect:
         serializedVersion: 2
-        x: 82
-        y: 14
-        width: 29
-        height: 48
+        x: 93
+        y: 36
+        width: 12
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Character_RunSpriteSheet_3
+    - name: Decal_BloodyShirt_3
       rect:
         serializedVersion: 2
-        x: 119
-        y: 14
-        width: 24
-        height: 48
+        x: 125
+        y: 36
+        width: 12
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class Controls : MonoBehaviour
@@ -47,6 +48,9 @@ public class Controls : MonoBehaviour
     Animator Animator;
     bool canMove;
     float cameraSpeed = 10;
+    private int carryingOrbs;
+
+    public Text orbCount;
 
     void Start()
     {
@@ -57,10 +61,14 @@ public class Controls : MonoBehaviour
         MenuDownHoldTime = 0;
         // Spped of the player when he runs from screen to screen while transitioning
         playerTransitionSpeed = playerSpeed / 4;
+        //set amount of orbs carried to 0
+        carryingOrbs = 0;
     }
 
     void Update()
     {
+        //update orb count ui text
+        orbCount.text = "Orb Count: " + carryingOrbs;
         if (canMove)
         {
             // Create a ray down checking if there is anything underneath the player
@@ -92,26 +100,30 @@ public class Controls : MonoBehaviour
             move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
             // Move the player
             transform.position += move * playerSpeed * Time.deltaTime;
-            if (Input.GetAxis("Horizontal") > -0.5f && Input.GetAxis("Horizontal") < 0.5f)
+            if (MurdererScripts.isMurderer == false)
             {
-                Animator.SetBool("Running", false);
-                Animator.SetBool("Idle", true);
-            }
-            // Change animation from idle to run and flip the players sprite
-            if (Input.GetAxis("Horizontal") < -0.1f)
-            {
-                Animator.SetBool("Running", true);
-                Animator.SetBool("Idle", false);
-                GetComponent<SpriteRenderer>().flipX = true;
-            }
-            // Change animation from idle to run and flip the sprite
-            if (Input.GetAxis("Horizontal") > 0.1f)
-            {
-                Animator.SetBool("Running", true);
-                Animator.SetBool("Idle", false);
-                GetComponent<SpriteRenderer>().flipX = false;
+                if (Input.GetAxis("Horizontal") > -0.5f && Input.GetAxis("Horizontal") < 0.5f)
+                {
+                    Animator.SetBool("Running", false);
+                    Animator.SetBool("Idle", true);
+                }
+                // Change animation from idle to run and flip the players sprite
+                if (Input.GetAxis("Horizontal") < -0.1f)
+                {
+                    Animator.SetBool("Running", true);
+                    Animator.SetBool("Idle", false);
+                    GetComponent<SpriteRenderer>().flipX = true;
+                }
+                // Change animation from idle to run and flip the sprite
+                if (Input.GetAxis("Horizontal") > 0.1f)
+                {
+                    Animator.SetBool("Running", true);
+                    Animator.SetBool("Idle", false);
+                    GetComponent<SpriteRenderer>().flipX = false;
+                }
             }
         }
+        
         // If player is on ground and space button hit -> jump
         if (Input.GetKeyDown(KeyCode.Space) && (onGround) && (!onNoJumpArea))
         {
@@ -124,6 +136,7 @@ public class Controls : MonoBehaviour
         {
             SceneManager.LoadScene(1);
         }
+
         if (moveCameraLeft || moveCameraRight || moveCameraToCenter)
         {
             canMove = false;
@@ -268,6 +281,16 @@ public class Controls : MonoBehaviour
             moveCameraRight = true;
             moveCameraToCenter = false;
         }
+
+        //collision with orb only with not currently holding any orbs
+        if (MurdererScripts.isMurderer == true && other.gameObject.tag == "Orb")
+        {
+            if (carryingOrbs == 0)
+            {
+                carryingOrbs += 1;
+                Destroy(other.gameObject);
+            }
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -308,6 +331,11 @@ public class Controls : MonoBehaviour
             Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), topPlatform.GetComponent<Collider2D>(), false);
             rb.gravityScale = 1;
         }
-        GateHighlight.enabled = false;
+
+        //only works on main menu scene
+        if (Application.loadedLevel == 1)
+        {
+            GateHighlight.enabled = false;
+        }
     }
 }

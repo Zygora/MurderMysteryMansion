@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 03d15a9b6d88b3a438302988c80a0e37
-timeCreated: 1463610125
+timeCreated: 1464379447
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -100,10 +100,18 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -32.5, y: 24.5}
+      - - {x: -12.5, y: -9.5}
+        - {x: -32.5, y: -18.5}
         - {x: -32.5, y: -24.5}
-        - {x: 32.5, y: -24.5}
-        - {x: 32.5, y: 24.5}
+        - {x: 30.5, y: -24.5}
+        - {x: 32.5, y: -21.5}
+        - {x: 32.5, y: -13.5}
+        - {x: 14.5, y: -9.5}
+      - - {x: 21.5, y: -16.5}
+        - {x: 24.5, y: -15.5}
+        - {x: 24.5, y: -12.5}
+        - {x: 21.5, y: -11.5}
+        - {x: 19.5, y: -13.5}
     - name: Character_DeathSpriteSheet_4
       rect:
         serializedVersion: 2
@@ -115,25 +123,35 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -32.5, y: 24.5}
+      - - {x: -12.5, y: -9.5}
+        - {x: -32.5, y: -18.5}
         - {x: -32.5, y: -24.5}
-        - {x: 32.5, y: -24.5}
-        - {x: 32.5, y: 24.5}
+        - {x: 30.5, y: -24.5}
+        - {x: 32.5, y: -21.5}
+        - {x: 32.5, y: -13.5}
+        - {x: 14.5, y: -9.5}
+      - - {x: 21.5, y: -16.5}
+        - {x: 24.5, y: -15.5}
+        - {x: 24.5, y: -12.5}
+        - {x: 21.5, y: -11.5}
+        - {x: 19.5, y: -13.5}
     - name: Character_DeathSpriteSheet_5
       rect:
         serializedVersion: 2
         x: 231
         y: 14
-        width: 51
+        width: 65
         height: 49
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -25.5, y: 24.5}
-        - {x: -25.5, y: -24.5}
-        - {x: 25.5, y: -24.5}
-        - {x: 25.5, y: 24.5}
+      - - {x: -18.5, y: -13.5}
+        - {x: -32.5, y: -18.5}
+        - {x: -32.5, y: -24.5}
+        - {x: 20.5, y: -24.5}
+        - {x: 20.5, y: -17.5}
+        - {x: 17.5, y: -13.5}
     outline: []
   spritePackingTag: 
   userData: 
