@@ -12,7 +12,10 @@ public class NetworkCharacter : Photon.MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-      //  realPosition = transform.position;
+        //  realPosition = transform.position;
+        PhotonNetwork.sendRate = 20;
+        PhotonNetwork.sendRateOnSerialize = 10;
+
       
 	}
 	
@@ -35,7 +38,7 @@ public class NetworkCharacter : Photon.MonoBehaviour {
     {
         if (stream.isWriting) // Our player. We need to send our actual position to the network.
         {
-            stream.SendNext(transform.position);
+            stream.SendNext(transform.position);      
         }
         else
         {
@@ -48,5 +51,17 @@ public class NetworkCharacter : Photon.MonoBehaviour {
 
         }
 
+    }
+
+    void SerializeState(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if(stream.isWriting)
+        {
+
+        }
+        else
+        {
+
+        }
     }
 }
