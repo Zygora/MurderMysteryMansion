@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 
-public class Controls : MonoBehaviour {
+public class Controls : MonoBehaviour
+{
     // Tweakable variables
     [Header("Tweakable variables")]
     [Range(1, 15)]
@@ -12,10 +13,10 @@ public class Controls : MonoBehaviour {
     public float playerJumpForce;
     [Range(1, 15)]
     public float playerClimbSpeed;
-    [Space(10), ]
+    [Space(10),]
     // System variables
     private Rigidbody2D rb;
-    private Vector3  move;
+    private Vector3 move;
     // References to other objects (leave public)
     [Header("References")]
     public GameObject topPlatform;
@@ -35,23 +36,31 @@ public class Controls : MonoBehaviour {
     public GameObject OptionsRoom;
     public GameObject PlayerCustomizationRoom;
     public GameObject MenuRoom;
-    Animator Animator;
+
     public bool moveCameraLeft;
     public bool moveCameraRight;
     public bool moveCameraToCenter;
-    float cameraSpeed = 10;
+    
     public float MenuDownHoldTime;
+    public float playerTransitionSpeed;
+
+    Animator Animator;
     bool canMove;
-    float prevSpeed;
-    void Start () {
+    float cameraSpeed = 10;
+
+    void Start()
+    {
         // Get rigidbody of the player at start
         rb = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
+        // Time that player should hold down button near the gates in order to exit the game
         MenuDownHoldTime = 0;
-        prevSpeed = playerSpeed;
+        // Spped of the player when he runs from screen to screen while transitioning
+        playerTransitionSpeed = playerSpeed / 4;
     }
 
-	void Update () {
+    void Update()
+    {
         if (canMove)
         {
             // Create a ray down checking if there is anything underneath the player
@@ -78,25 +87,24 @@ public class Controls : MonoBehaviour {
                 move = new Vector3(0, Input.GetAxis("Vertical"), 0);
                 transform.position += move * playerClimbSpeed * Time.deltaTime;
             }
-        
+
             // Create move vector
             move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
             // Move the player
-            
-                transform.position += move * playerSpeed * Time.deltaTime;
+            transform.position += move * playerSpeed * Time.deltaTime;
             if (Input.GetAxis("Horizontal") > -0.5f && Input.GetAxis("Horizontal") < 0.5f)
             {
                 Animator.SetBool("Running", false);
                 Animator.SetBool("Idle", true);
             }
-
+            // Change animation from idle to run and flip the players sprite
             if (Input.GetAxis("Horizontal") < -0.1f)
             {
                 Animator.SetBool("Running", true);
                 Animator.SetBool("Idle", false);
                 GetComponent<SpriteRenderer>().flipX = true;
             }
-
+            // Change animation from idle to run and flip the sprite
             if (Input.GetAxis("Horizontal") > 0.1f)
             {
                 Animator.SetBool("Running", true);
@@ -104,83 +112,67 @@ public class Controls : MonoBehaviour {
                 GetComponent<SpriteRenderer>().flipX = false;
             }
         }
+        // If player is on ground and space button hit -> jump
+        if (Input.GetKeyDown(KeyCode.Space) && (onGround) && (!onNoJumpArea))
+        {
+            rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
+            Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), topPlatform.GetComponent<Collider2D>(), false);
+        }
 
-            //play animations and chaneg sprite rotation
-            
-
-            // If player is on ground and space button hit -> jump
-            if (Input.GetKeyDown(KeyCode.Space) && (onGround) && (!onNoJumpArea))
-            {
-                rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
-                Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(),
-                    topPlatform.GetComponent<Collider2D>(), false);
-            }
-            // Special Ability
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                if (redBackground.activeSelf)
-                {
-                    redBackground.SetActive(false);
-                    return;
-                }
-                if (!redBackground.activeSelf)
-                {
-                    redBackground.SetActive(true);
-                    return;
-                }
-            }
-
-            //go to main menu
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                SceneManager.LoadScene(1);
-            }
-            if(moveCameraLeft ||moveCameraRight || moveCameraToCenter)
+        //go to main menu
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(1);
+        }
+        if (moveCameraLeft || moveCameraRight || moveCameraToCenter)
         {
             canMove = false;
         }
-            else
+        else
         {
             canMove = true;
         }
-        //pan camera on main menu screen
-        if (moveCameraLeft == true)
+        // Transitioning between screen in the menu
+        if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            Camera.transform.position = Vector3.MoveTowards(Camera.transform.position, OptionsRoom.transform.position, cameraSpeed * Time.deltaTime);
-            canMove = false;
-            transform.position += Vector3.left * playerSpeed/4 * Time.deltaTime;
-            if (Camera.transform.position==OptionsRoom.transform.position)
+            if (moveCameraLeft == true)
             {
-                moveCameraLeft = false;
-                canMove = true;
+                Camera.transform.position = Vector3.MoveTowards(Camera.transform.position, OptionsRoom.transform.position, cameraSpeed * Time.deltaTime);
+                canMove = false;
+                transform.position += Vector3.left * playerTransitionSpeed * Time.deltaTime;
+                if (Camera.transform.position == OptionsRoom.transform.position)
+                {
+                    moveCameraLeft = false;
+                    canMove = true;
+                }
             }
-        }
 
-        if (moveCameraRight == true)
-        {
-            Camera.transform.position = Vector3.MoveTowards(Camera.transform.position, PlayerCustomizationRoom.transform.position, cameraSpeed * Time.deltaTime);
-            canMove = false;
-            transform.position += Vector3.right * playerSpeed / 4 * Time.deltaTime;
-            if (Camera.transform.position == PlayerCustomizationRoom.transform.position)
+            if (moveCameraRight == true)
             {
-                moveCameraRight = false;
+                Camera.transform.position = Vector3.MoveTowards(Camera.transform.position, PlayerCustomizationRoom.transform.position, cameraSpeed * Time.deltaTime);
+                canMove = false;
+                transform.position += Vector3.right * playerTransitionSpeed * Time.deltaTime;
+                if (Camera.transform.position == PlayerCustomizationRoom.transform.position)
+                {
+                    moveCameraRight = false;
+                }
             }
-        }
 
-        if (moveCameraToCenter == true)
-        {
-            Camera.transform.position = Vector3.MoveTowards(Camera.transform.position, MenuRoom.transform.position, cameraSpeed * Time.deltaTime);
-            canMove = false;
-            Vector3 direction;
-            direction = new Vector3(MenuRoom.transform.position.x - gameObject.transform.position.x, 0, 0);
-            direction.Normalize();
-            transform.position += direction* playerSpeed / 4 * Time.deltaTime;
-            if (Camera.transform.position == MenuRoom.transform.position)
+            if (moveCameraToCenter == true)
             {
-                moveCameraToCenter = false;
+                Camera.transform.position = Vector3.MoveTowards(Camera.transform.position, MenuRoom.transform.position, cameraSpeed * Time.deltaTime);
+                canMove = false;
+                Vector3 direction;
+                direction = new Vector3(MenuRoom.transform.position.x - gameObject.transform.position.x, 0, 0);
+                direction.Normalize();
+                transform.position += direction * playerSpeed / 4 * Time.deltaTime;
+                if (Camera.transform.position == MenuRoom.transform.position)
+                {
+                    moveCameraToCenter = false;
+                }
             }
         }
-        //test death animation
+        // Test death animation
         if (Input.GetKey(KeyCode.Q))
         {
             Animator.SetBool("Dead", true);
@@ -190,7 +182,7 @@ public class Controls : MonoBehaviour {
         {
             Animator.SetBool("Dead", false);
         }
-        
+
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -222,15 +214,15 @@ public class Controls : MonoBehaviour {
             {
                 SceneManager.LoadScene(2);
             }
-            if(Input.GetKey(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.DownArrow))
             {
-                MenuDownHoldTime += Time.deltaTime;          
+                MenuDownHoldTime += Time.deltaTime;
             }
             if (MenuDownHoldTime > 5)
             {
                 SceneManager.LoadScene(3);
             }
-            if(Input.GetKeyUp(KeyCode.DownArrow))
+            if (Input.GetKeyUp(KeyCode.DownArrow))
             {
                 MenuDownHoldTime = 0;
             }
@@ -265,14 +257,12 @@ public class Controls : MonoBehaviour {
             canGoDown = false;
             canGoUp = true;
         }
-
         //set bools to start panning
         if (other.gameObject.tag == "OptionsRoom")
         {
             moveCameraLeft = true;
             moveCameraToCenter = false;
         }
-
         if (other.gameObject.tag == "PlayerCustomizationRoom")
         {
             moveCameraRight = true;
@@ -286,20 +276,17 @@ public class Controls : MonoBehaviour {
         {
             onTop = false;
         }
-
         //set bools to start panning
         if (other.gameObject.tag == "OptionsRoom")
         {
             moveCameraLeft = false;
             moveCameraToCenter = true;
         }
-
         if (other.gameObject.tag == "PlayerCustomizationRoom")
         {
             moveCameraRight = false;
             moveCameraToCenter = true;
         }
-
         if (other.tag == "NoJumpArea")
         {
             onNoJumpArea = false;
@@ -321,7 +308,6 @@ public class Controls : MonoBehaviour {
             Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), topPlatform.GetComponent<Collider2D>(), false);
             rb.gravityScale = 1;
         }
-
         GateHighlight.enabled = false;
     }
 }
