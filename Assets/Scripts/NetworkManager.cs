@@ -4,12 +4,14 @@ using System.Collections;
 public class NetworkManager : MonoBehaviour {
     int currentRoom = 0;
     string[] roomList;
-    public GameObject spawnpoint;
+    GUIStyle lobbyFont;
+   // public GameObject spawnpoint;
     
     // Use this for initialization
     void Start()
     {
         Connect();
+
     }
 
     // Update is called once per frame
@@ -23,6 +25,13 @@ public class NetworkManager : MonoBehaviour {
     void OnGUI()
     {
         GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
+        //if (GUI.Button(new Rect(10, 10, 150, 100), "I am a button"))
+        //  print("You clicked the button!");
+        if (GUI.Button(new Rect(10, 10, 150, 100), "Join Random")) ;
+
+
+            
+
     }
 
     void OnJoinedLobby()
@@ -63,15 +72,15 @@ public class NetworkManager : MonoBehaviour {
     void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom" + PhotonNetwork.room.name);
-        SpawnMyPlayer();
-        Debug.Log("Name:"+PhotonNetwork.playerName);
+      //  SpawnMyPlayer();
+     //   Debug.Log("Name:"+PhotonNetwork.playerName);
     }
 
     void SpawnMyPlayer()
     {
-        Vector3 spawnposition = spawnpoint.transform.position;
-        GameObject MyPlayerGO = (GameObject)PhotonNetwork.Instantiate("Player", spawnposition, Quaternion.identity, 0);
-        ((MonoBehaviour)MyPlayerGO.GetComponent("Controls")).enabled = true;
+      //  Vector3 spawnposition = spawnpoint.transform.position;
+      //  GameObject MyPlayerGO = (GameObject)PhotonNetwork.Instantiate("Player", spawnposition, Quaternion.identity, 0);
+      //  ((MonoBehaviour)MyPlayerGO.GetComponent("Controls")).enabled = true;
     }
-
+    
 }

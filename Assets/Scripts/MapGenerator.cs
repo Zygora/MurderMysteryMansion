@@ -98,11 +98,12 @@ public class MapGenerator : MonoBehaviour {
 		int currentObjectCount = 0;
 		int currentColumn = 0;
 		int currentrow = 0;
+        string seed = "";
 
 
 
-		//starting position of first room
-		Vector3 currentLocation = new Vector3 (0.0f, 0.0f, 0.0f);
+    //starting position of first room
+    Vector3 currentLocation = new Vector3 (0.0f, 0.0f, 0.0f);
 
 		//do while rows is still less than meax rows
 		while (currentrow < YTiles) {
@@ -119,8 +120,10 @@ public class MapGenerator : MonoBehaviour {
 			gridObject.transform.SetParent (rootObject.transform);
 			//remove room from list so that it can't be repeated
 			Rooms.RemoveAt (x-1);
-			//change the name of the game object from gridObject
-			gridObject.name = RootObjectName + "_" + currentObjectCount;
+            //change the name of the game object from gridObject
+            //gridObject.name = RootObjectName + "_" + currentObjectCount;
+            seed += gridObject.name;
+            Debug.Log(seed);
 			//set location to the right of last gameobject
 			currentLocation.x = currentLocation.x + spriteX;
 			//increment number of current columns;
