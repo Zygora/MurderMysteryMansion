@@ -3,12 +3,8 @@ using System.Collections;
 
 public class CrazedAlchemist : MonoBehaviour
 {
-    public GameObject redPotionLeft;
-    public GameObject redPotion;
-    public GameObject bluePotionLeft;
-    public GameObject bluePotion;
     Vector3 potionStartPoint;
-    public int numberOfPotions;
+    public int numberOfPotionsAvailable;
     public float potionCooldown = 5;
     float timeSincePotionUsed;
     bool potionUsed;
@@ -27,7 +23,7 @@ public class CrazedAlchemist : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.P))&&(!potionUsed))
         {
             potionUsed = true;
-            if (numberOfPotions > 0)
+            if (numberOfPotionsAvailable > 0)
             {
                 potionStartPoint = gameObject.transform.position;
                 float a = Random.Range(-10.0f, 10.0f);
@@ -36,14 +32,14 @@ public class CrazedAlchemist : MonoBehaviour
                     // player moves left
                     if (gameObject.GetComponent<Controls>().direction < 0)
                     {
-                        GameObject potion = Instantiate(redPotionLeft);
+                        GameObject potion = Instantiate(Resources.Load("RedPotionLeft") as GameObject);
                         Vector3 spawn = gameObject.transform.position;
                         spawn.x -= 1;
                         potion.transform.position = spawn;
                     }
                     else
                     {
-                        GameObject potion = Instantiate(redPotion);
+                        GameObject potion = Instantiate(Resources.Load("RedPotion") as GameObject);
                         Vector3 spawn = gameObject.transform.position;
                         spawn.x += 1;
                         potion.transform.position = spawn; 
@@ -54,20 +50,20 @@ public class CrazedAlchemist : MonoBehaviour
                     // player moves left
                     if (gameObject.GetComponent<Controls>().direction < 0)
                     {
-                        GameObject potionBlue = Instantiate(bluePotionLeft);
+                        GameObject potionBlue = Instantiate(Resources.Load("BluePotionLeft") as GameObject);
                         Vector3 spawn = gameObject.transform.position;
                         spawn.x -= 1;
                         potionBlue.transform.position = spawn;
                     }
                     else
                     {
-                        GameObject potionBlue = Instantiate(bluePotion);
+                        GameObject potionBlue = Instantiate(Resources.Load("BluePotion") as GameObject);
                         Vector3 spawn = gameObject.transform.position;
                         spawn.x += 1;
                         potionBlue.transform.position = spawn;
                     }
                 }
-                numberOfPotions--;
+                numberOfPotionsAvailable--;
             }
         }
     }
