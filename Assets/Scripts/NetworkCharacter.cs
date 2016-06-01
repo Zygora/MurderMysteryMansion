@@ -9,15 +9,20 @@ public class NetworkCharacter : Photon.MonoBehaviour {
     public double currentPacketTime = 0.0;
     public double lastPacketTime = 0.0;
     public double timeToReachGoal = 0.0;
+    Animator anim;
+    SpriteRenderer spRend;
 
     // Use this for initialization
     void Start () {
         //  realPosition = transform.position;
         PhotonNetwork.sendRate = 20;
         PhotonNetwork.sendRateOnSerialize = 10;
+        anim = GetComponent<Animator>();
+        spRend = GetComponent<SpriteRenderer>();
 
-      
-	}
+
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -38,7 +43,10 @@ public class NetworkCharacter : Photon.MonoBehaviour {
     {
         if (stream.isWriting) // Our player. We need to send our actual position to the network.
         {
-            stream.SendNext(transform.position);      
+            stream.SendNext(transform.position);
+            stream.SendNext(anim.GetBool("Running"));
+            stream.SendNext(anim.GetBool("Idle"));
+            stream.SendNext(spRend.flipX);
         }
         else
         {
@@ -48,6 +56,9 @@ public class NetworkCharacter : Photon.MonoBehaviour {
             realPosition = (Vector3)stream.ReceiveNext();
             lastPacketTime = currentPacketTime;
             currentPacketTime = info.timestamp;
+            anim.SetBool("Running",(bool)stream.ReceiveNext());
+            anim.SetBool("Idle",(bool)stream.ReceiveNext());
+            spRend.flipX = (bool)stream.ReceiveNext();
 
         }
 

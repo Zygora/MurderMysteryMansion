@@ -68,7 +68,11 @@ public class Controls : MonoBehaviour
     void Update()
     {
         //update orb count ui text
+<<<<<<< HEAD
         //orbCount.text = "Orb Count: " + carryingOrbs;
+=======
+       // orbCount.text = "Orb Count: " + carryingOrbs;
+>>>>>>> c20b2a7b9d8dd9032eea8acf823df31474c2bd7b
         if (canMove)
         {
             // Create a ray down checking if there is anything underneath the player
