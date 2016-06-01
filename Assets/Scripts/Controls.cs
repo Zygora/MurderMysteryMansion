@@ -51,6 +51,8 @@ public class Controls : MonoBehaviour
     private int carryingOrbs;
     public float direction = 1;
     public Text orbCount;
+    bool speedIncreased;
+    float timeSpeedIncreased;
 
     void Start()
     {
@@ -67,6 +69,19 @@ public class Controls : MonoBehaviour
 
     void Update()
     {
+<<<<<<< HEAD
+=======
+        if(speedIncreased)
+        {
+            timeSpeedIncreased += Time.deltaTime;
+            if(timeSpeedIncreased>3)
+            {
+                playerSpeed /= 2;
+                timeSpeedIncreased = 0;
+                speedIncreased = false;
+            }
+        }
+>>>>>>> 59bed895004e4cc0ed5fe24ebd36b3cd317ef682
         if (canMove)
         {
             // Create a ray down checking if there is anything underneath the player
@@ -244,6 +259,17 @@ public class Controls : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if(other.tag =="BluePotion")
+        {
+            playerSpeed *= 2;
+            speedIncreased = true;
+            Destroy(other.gameObject);
+        }
+        if (other.tag == "RedPotion")
+        {
+            // Teleport to another room
+            Destroy(other.gameObject);
+        }
         if (other.tag == "Top")
         {
             onTop = true;
