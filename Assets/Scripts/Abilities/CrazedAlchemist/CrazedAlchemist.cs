@@ -3,7 +3,6 @@ using System.Collections;
 
 public class CrazedAlchemist : MonoBehaviour
 {
-    Vector3 potionStartPoint;
     public int numberOfPotionsAvailable;
     public float potionCooldown = 5;
     float timeSincePotionUsed;
@@ -11,21 +10,21 @@ public class CrazedAlchemist : MonoBehaviour
 
     void Update()
     {
-        if(potionUsed)
+        if (potionUsed)
         {
             timeSincePotionUsed += Time.deltaTime;
-            if(timeSincePotionUsed>potionCooldown)
+            if (timeSincePotionUsed > potionCooldown)
             {
                 timeSincePotionUsed = 0;
                 potionUsed = false;
             }
         }
-        if ((Input.GetKeyDown(KeyCode.P))&&(!potionUsed))
+        if ((Input.GetKeyDown(KeyCode.P)) && (!potionUsed))
         {
             potionUsed = true;
             if (numberOfPotionsAvailable > 0)
             {
-                potionStartPoint = gameObject.transform.position;
+
                 float a = Random.Range(-10.0f, 10.0f);
                 if (a <= 0)
                 {
@@ -38,11 +37,12 @@ public class CrazedAlchemist : MonoBehaviour
                         potion.transform.position = spawn;
                     }
                     else
+                    // player moves right
                     {
                         GameObject potion = Instantiate(Resources.Load("RedPotion") as GameObject);
                         Vector3 spawn = gameObject.transform.position;
                         spawn.x += 1;
-                        potion.transform.position = spawn; 
+                        potion.transform.position = spawn;
                     }
                 }
                 else
@@ -55,6 +55,7 @@ public class CrazedAlchemist : MonoBehaviour
                         spawn.x -= 1;
                         potionBlue.transform.position = spawn;
                     }
+                    // player moves right
                     else
                     {
                         GameObject potionBlue = Instantiate(Resources.Load("BluePotion") as GameObject);
