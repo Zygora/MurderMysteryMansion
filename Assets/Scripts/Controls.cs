@@ -67,7 +67,6 @@ public class Controls : MonoBehaviour
 
     void Update()
     {
-
         if (canMove)
         {
             // Create a ray down checking if there is anything underneath the player
