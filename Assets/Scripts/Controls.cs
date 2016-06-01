@@ -69,6 +69,7 @@ public class Controls : MonoBehaviour
 
     void Update()
     {
+
         if(speedIncreased)
         {
             timeSpeedIncreased += Time.deltaTime;
@@ -79,6 +80,7 @@ public class Controls : MonoBehaviour
                 speedIncreased = false;
             }
         }
+
         if (canMove)
         {
             // Create a ray down checking if there is anything underneath the player
