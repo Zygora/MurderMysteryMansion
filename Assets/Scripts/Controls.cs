@@ -46,10 +46,10 @@ public class Controls : MonoBehaviour
     public float playerTransitionSpeed;
 
     Animator Animator;
-    bool canMove;
+    bool canMove = true;
     float cameraSpeed = 10;
     private int carryingOrbs;
-
+    public float direction = 1;
     public Text orbCount;
 
     void Start()
@@ -68,7 +68,7 @@ public class Controls : MonoBehaviour
     void Update()
     {
         //update orb count ui text
-        orbCount.text = "Orb Count: " + carryingOrbs;
+        //orbCount.text = "Orb Count: " + carryingOrbs;
         if (canMove)
         {
             // Create a ray down checking if there is anything underneath the player
@@ -113,6 +113,7 @@ public class Controls : MonoBehaviour
                     Animator.SetBool("Running", true);
                     Animator.SetBool("Idle", false);
                     GetComponent<SpriteRenderer>().flipX = true;
+                    direction = -1;
                 }
                 // Change animation from idle to run and flip the sprite
                 if (Input.GetAxis("Horizontal") > 0.1f)
@@ -120,6 +121,7 @@ public class Controls : MonoBehaviour
                     Animator.SetBool("Running", true);
                     Animator.SetBool("Idle", false);
                     GetComponent<SpriteRenderer>().flipX = false;
+                    direction = 1;
                 }
             }
         }
