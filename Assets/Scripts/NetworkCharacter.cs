@@ -9,8 +9,11 @@ public class NetworkCharacter : Photon.MonoBehaviour {
     public double currentPacketTime = 0.0;
     public double lastPacketTime = 0.0;
     public double timeToReachGoal = 0.0;
+    
     Animator anim;
     SpriteRenderer spRend;
+    string playerName;
+    string playerClass;
 
     // Use this for initialization
     void Start () {
@@ -19,8 +22,8 @@ public class NetworkCharacter : Photon.MonoBehaviour {
         PhotonNetwork.sendRateOnSerialize = 10;
         anim = GetComponent<Animator>();
         spRend = GetComponent<SpriteRenderer>();
-
-
+        playerName = GetComponentInParent<PlayerManager>().playerName.ToString();
+        playerClass = GetComponentInParent<PlayerManager>().playerClass.ToString();
 
     }
 	
@@ -47,6 +50,8 @@ public class NetworkCharacter : Photon.MonoBehaviour {
             stream.SendNext(anim.GetBool("Running"));
             stream.SendNext(anim.GetBool("Idle"));
             stream.SendNext(spRend.flipX);
+            stream.SendNext(playerName);
+            stream.SendNext(playerClass);
         }
         else
         {
@@ -59,6 +64,9 @@ public class NetworkCharacter : Photon.MonoBehaviour {
             anim.SetBool("Running",(bool)stream.ReceiveNext());
             anim.SetBool("Idle",(bool)stream.ReceiveNext());
             spRend.flipX = (bool)stream.ReceiveNext();
+            //Add player 
+            playerName = (string)stream.ReceiveNext();
+            playerClass = (string)stream.ReceiveNext();
 
         }
 
