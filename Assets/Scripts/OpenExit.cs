@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PolygonColliderChangeScript : MonoBehaviour {
+public class OpenExit : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

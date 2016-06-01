@@ -48,9 +48,7 @@ public class Controls : MonoBehaviour
     Animator Animator;
     bool canMove = true;
     float cameraSpeed = 10;
-    private int carryingOrbs;
     public float direction = 1;
-    public Text orbCount;
     bool speedIncreased;
     float timeSpeedIncreased;
 
@@ -63,8 +61,6 @@ public class Controls : MonoBehaviour
         MenuDownHoldTime = 0;
         // Spped of the player when he runs from screen to screen while transitioning
         playerTransitionSpeed = playerSpeed / 4;
-        //set amount of orbs carried to 0
-        carryingOrbs = 0;
     }
 
     void Update()
@@ -84,17 +80,26 @@ public class Controls : MonoBehaviour
         if (canMove)
         {
             // Create a ray down checking if there is anything underneath the player
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.57f);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
+           // Debug.DrawRay(transform.position, Vector2.down, Color.red);
             // If ray hit something player is on ground
             if (hit.collider != null)
             {
-                onGround = true;
+                if (hit.collider.tag == "Ground" && hit.distance <1.3f)
+                {
+                   // Debug.Log(hit.distance);
+                    onGround = true;
+                    Animator.SetBool("InAir", false);
+                }
+                // otherwise the player is in the air
+                else if (hit.distance >= 1.3f)
+                {
+                   // Debug.Log(hit.distance);
+                    onGround = false;
+                    Animator.SetBool("InAir", true);
+                }
             }
-            // otherwise the player is in the air
-            else
-            {
-                onGround = false;
-            }
+        
             // If player is on a ladder can go down -> go down
             if ((onLadder) && (canGoDown) && ((Input.GetAxis("Vertical") < 0)))
             {
@@ -305,16 +310,6 @@ public class Controls : MonoBehaviour
         {
             moveCameraRight = true;
             moveCameraToCenter = false;
-        }
-
-        //collision with orb only with not currently holding any orbs
-        if (MurdererScripts.isMurderer == true && other.gameObject.tag == "Orb")
-        {
-            if (carryingOrbs == 0)
-            {
-                carryingOrbs += 1;
-                Destroy(other.gameObject);
-            }
         }
     }
 
