@@ -45,7 +45,8 @@ public class Controls : MonoBehaviour
     public float MenuDownHoldTime;
     public float playerTransitionSpeed;
 
-    Animator Animator;
+    public Animator TorsoAnimator;
+    public Animator LegsAnimator;
     bool canMove = true;
     float cameraSpeed = 10;
     public float direction = 1;
@@ -56,7 +57,7 @@ public class Controls : MonoBehaviour
     {
         // Get rigidbody of the player at start
         rb = GetComponent<Rigidbody2D>();
-        Animator = GetComponent<Animator>();
+        //Animator = GetComponent<Animator>();
         // Time that player should hold down button near the gates in order to exit the game
         MenuDownHoldTime = 0;
         // Spped of the player when he runs from screen to screen while transitioning
@@ -89,14 +90,14 @@ public class Controls : MonoBehaviour
                 {
                    // Debug.Log(hit.distance);
                     onGround = true;
-                    Animator.SetBool("InAir", false);
+                    //Animator.SetBool("InAir", false);
                 }
                 // otherwise the player is in the air
                 else if (hit.distance >= 1.3f)
                 {
                    // Debug.Log(hit.distance);
                     onGround = false;
-                    Animator.SetBool("InAir", true);
+                    //Animator.SetBool("InAir", true);
                 }
             }
         
@@ -121,22 +122,28 @@ public class Controls : MonoBehaviour
             {
                 if (Input.GetAxis("Horizontal") > -0.5f && Input.GetAxis("Horizontal") < 0.5f)
                 {
-                    Animator.SetBool("Running", false);
-                    Animator.SetBool("Idle", true);
+                    TorsoAnimator.SetBool("Running", false);
+                    LegsAnimator.SetBool("Running", false);
+                    TorsoAnimator.SetBool("Idle", true);
+                    LegsAnimator.SetBool("Idle", true);
                 }
                 // Change animation from idle to run and flip the players sprite
                 if (Input.GetAxis("Horizontal") < -0.1f)
                 {
-                    Animator.SetBool("Running", true);
-                    Animator.SetBool("Idle", false);
+                    TorsoAnimator.SetBool("Running", true);
+                    LegsAnimator.SetBool("Running", true);
+                    TorsoAnimator.SetBool("Idle", false);
+                    LegsAnimator.SetBool("Idle", false);
                     GetComponent<SpriteRenderer>().flipX = true;
                     direction = -1;
                 }
                 // Change animation from idle to run and flip the sprite
                 if (Input.GetAxis("Horizontal") > 0.1f)
                 {
-                    Animator.SetBool("Running", true);
-                    Animator.SetBool("Idle", false);
+                    TorsoAnimator.SetBool("Running", true);
+                    LegsAnimator.SetBool("Running", true);
+                    TorsoAnimator.SetBool("Idle", false);
+                    LegsAnimator.SetBool("Idle", false);
                     GetComponent<SpriteRenderer>().flipX = false;
                     direction = 1;
                 }
@@ -207,12 +214,12 @@ public class Controls : MonoBehaviour
         // Test death animation
         if (Input.GetKey(KeyCode.Q))
         {
-            Animator.SetBool("Dead", true);
+            //Animator.SetBool("Dead", true);
         }
 
         if (Input.GetKey(KeyCode.E))
         {
-            Animator.SetBool("Dead", false);
+           // Animator.SetBool("Dead", false);
         }
 
     }

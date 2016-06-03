@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 4a2ef19a8276d4f4da91e9a3798d734e
-timeCreated: 1464976554
+timeCreated: 1464990139
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -55,9 +55,9 @@ TextureImporter:
     - name: Legs_Idle_0
       rect:
         serializedVersion: 2
-        x: 23
+        x: 24
         y: 17
-        width: 11
+        width: 10
         height: 22
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -68,7 +68,7 @@ TextureImporter:
         serializedVersion: 2
         x: 47
         y: 17
-        width: 11
+        width: 10
         height: 22
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
