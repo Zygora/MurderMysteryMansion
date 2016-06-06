@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class NetworkManager : MonoBehaviour {
     int currentRoom = 0;
@@ -90,7 +91,6 @@ public class NetworkManager : MonoBehaviour {
     {
         Debug.Log("OnJoinedRoom" + PhotonNetwork.room.name);
         PhotonNetwork.room.maxPlayers = 4;
-
         SpawnMyPlayer();
         Debug.Log("Name:"+PhotonNetwork.playerName);
     }
