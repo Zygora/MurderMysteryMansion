@@ -9,6 +9,7 @@ public class NetworkCharacter : Photon.MonoBehaviour {
     public double currentPacketTime = 0.0;
     public double lastPacketTime = 0.0;
     public double timeToReachGoal = 0.0;
+    public Camera maincam;
     
     Animator anim;
     SpriteRenderer spRend;
@@ -24,7 +25,7 @@ public class NetworkCharacter : Photon.MonoBehaviour {
         spRend = GetComponent<SpriteRenderer>();
         playerName = GetComponentInParent<PlayerManager>().playerName.ToString();
         playerClass = GetComponentInParent<PlayerManager>().playerClass.ToString();
-
+        maincam = (Camera)GameObject.FindObjectOfType(typeof(Camera));
     }
 	
 	// Update is called once per frame
@@ -32,6 +33,7 @@ public class NetworkCharacter : Photon.MonoBehaviour {
         if (photonView.isMine)
         {
             //do nothing
+            maincam.transform.position = new Vector3(transform.position.x,transform.position.y,-10);
 
         }
         else
