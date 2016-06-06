@@ -8,7 +8,7 @@ public class Squeler : MonoBehaviour
     public GameObject arrow;
     public GameObject arrowSpawn1;
     public GameObject arrowSpawn2;
-    public Camera camera;
+    public new Camera camera;
     public float squealerCooldown = 30;
     float timePassed;
     // Update is called once per frame

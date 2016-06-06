@@ -4,8 +4,10 @@ using System.Collections;
 // Move to Controls script and disable player's movement while he's reviving
 public class Revive : MonoBehaviour
 {
-    bool nearDownedWimp;
+
     public float reviveTime = 2.0f;
+
+    bool nearDownedWimp;
     float reviveTimePassed;
     GameObject downedWimp;
 
