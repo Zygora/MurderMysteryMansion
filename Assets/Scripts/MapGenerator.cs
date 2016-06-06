@@ -8,7 +8,7 @@ public class MapGenerator : MonoBehaviour {
 
 	public float XTiles;
 	public float YTiles;
-
+    
 	public GameObject Room1;
 	public GameObject Room2;
 	public GameObject Room3;
@@ -35,7 +35,10 @@ public class MapGenerator : MonoBehaviour {
 	public GameObject Room24;
 	public GameObject Room25;
 
-	void Start () {
+    bool isMaster = false;
+
+    [SerializeField] public string seed = "";
+    void Start () {
 		TileSpriteRootGameObjectName = "Rooms";
 
 		//create rooms on script start
@@ -98,15 +101,16 @@ public class MapGenerator : MonoBehaviour {
 		int currentObjectCount = 0;
 		int currentColumn = 0;
 		int currentrow = 0;
-        string seed = "";
 
 
 
     //starting position of first room
     Vector3 currentLocation = new Vector3 (0.0f, 0.0f, 0.0f);
 
-		//do while rows is still less than meax rows
-		while (currentrow < YTiles) {
+        MapGenerator MasterObj = new MapGenerator();
+
+        //do while rows is still less than meax rows
+        while (currentrow < YTiles) {
 			//change max random number range to length of list +1;
 			int maxRandomRange = Rooms.Count + 1;
 			int x = Random.Range (1, maxRandomRange);
@@ -122,8 +126,8 @@ public class MapGenerator : MonoBehaviour {
 			Rooms.RemoveAt (x-1);
             //change the name of the game object from gridObject
             //gridObject.name = RootObjectName + "_" + currentObjectCount;
-            seed += gridObject.name;
-            Debug.Log(seed);
+            MasterObj.seed += gridObject.name;
+            //Debug.Log("Seed:"+seed);
 			//set location to the right of last gameobject
 			currentLocation.x = currentLocation.x + spriteX;
 			//increment number of current columns;
@@ -143,5 +147,35 @@ public class MapGenerator : MonoBehaviour {
 			//increase object count used for naming rooms
 			currentObjectCount++;
 		}
-	}
+
+        Debug.Log(MasterObj.seed);
+
+        if (PhotonNetwork.player.isMasterClient)
+        {
+            MasterObj.isMaster = true;
+            Debug.Log("Is Master:"+MasterObj.isMaster);
+        }
+    }
+
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+
+        
+        if (stream.isWriting) // Our player. We need to send our actual position to the network.
+        {
+            if(isMaster)
+            {
+                stream.SendNext(seed);
+            }
+          
+        }
+        else
+        {
+            //this is someone else's player. We need to receive their position (as of a few milliseconds ago, and update our version of that player.
+            seed = (string)stream.ReceiveNext();
+
+        }
+
+    }
 }

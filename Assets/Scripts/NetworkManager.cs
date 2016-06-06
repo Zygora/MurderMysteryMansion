@@ -60,7 +60,7 @@ public class NetworkManager : MonoBehaviour {
     {
         currentRoom++;
         Debug.Log("OnPhotonRandomJoinFailed");
-        Debug.Log(PhotonNetwork.ServerAddress);
+        //Debug.Log(PhotonNetwork.ServerAddress);
         //PhotonNetwork.GetRoomList();
         //RoomOptions roomOptions = new RoomOptions() { isVisible = false, maxPlayers = 2}; //Set max players
       //  PhotonNetwork.CreateRoom("Room" + currentRoom);
@@ -92,7 +92,6 @@ public class NetworkManager : MonoBehaviour {
         Debug.Log("OnJoinedRoom" + PhotonNetwork.room.name);
         PhotonNetwork.room.maxPlayers = 4;
         SpawnMyPlayer();
-        Debug.Log("Name:"+PhotonNetwork.playerName);
     }
 
     void SpawnMyPlayer()
@@ -107,6 +106,7 @@ public class NetworkManager : MonoBehaviour {
         //GameObject.Find("Player").GetComponent<PlayerManager>().playerClass = "Murderer";
         GameObject MyPlayerGO = (GameObject)PhotonNetwork.Instantiate("Player", spawnposition, Quaternion.identity, 0);
         ((MonoBehaviour)MyPlayerGO.GetComponent("Controls")).enabled = true;
+       
     }
     
 }

@@ -42,7 +42,8 @@ public class NetworkCharacter : Photon.MonoBehaviour {
             currentTime += Time.deltaTime;
             transform.position = Vector3.Lerp(positionAtLastPacket, realPosition, (float)(currentTime / timeToReachGoal));
         }
-	}
+       
+    }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -72,6 +73,13 @@ public class NetworkCharacter : Photon.MonoBehaviour {
 
         }
 
+    }
+
+    void OnGUI()
+    {
+
+            GUI.Label(new Rect(50,50,500,500), "Player:" + PhotonNetwork.player.ID);
+        
     }
 
     void SerializeState(PhotonStream stream, PhotonMessageInfo info)
