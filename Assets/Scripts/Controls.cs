@@ -45,8 +45,8 @@ public class Controls : MonoBehaviour
     public float MenuDownHoldTime;
     public float playerTransitionSpeed;
 
-   // public Animator TorsoAnimator;
-   // public Animator LegsAnimator;
+    public Animator TorsoAnimator;
+    public Animator LegsAnimator;
     bool canMove = true;
     float cameraSpeed = 10;
     public float direction = 1;
@@ -91,6 +91,8 @@ public class Controls : MonoBehaviour
                    // Debug.Log(hit.distance);
                     onGround = true;
                     //Animator.SetBool("InAir", false);
+                    TorsoAnimator.SetBool("Jumping", false);
+                    LegsAnimator.SetBool("Jumping", false);
                 }
                 // otherwise the player is in the air
                 else if (hit.distance >= 1.3f)
@@ -98,6 +100,8 @@ public class Controls : MonoBehaviour
                    // Debug.Log(hit.distance);
                     onGround = false;
                     //Animator.SetBool("InAir", true);
+                    TorsoAnimator.SetBool("Jumping", true);
+                    LegsAnimator.SetBool("Jumping", true);
                 }
             }
         
@@ -122,29 +126,29 @@ public class Controls : MonoBehaviour
             {
                 if (Input.GetAxis("Horizontal") > -0.5f && Input.GetAxis("Horizontal") < 0.5f)
                 {
-                    //TorsoAnimator.SetBool("Running", false);
-                    //LegsAnimator.SetBool("Running", false);
-                    //TorsoAnimator.SetBool("Idle", true);
-                    //LegsAnimator.SetBool("Idle", true);
+                    TorsoAnimator.SetBool("Running", false);
+                    LegsAnimator.SetBool("Running", false);
+                    TorsoAnimator.SetBool("Idle", true);
+                    LegsAnimator.SetBool("Idle", true);
                 }
                 // Change animation from idle to run and flip the players sprite
                 if (Input.GetAxis("Horizontal") < -0.1f)
                 {
-                   // TorsoAnimator.SetBool("Running", true);
-                    //LegsAnimator.SetBool("Running", true);
-                    //TorsoAnimator.SetBool("Idle", false);
-                    //LegsAnimator.SetBool("Idle", false);
-                    GetComponent<SpriteRenderer>().flipX = true;
+                    TorsoAnimator.SetBool("Running", true);
+                    LegsAnimator.SetBool("Running", true);
+                    TorsoAnimator.SetBool("Idle", false);
+                    LegsAnimator.SetBool("Idle", false);
+                    //GetComponent<SpriteRenderer>().flipX = true;
                     direction = -1;
                 }
                 // Change animation from idle to run and flip the sprite
                 if (Input.GetAxis("Horizontal") > 0.1f)
                 {
-                    /*TorsoAnimator.SetBool("Running", true);
+                    TorsoAnimator.SetBool("Running", true);
                     LegsAnimator.SetBool("Running", true);
                     TorsoAnimator.SetBool("Idle", false);
-                    LegsAnimator.SetBool("Idle", false);*/
-                    GetComponent<SpriteRenderer>().flipX = false;
+                    LegsAnimator.SetBool("Idle", false);
+                   // GetComponent<SpriteRenderer>().flipX = false;
                     direction = 1;
                 }
             }

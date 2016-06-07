@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 2fb81fccb06860e4dbc7be52f0a254a5
-timeCreated: 1464810740
+timeCreated: 1465329801
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -57,10 +57,10 @@ TextureImporter:
     - name: Decal_ShirtJump_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 34
+        x: 20
+        y: 35
         width: 12
-        height: 14
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -68,10 +68,10 @@ TextureImporter:
     - name: Decal_ShirtJump_1
       rect:
         serializedVersion: 2
-        x: 26
-        y: 33
+        x: 46
+        y: 35
         width: 12
-        height: 14
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -79,21 +79,10 @@ TextureImporter:
     - name: Decal_ShirtJump_2
       rect:
         serializedVersion: 2
-        x: 50
-        y: 35
+        x: 69
+        y: 33
         width: 12
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-    - name: Decal_ShirtJump_3
-      rect:
-        serializedVersion: 2
-        x: 76
-        y: 35
-        width: 12
-        height: 14
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
