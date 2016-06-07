@@ -82,9 +82,9 @@ public class Controls : MonoBehaviour
         {
             // Create a ray down checking if there is anything underneath the player
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
-           // Debug.DrawRay(transform.position, Vector2.down, Color.red);
+            // Debug.DrawRay(transform.position, Vector2.down, Color.red);
             // If ray hit something player is on ground
-            if (hit.collider != null)
+            if (hit.collider != null);
             {
                 if (hit.collider.tag == "Ground" && hit.distance <1.3f)
                 {
@@ -139,6 +139,7 @@ public class Controls : MonoBehaviour
                     TorsoAnimator.SetBool("Idle", false);
                     LegsAnimator.SetBool("Idle", false);
                     //GetComponent<SpriteRenderer>().flipX = true;
+                    transform.eulerAngles = new Vector3(0, 180, 0);
                     direction = -1;
                 }
                 // Change animation from idle to run and flip the sprite
@@ -148,7 +149,8 @@ public class Controls : MonoBehaviour
                     LegsAnimator.SetBool("Running", true);
                     TorsoAnimator.SetBool("Idle", false);
                     LegsAnimator.SetBool("Idle", false);
-                   // GetComponent<SpriteRenderer>().flipX = false;
+                    // GetComponent<SpriteRenderer>().flipX = false;
+                    transform.eulerAngles = new Vector3(0, 0, 0);
                     direction = 1;
                 }
             }
@@ -218,12 +220,14 @@ public class Controls : MonoBehaviour
         // Test death animation
         if (Input.GetKey(KeyCode.Q))
         {
-            //Animator.SetBool("Dead", true);
+            TorsoAnimator.SetBool("Dead", true);
+            LegsAnimator.SetBool("Dead", true);
         }
 
         if (Input.GetKey(KeyCode.E))
         {
-           // Animator.SetBool("Dead", false);
+            TorsoAnimator.SetBool("Dead", false);
+            LegsAnimator.SetBool("Dead", false);
         }
 
     }
