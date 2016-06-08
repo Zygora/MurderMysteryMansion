@@ -4,9 +4,7 @@ using System.Collections;
 // Move to Controls script and disable player's movement while he's reviving
 public class Revive : MonoBehaviour
 {
-
     public float reviveTime = 2.0f; // Time which it takes to revive a wimp
-
     bool nearDownedWimp;            // Flag that shows if this wimp is near another wimp that needs to be revived
     float reviveTimePassed;         // Time since start of the reviving process
     GameObject downedWimp;          // Reference to the wimp that needs to be revived
