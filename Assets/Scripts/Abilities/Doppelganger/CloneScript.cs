@@ -10,7 +10,6 @@ public class CloneScript : MonoBehaviour {
 
     void Start()
     {
-        timeBeforeDestroyed = 0;
         timePassed = 0;
     }
 

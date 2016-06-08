@@ -23,6 +23,4 @@ public class ThirdEye : MonoBehaviour
             cooldown = 5;
         }
     }
-
-
 }
