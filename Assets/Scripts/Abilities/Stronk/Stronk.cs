@@ -3,35 +3,41 @@
 public class Stronk : MonoBehaviour
 {
 
-    public GameObject player;
-    public Vector2 throwDirectionRight;
-    public Vector2 throwDirectionLeft;
-    public float throwForce;
+    public GameObject player;               // Reference to the player that can be trown
+    public Vector2 throwDirectionRight;     // Direction to throw a wimp to the right
+    public Vector2 throwDirectionLeft;      // Direction to throw a wimp to the left
+    public float throwForce;                // Force of the throw
 
-    bool nearWimp;
-    bool grabbed;
+    bool nearWimp;                          // Flag showing that this wimp is near another one
+    bool grabbed;                           // Flag showing if this wimp is holding to another one
 
     // Update is called once per frame
     void Update()
     {
-
+        // If player is near a wimp and presses E
         if ((Input.GetKeyDown(KeyCode.E)) && (nearWimp))
         {
+            // Grab a wimp
             player.GetComponent<Rigidbody2D>().isKinematic = true;
             grabbed = true;
             player.transform.position = new Vector3(gameObject.transform.position.x - 0.3f, gameObject.transform.position.y + 3, gameObject.transform.position.z);
+            // Rotate the wimp that this wimp holds on to to horizontal position
             player.transform.rotation = Quaternion.Euler(0, 0, 90);
+            // Make the wimp that is in the air a child to this wimp so they will move together
             player.transform.parent = gameObject.transform;
         }
-
+        // If player holds a wimp and presses R
         if ((Input.GetKeyDown(KeyCode.R)) && (grabbed))
         {
+            // Throw the wimp
             player.transform.parent = null;
             player.GetComponent<Rigidbody2D>().isKinematic = false;
+            // If player is facing left trow to the left
             if (gameObject.GetComponent<Controls>().direction < 0)
             {
                 player.GetComponent<Rigidbody2D>().AddForce(throwDirectionLeft * throwForce, ForceMode2D.Impulse);
             }
+            // If player is facing right trow to the right
             else
             {
                 player.GetComponent<Rigidbody2D>().AddForce(throwDirectionRight * throwForce, ForceMode2D.Impulse);

@@ -3,26 +3,31 @@ using System.Collections;
 
 public class Squeler : MonoBehaviour
 {
-    public GameObject player1;
-    public GameObject player2;
-    public GameObject arrow;
-    public GameObject arrowSpawn1;
-    public GameObject arrowSpawn2;
-    public new Camera camera;
-    public float squealerCooldown = 30;
-    float timePassed;
-    // Update is called once per frame
+    public GameObject player1;          // Reference to the first player          
+    public GameObject player2;          // Reference to the second player
+    public GameObject arrow;            // Arrow prefab
+    public GameObject arrowSpawn1;      // Arrow spawner for the first player
+    public GameObject arrowSpawn2;      // Arrow spawner for the second player
+    public new Camera camera;           // Reference to the camera
+    public float squealerCooldown = 30; // Cooldown of the ability
+
+    float timePassed;                   // Time passed since the ability was last used
+
     void Update()
     {
-        if(timePassed>0)
+        // 
+        if (timePassed > 0)
         {
             timePassed -= Time.deltaTime;
         }
+
         if (timePassed <= 0)
         {
             Vector3 viewPos = camera.WorldToViewportPoint(player1.transform.position);
+            // If a wimp/murderer is in the view of the camera 
             if ((viewPos.x > 0) && (viewPos.y > 0) && (viewPos.x < 1) && (viewPos.y < 1))
             {
+                // Draw arrows that point to the target
                 GameObject arrow1 = Instantiate(arrow);
                 arrow1.transform.parent = player1.transform;
                 arrow1.transform.position = arrowSpawn1.transform.position;
@@ -38,9 +43,12 @@ public class Squeler : MonoBehaviour
                 arrow2.transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
                 timePassed = squealerCooldown;
             }
+
             Vector3 viewPos2 = camera.WorldToViewportPoint(player2.transform.position);
+            // If a wimp/murderer is in the view of the camera 
             if ((viewPos2.x > 0) && (viewPos2.y > 0) && (viewPos2.x < 1) && (viewPos2.y < 1))
             {
+                // Draw arrows that point to the target
                 GameObject arrow1 = Instantiate(arrow);
                 arrow1.transform.parent = player1.transform;
                 arrow1.transform.position = arrowSpawn1.transform.position;
