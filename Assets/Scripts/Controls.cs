@@ -52,16 +52,20 @@ public class Controls : MonoBehaviour
     public float direction = 1;
     bool speedIncreased;
     float timeSpeedIncreased;
+    private bool dead;
+    private Collider2D col;
 
     void Start()
     {
         // Get rigidbody of the player at start
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
         //Animator = GetComponent<Animator>();
         // Time that player should hold down button near the gates in order to exit the game
         MenuDownHoldTime = 0;
         // Spped of the player when he runs from screen to screen while transitioning
         playerTransitionSpeed = playerSpeed / 4;
+        dead = false;
     }
 
     void Update()
@@ -78,17 +82,17 @@ public class Controls : MonoBehaviour
             }
         }
 
-        if (canMove)
+        if (canMove && dead == false)
         {
             // Create a ray down checking if there is anything underneath the player
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
             // Debug.DrawRay(transform.position, Vector2.down, Color.red);
             // If ray hit something player is on ground
-            if (hit.collider != null);
+            if (hit.collider != null) ;
             {
-                if (hit.collider.tag == "Ground" && hit.distance <1.3f)
+                if (hit.collider.tag == "Ground" && hit.distance < 1.3f)
                 {
-                   // Debug.Log(hit.distance);
+                    // Debug.Log(hit.distance);
                     onGround = true;
                     //Animator.SetBool("InAir", false);
                     TorsoAnimator.SetBool("Jumping", false);
@@ -97,14 +101,14 @@ public class Controls : MonoBehaviour
                 // otherwise the player is in the air
                 else if (hit.distance >= 1.3f)
                 {
-                   // Debug.Log(hit.distance);
+                    // Debug.Log(hit.distance);
                     onGround = false;
                     //Animator.SetBool("InAir", true);
                     TorsoAnimator.SetBool("Jumping", true);
                     LegsAnimator.SetBool("Jumping", true);
                 }
             }
-        
+
             // If player is on a ladder can go down -> go down
             if ((onLadder) && (canGoDown) && ((Input.GetAxis("Vertical") < 0)))
             {
@@ -122,47 +126,46 @@ public class Controls : MonoBehaviour
             move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
             // Move the player
             transform.position += move * playerSpeed * Time.deltaTime;
-            if (MurdererScripts.isMurderer == false)
+
+            if (Input.GetAxis("Horizontal") > -0.5f && Input.GetAxis("Horizontal") < 0.5f)
             {
-                if (Input.GetAxis("Horizontal") > -0.5f && Input.GetAxis("Horizontal") < 0.5f)
-                {
-                    TorsoAnimator.SetBool("Running", false);
-                    LegsAnimator.SetBool("Running", false);
-                    TorsoAnimator.SetBool("Idle", true);
-                    LegsAnimator.SetBool("Idle", true);
-                }
-                // Change animation from idle to run and flip the players sprite
-                if (Input.GetAxis("Horizontal") < -0.1f)
-                {
-                    TorsoAnimator.SetBool("Running", true);
-                    LegsAnimator.SetBool("Running", true);
-                    TorsoAnimator.SetBool("Idle", false);
-                    LegsAnimator.SetBool("Idle", false);
-                    //GetComponent<SpriteRenderer>().flipX = true;
-                    transform.eulerAngles = new Vector3(0, 180, 0);
-                    direction = -1;
-                }
-                // Change animation from idle to run and flip the sprite
-                if (Input.GetAxis("Horizontal") > 0.1f)
-                {
-                    TorsoAnimator.SetBool("Running", true);
-                    LegsAnimator.SetBool("Running", true);
-                    TorsoAnimator.SetBool("Idle", false);
-                    LegsAnimator.SetBool("Idle", false);
-                    // GetComponent<SpriteRenderer>().flipX = false;
-                    transform.eulerAngles = new Vector3(0, 0, 0);
-                    direction = 1;
-                }
+                TorsoAnimator.SetBool("Running", false);
+                LegsAnimator.SetBool("Running", false);
+                TorsoAnimator.SetBool("Idle", true);
+                LegsAnimator.SetBool("Idle", true);
+            }
+            // Change animation from idle to run and flip the players sprite
+            if (Input.GetAxis("Horizontal") < -0.1f)
+            {
+                TorsoAnimator.SetBool("Running", true);
+                LegsAnimator.SetBool("Running", true);
+                TorsoAnimator.SetBool("Idle", false);
+                LegsAnimator.SetBool("Idle", false);
+                //GetComponent<SpriteRenderer>().flipX = true;
+                transform.eulerAngles = new Vector3(0, 180, 0);
+                direction = -1;
+            }
+            // Change animation from idle to run and flip the sprite
+            if (Input.GetAxis("Horizontal") > 0.1f)
+            {
+                TorsoAnimator.SetBool("Running", true);
+                LegsAnimator.SetBool("Running", true);
+                TorsoAnimator.SetBool("Idle", false);
+                LegsAnimator.SetBool("Idle", false);
+                // GetComponent<SpriteRenderer>().flipX = false;
+                transform.eulerAngles = new Vector3(0, 0, 0);
+                direction = 1;
+            }
+
+
+
+            // If player is on ground and space button hit -> jump
+            if (Input.GetKeyDown(KeyCode.Space) && (onGround) && (!onNoJumpArea))
+            {
+                rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
+                Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), topPlatform.GetComponent<Collider2D>(), false);
             }
         }
-        
-        // If player is on ground and space button hit -> jump
-        if (Input.GetKeyDown(KeyCode.Space) && (onGround) && (!onNoJumpArea))
-        {
-            rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
-            Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), topPlatform.GetComponent<Collider2D>(), false);
-        }
-
         //go to main menu
         if (Input.GetKey(KeyCode.Escape))
         {
@@ -325,6 +328,15 @@ public class Controls : MonoBehaviour
         {
             moveCameraRight = true;
             moveCameraToCenter = false;
+        }
+
+        if (other.gameObject.tag == "Knife" && dead == false && gameObject.tag!="Murderer")
+        {
+            TorsoAnimator.SetBool("Dead", true);
+            LegsAnimator.SetBool("Dead", true);
+            rb.gravityScale = 0;
+            col.isTrigger = enabled;
+            dead = true;
         }
     }
 

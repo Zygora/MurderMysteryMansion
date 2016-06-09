@@ -28,7 +28,7 @@ public class OrbCount : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other)
     {
         //collision with orb only with not currently holding any orbs
-        if (MurdererScripts.isMurderer == true && other.gameObject.tag == "Orb")
+        if (MurdererScripts.isMurderer == false && other.gameObject.tag == "Orb")
         {
             if (carryingOrbs == 0)
             {
