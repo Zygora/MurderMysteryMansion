@@ -15,7 +15,9 @@ public class CloneScript : MonoBehaviour {
 
 	void Update () {
         timePassed += Time.deltaTime;
+        // Move this clone in the direction specified
         transform.Translate(direction * Time.deltaTime * cloneSpeed);
+        // Destroy this clone if he is alive for more than it's maximum alive time
         if (timePassed > timeBeforeDestroyed)
         {
             Destroy(gameObject);

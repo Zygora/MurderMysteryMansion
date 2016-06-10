@@ -19,6 +19,7 @@ public class Revive : MonoBehaviour
             // If player is revivng for enough time -> revive downed wimp
             if (reviveTimePassed > reviveTime)
             {
+                // ADD ACTUAL REVIVE
                 downedWimp.tag = "Wimp";
                 downedWimp.GetComponent<Animator>().enabled = true;
                 reviveTimePassed = 0;

@@ -20,7 +20,12 @@ public class Stronk : MonoBehaviour
             // Grab a wimp
             player.GetComponent<Rigidbody2D>().isKinematic = true;
             grabbed = true;
-            player.transform.position = new Vector3(gameObject.transform.position.x - 0.3f, gameObject.transform.position.y + 3, gameObject.transform.position.z);
+            player.transform.position = 
+                new Vector3(
+                gameObject.transform.position.x - 0.3f, 
+                gameObject.transform.position.y + 1.9f, 
+                gameObject.transform.position.z
+                );
             // Rotate the wimp that this wimp holds on to to horizontal position
             player.transform.rotation = Quaternion.Euler(0, 0, 90);
             // Make the wimp that is in the air a child to this wimp so they will move together
