@@ -334,8 +334,7 @@ public class Controls : MonoBehaviour
         {
             TorsoAnimator.SetBool("Dead", true);
             LegsAnimator.SetBool("Dead", true);
-            rb.gravityScale = 0;
-            col.isTrigger = enabled;
+            gameObject.layer = 8;
             dead = true;
         }
     }

@@ -12,6 +12,7 @@ public class MurdererScripts : MonoBehaviour {
     void Start () {
         isMurderer = true;
         gameObject.tag = "Murderer";
+        gameObject.layer = 9;
 	}
 	
 	// Update is called once per frame
