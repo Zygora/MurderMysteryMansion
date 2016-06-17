@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TurnOnBloodShirt : MonoBehaviour {
     private Animator Aniamtor;
+    public GameObject player;
 	// Use this for initialization
 	void Start () {
         Aniamtor = GetComponent<Animator>();
@@ -11,7 +12,7 @@ public class TurnOnBloodShirt : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (MurdererScripts.isMurderer == true)
+        if (player.tag == "Murderer")
         {
             Aniamtor.enabled = true;
         }

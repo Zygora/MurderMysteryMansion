@@ -12,7 +12,8 @@ public class ScaredCat : MonoBehaviour {
 	void Update () {
 	    if(Input.GetKeyDown(KeyCode.E))
         {
-
+            // Change this wimp's sprite to cat sprite
+            // Go to a random room and come back???
         }
 	}
 }

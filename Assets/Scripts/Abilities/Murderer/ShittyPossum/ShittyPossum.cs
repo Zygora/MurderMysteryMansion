@@ -8,7 +8,8 @@ public class ShittyPossum : MonoBehaviour {
 
 	    if(Input.GetKeyDown(KeyCode.E))
         {
-            // Change animation state to dead
+            // Change murderer's animation state to dead
+            // They can't move
             // Controls come back after a second after any button is pressed
         }
 	}
