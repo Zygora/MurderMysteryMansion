@@ -22,7 +22,7 @@ public class OrbCount : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //update orb ui text
-        orbCount.text = "Orb Count: " + carryingOrbs;
+        //orbCount.text = "Orb Count: " + carryingOrbs;
     }
 
     void OnTriggerEnter2D(Collider2D other)

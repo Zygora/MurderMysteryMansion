@@ -7,6 +7,8 @@ public class MurdererScripts : MonoBehaviour {
     public Animator LegsAnimator;
    
     public static bool isMurderer;
+    public string horizontal;
+    public string vertical;
 
     // Use this for initialization
     void Start () {
@@ -17,19 +19,19 @@ public class MurdererScripts : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetAxis("Horizontal") > -0.5f && Input.GetAxis("Horizontal") < 0.5f)
+        if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
         {
             ShirtAnimator.SetBool("MurdererRunning", false);
             ShirtAnimator.SetBool("MurdererIdle", true);
         }
 
-        if (Input.GetAxis("Horizontal") < -0.1f)
+        if (Input.GetAxis(horizontal) < -0.1f)
         {
             ShirtAnimator.SetBool("MurdererRunning", true);
             ShirtAnimator.SetBool("MurdererIdle", false);
         }
 
-        if (Input.GetAxis("Horizontal") > 0.1f)
+        if (Input.GetAxis(horizontal) > 0.1f)
         {
             ShirtAnimator.SetBool("MurdererRunning", true);
             ShirtAnimator.SetBool("MurdererIdle", false);
@@ -44,7 +46,7 @@ public class MurdererScripts : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
         // Debug.DrawRay(transform.position, Vector2.down, Color.red);
         // If ray hit something player is on ground
-        if (hit.collider != null) ;
+        if (hit.collider != null) 
         {
             if (hit.collider.tag == "Ground" && hit.distance < 1.3f)
             {
