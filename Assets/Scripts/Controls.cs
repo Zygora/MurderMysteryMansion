@@ -10,7 +10,7 @@ public class Controls : MonoBehaviour
     [Header("Tweakable variables")]
     [Range(1, 15)]
     public float playerSpeed;
-    [Range(20, 70)]
+    [Range(20, 150)]
     public float playerJumpForce;
     [Range(1, 15)]
     public float playerClimbSpeed;
@@ -37,6 +37,9 @@ public class Controls : MonoBehaviour
     public GameObject OptionsRoom;
     public GameObject PlayerCustomizationRoom;
     public GameObject MenuRoom;
+    public Animator TorsoAnimator;
+    public Animator LegsAnimator;
+    private Collider2D col;
 
     public bool moveCameraLeft;
     public bool moveCameraRight;
@@ -45,15 +48,15 @@ public class Controls : MonoBehaviour
     public float MenuDownHoldTime;
     public float playerTransitionSpeed;
 
-    public Animator TorsoAnimator;
-    public Animator LegsAnimator;
+    public string horizontal;
+    public string vertical;
     bool canMove = true;
     float cameraSpeed = 10;
     public float direction = 1;
     bool speedIncreased;
     float timeSpeedIncreased;
     private bool dead;
-    private Collider2D col;
+    
 
     void Start()
     {
@@ -66,12 +69,13 @@ public class Controls : MonoBehaviour
         // Spped of the player when he runs from screen to screen while transitioning
         playerTransitionSpeed = playerSpeed / 4;
         dead = false;
+        
     }
 
     void Update()
     {
-
-        if(speedIncreased)
+        
+        if (speedIncreased)
         {
             timeSpeedIncreased += Time.deltaTime;
             if(timeSpeedIncreased>3)
@@ -88,7 +92,7 @@ public class Controls : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
             // Debug.DrawRay(transform.position, Vector2.down, Color.red);
             // If ray hit something player is on ground
-            if (hit.collider != null) ;
+            if (hit.collider != null)
             {
                 if (hit.collider.tag == "Ground" && hit.distance < 1.3f)
                 {
@@ -110,24 +114,24 @@ public class Controls : MonoBehaviour
             }
 
             // If player is on a ladder can go down -> go down
-            if ((onLadder) && (canGoDown) && ((Input.GetAxis("Vertical") < 0)))
+            if ((onLadder) && (canGoDown) && ((Input.GetAxis(vertical) < 0)))
             {
-                move = new Vector3(0, Input.GetAxis("Vertical"), 0);
+                move = new Vector3(0, Input.GetAxis(vertical), 0);
                 transform.position += move * playerClimbSpeed * Time.deltaTime;
             }
             // If player is on a ladder and not at the top and can go up -> go up
-            if ((onLadder) && (canGoUp) && ((Input.GetAxis("Vertical") > 0)) && (!onTop))
+            if ((onLadder) && (canGoUp) && ((Input.GetAxis(vertical) > 0)) && (!onTop))
             {
-                move = new Vector3(0, Input.GetAxis("Vertical"), 0);
+                move = new Vector3(0, Input.GetAxis(vertical), 0);
                 transform.position += move * playerClimbSpeed * Time.deltaTime;
             }
 
             // Create move vector
-            move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+            move = new Vector3(Input.GetAxis(horizontal), 0, 0);
             // Move the player
             transform.position += move * playerSpeed * Time.deltaTime;
 
-            if (Input.GetAxis("Horizontal") > -0.5f && Input.GetAxis("Horizontal") < 0.5f)
+            if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
             {
                 TorsoAnimator.SetBool("Running", false);
                 LegsAnimator.SetBool("Running", false);
@@ -135,7 +139,7 @@ public class Controls : MonoBehaviour
                 LegsAnimator.SetBool("Idle", true);
             }
             // Change animation from idle to run and flip the players sprite
-            if (Input.GetAxis("Horizontal") < -0.1f)
+            if (Input.GetAxis(horizontal) < -0.1f)
             {
                 TorsoAnimator.SetBool("Running", true);
                 LegsAnimator.SetBool("Running", true);
@@ -146,7 +150,7 @@ public class Controls : MonoBehaviour
                 direction = -1;
             }
             // Change animation from idle to run and flip the sprite
-            if (Input.GetAxis("Horizontal") > 0.1f)
+            if (Input.GetAxis(horizontal) > 0.1f)
             {
                 TorsoAnimator.SetBool("Running", true);
                 LegsAnimator.SetBool("Running", true);
@@ -169,7 +173,7 @@ public class Controls : MonoBehaviour
         //go to main menu
         if (Input.GetKey(KeyCode.Escape))
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(0);
         }
 
         if (moveCameraLeft || moveCameraRight || moveCameraToCenter)

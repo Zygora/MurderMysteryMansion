@@ -1,0 +1,25 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class SpawnPlayers : MonoBehaviour {
+    public GameObject player1;
+    public GameObject player2;
+    public GameObject player3;
+    public GameObject player4;
+    private bool player2Spawned = false;
+    private bool player3Spawned = false;
+    private bool player4Spawned = false;
+
+    // Use this for initialization
+    void Start () {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        if (Input.GetButtonDown("Spawn_P2") && player2Spawned == false) {
+            Instantiate(player2, this.transform.position, Quaternion.identity);
+            player2Spawned = true;
+        }
+	}
+}
