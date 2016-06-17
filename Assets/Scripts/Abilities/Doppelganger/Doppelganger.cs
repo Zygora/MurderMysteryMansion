@@ -64,13 +64,13 @@ public class Doppelganger : MonoBehaviour
                     arrow.SetActive(false);
                     // Instantiate a clone
                     GameObject clone = Instantiate(Resources.Load("Clone")) as GameObject;
-                    // If we need to flip the clone make speed negative so it will be moving in the right direction
+                    // If we need to flip the clone make it's speed negative so it will be moving in the right direction
                     if (direction == new Vector2(-1, 0))
                     {
                         clone.transform.eulerAngles = new Vector3(0, 180, 0);
                         clone.GetComponent<CloneScript>().cloneSpeed *= -1;
                     }
-
+                    // Move clone to players posi tion
                     clone.transform.position = gameObject.transform.position;
                     // Pass the time after which it shoul be destroyed to the clone's script
                     clone.GetComponent<CloneScript>().timeBeforeDestroyed = timeBeforeDestroyed;
