@@ -12,7 +12,7 @@ public class SpawnPlayers : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-	
+	    
 	}
 	
 	// Update is called once per frame
@@ -21,5 +21,17 @@ public class SpawnPlayers : MonoBehaviour {
             Instantiate(player2, this.transform.position, Quaternion.identity);
             player2Spawned = true;
         }
-	}
+
+        if (Input.GetButtonDown("Spawn_P3") && player3Spawned == false)
+        {
+            Instantiate(player3, this.transform.position, Quaternion.identity);
+            player3Spawned = true;
+        }
+
+        if (Input.GetButtonDown("Spawn_P4") && player4Spawned == false)
+        {
+            Instantiate(player4, this.transform.position, Quaternion.identity);
+            player4Spawned = true;
+        }
+    }
 }

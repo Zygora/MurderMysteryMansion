@@ -69,6 +69,7 @@ public class MapGenerator : MonoBehaviour {
 		GameObject rootObject = new GameObject ();
 		rootObject.transform.position = new Vector3 (0.0f, 0.0f, 0.0f);
 		rootObject.name = RootObjectName;
+        rootObject.AddComponent<RandomSpawnPlayers>();
 
 		//list holding all rooms
 		List<GameObject> Rooms = new List<GameObject> ();
@@ -105,7 +106,7 @@ public class MapGenerator : MonoBehaviour {
 
 
     //starting position of first room
-    Vector3 currentLocation = new Vector3 (0.0f, 0.0f, 0.0f);
+    Vector3 currentLocation = new Vector3 (0.0f, -296.0f, 0.0f);
 
         MapGenerator MasterObj = new MapGenerator();
 
@@ -141,14 +142,14 @@ public class MapGenerator : MonoBehaviour {
 				//reset starting location when it reaches max columns
 				currentLocation.x = 0;
 				//move rooms down by height of rooms when it reaches max columns to start a new row
-				currentLocation.y = currentLocation.y - spriteY;
+				currentLocation.y = currentLocation.y + spriteY;
 
 			}
 			//increase object count used for naming rooms
 			currentObjectCount++;
 		}
 
-        Debug.Log(MasterObj.seed);
+        //Debug.Log(MasterObj.seed);
 
         if (PhotonNetwork.player.isMasterClient)
         {

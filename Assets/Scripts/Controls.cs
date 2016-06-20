@@ -62,6 +62,7 @@ public class Controls : MonoBehaviour
     float timeCameraMoved = 0;
     bool movesWithCamera = true;
     float speedMultiplier;
+ 
 
     void Start()
     {
@@ -74,12 +75,12 @@ public class Controls : MonoBehaviour
         // Spped of the player when he runs from screen to screen while transitioning
         playerTransitionSpeed = playerSpeed / 4;
         dead = false;
-
+        
     }
 
     void Update()
     {
-
+   
         if (speedIncreased)
         {
             timeSpeedIncreased += Time.deltaTime;
