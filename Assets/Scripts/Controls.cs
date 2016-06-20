@@ -62,6 +62,8 @@ public class Controls : MonoBehaviour
     float timeCameraMoved = 0;
     bool movesWithCamera = true;
     float speedMultiplier;
+    private bool WalkRight;
+    private bool WalkLeft;
 
     void Start()
     {
@@ -245,7 +247,10 @@ public class Controls : MonoBehaviour
         }
         if (moveCamera)
         {
-            
+            TorsoAnimator.SetBool("Running", true);
+            LegsAnimator.SetBool("Running", true);
+            TorsoAnimator.SetBool("Idle", false);
+            LegsAnimator.SetBool("Idle", false);
             Vector3 nextRoomCamPos = currentRoom.transform.position;
             Vector3 direction;
             direction = new Vector3(currentRoom.transform.position.x - gameObject.transform.position.x, 0, 0);
@@ -255,7 +260,7 @@ public class Controls : MonoBehaviour
             canMove = false;
             transform.position += direction * playerSpeed / 4 * Time.deltaTime *speedMultiplier;
 
-            if (Input.GetKeyUp(KeyCode.LeftArrow) && (direction.x == 1))
+            if (Input.GetKey(KeyCode.LeftArrow) && (direction.x == 1))
             {
                 GameObject buffer;
                 buffer = currentRoom;
@@ -268,9 +273,8 @@ public class Controls : MonoBehaviour
                 {
                     speedMultiplier = 2;
                 }
-                    
             }
-            if (Input.GetKeyUp(KeyCode.RightArrow) && (direction.x == -1))
+            if (Input.GetKey(KeyCode.RightArrow) && (direction.x == -1))
             {
                 GameObject buffer;
                 buffer = currentRoom;
@@ -284,6 +288,7 @@ public class Controls : MonoBehaviour
                     speedMultiplier = 2;
                 }
             }
+            
             if ((Camera.transform.position.x == currentRoom.transform.position.x) 
                 && (Camera.transform.position.y == currentRoom.transform.position.y)
                 )
@@ -294,6 +299,14 @@ public class Controls : MonoBehaviour
                 }
                 moveCamera = false;
                 canMove = true;
+            }
+            if (direction.x == 1)
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+            if (direction.x == -1)
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
             }
         }
     }
