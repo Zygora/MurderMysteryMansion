@@ -8,7 +8,7 @@ public class Controls : MonoBehaviour
 {
     // Tweakable variables
     [Header("Tweakable variables")]
-    [Range(1, 15)]
+    [Range(1, 30)]
     public float playerSpeed;
     [Range(20, 150)]
     public float playerJumpForce;
@@ -44,19 +44,24 @@ public class Controls : MonoBehaviour
     public bool moveCameraLeft;
     public bool moveCameraRight;
     public bool moveCameraToCenter;
-    
+
     public float MenuDownHoldTime;
     public float playerTransitionSpeed;
 
     public string horizontal;
     public string vertical;
     bool canMove = true;
-    float cameraSpeed = 10;
+    public float cameraSpeed = 30;
     public float direction = 1;
     bool speedIncreased;
     float timeSpeedIncreased;
     private bool dead;
-    
+    public bool moveCamera;
+    public GameObject currentRoom;
+    public GameObject lastRoom;
+    float timeCameraMoved = 0;
+    bool movesWithCamera = true;
+    float speedMultiplier;
 
     void Start()
     {
@@ -69,16 +74,16 @@ public class Controls : MonoBehaviour
         // Spped of the player when he runs from screen to screen while transitioning
         playerTransitionSpeed = playerSpeed / 4;
         dead = false;
-        
+
     }
 
     void Update()
     {
-        
+
         if (speedIncreased)
         {
             timeSpeedIncreased += Time.deltaTime;
-            if(timeSpeedIncreased>3)
+            if (timeSpeedIncreased > 3)
             {
                 playerSpeed /= 2;
                 timeSpeedIncreased = 0;
@@ -184,6 +189,7 @@ public class Controls : MonoBehaviour
         {
             canMove = true;
         }
+
         // Transitioning between screen in the menu
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
@@ -212,6 +218,7 @@ public class Controls : MonoBehaviour
 
             if (moveCameraToCenter == true)
             {
+
                 Camera.transform.position = Vector3.MoveTowards(Camera.transform.position, MenuRoom.transform.position, cameraSpeed * Time.deltaTime);
                 canMove = false;
                 Vector3 direction;
@@ -236,7 +243,59 @@ public class Controls : MonoBehaviour
             TorsoAnimator.SetBool("Dead", false);
             LegsAnimator.SetBool("Dead", false);
         }
+        if (moveCamera)
+        {
+            
+            Vector3 nextRoomCamPos = currentRoom.transform.position;
+            Vector3 direction;
+            direction = new Vector3(currentRoom.transform.position.x - gameObject.transform.position.x, 0, 0);
+            direction.Normalize();
+            nextRoomCamPos.z = -10;
+            Camera.transform.position = Vector3.MoveTowards(Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
+            canMove = false;
+            transform.position += direction * playerSpeed / 4 * Time.deltaTime *speedMultiplier;
 
+            if (Input.GetKeyUp(KeyCode.LeftArrow) && (direction.x == 1))
+            {
+                GameObject buffer;
+                buffer = currentRoom;
+                currentRoom = lastRoom;
+                lastRoom = buffer;
+                direction *= -1;
+                canMove = false;
+                transform.eulerAngles = new Vector3(0, 180, 0);
+                if(speedMultiplier <=2)
+                {
+                    speedMultiplier = 2;
+                }
+                    
+            }
+            if (Input.GetKeyUp(KeyCode.RightArrow) && (direction.x == -1))
+            {
+                GameObject buffer;
+                buffer = currentRoom;
+                currentRoom = lastRoom;
+                lastRoom = buffer;
+                direction *= -1;
+                canMove = false;
+                transform.eulerAngles = new Vector3(0, 0, 0);
+                if (speedMultiplier <= 2)
+                {
+                    speedMultiplier = 2;
+                }
+            }
+            if ((Camera.transform.position.x == currentRoom.transform.position.x) 
+                && (Camera.transform.position.y == currentRoom.transform.position.y)
+                )
+            {
+                if (speedMultiplier != 1)
+                {
+                    speedMultiplier = 1;
+                }
+                moveCamera = false;
+                canMove = true;
+            }
+        }
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -285,7 +344,13 @@ public class Controls : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag =="BluePotion")
+        if (other.tag == "Room")
+        {
+            lastRoom = currentRoom;
+            currentRoom = other.gameObject;
+            moveCamera = true;
+        }
+        if (other.tag == "BluePotion")
         {
             playerSpeed *= 2;
             speedIncreased = true;
@@ -334,7 +399,7 @@ public class Controls : MonoBehaviour
             moveCameraToCenter = false;
         }
 
-        if (other.gameObject.tag == "Knife" && dead == false && gameObject.tag!="Murderer")
+        if (other.gameObject.tag == "Knife" && dead == false && gameObject.tag != "Murderer")
         {
             TorsoAnimator.SetBool("Dead", true);
             LegsAnimator.SetBool("Dead", true);
@@ -345,6 +410,10 @@ public class Controls : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
+        if (other.tag == "Room")
+        {
+            lastRoom = other.gameObject;
+        }
         if (other.tag == "Top")
         {
             onTop = false;
