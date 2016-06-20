@@ -62,12 +62,12 @@ public class Controls : MonoBehaviour
     float timeCameraMoved = 0;
     bool movesWithCamera = true;
     float speedMultiplier;
-<<<<<<< HEAD
+
  
-=======
+
     private bool WalkRight;
     private bool WalkLeft;
->>>>>>> ef9e00cd1036ea65596281f6bf74c21dbd599ab2
+
 
     void Start()
     {
