@@ -13,7 +13,25 @@ public class MurdererScripts : MonoBehaviour {
     // Use this for initialization
     void Start () {
         isMurderer = true;
-        gameObject.tag = "Murderer";
+        if (gameObject.tag == "Player1")
+        {
+            gameObject.tag = "Murderer1";
+        }
+
+        if (gameObject.tag == "Player2")
+        {
+            gameObject.tag = "Murderer2";
+        }
+
+        if (gameObject.tag == "Player3")
+        {
+            gameObject.tag = "Murderer3";
+        }
+
+        if (gameObject.tag == "Player4")
+        {
+            gameObject.tag = "Murderer4";
+        }
         gameObject.layer = 9;
 	}
 	

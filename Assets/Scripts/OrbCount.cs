@@ -28,9 +28,9 @@ public class OrbCount : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other)
     {
         //collision with orb only with not currently holding any orbs
-        if (gameObject.tag == "Player" && other.gameObject.tag == "Orb")
+        if (gameObject.tag == "Player1" || gameObject.tag == "Player2" || gameObject.tag == "Player3" || gameObject.tag == "Player4")
         {
-            if (carryingOrbs == 0)
+            if (carryingOrbs == 0 && other.gameObject.tag == "Orb") 
             {
                 carryingOrbs += 1;
                 Destroy(other.gameObject);
