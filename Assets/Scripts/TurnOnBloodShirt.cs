@@ -12,7 +12,7 @@ public class TurnOnBloodShirt : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (player.tag == "Murderer")
+        if (player.tag == "Murderer1" || player.tag == "Murderer2" || player.tag == "Murderer3" || player.tag == "Murderer4" )
         {
             Aniamtor.enabled = true;
         }
