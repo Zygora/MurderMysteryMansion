@@ -16,9 +16,9 @@ public class Controls : MonoBehaviour
     private Vector3 move;
     // References to other objects (leave public)
     [Header("References")]
-    public GameObject topPlatform;
+
     public GameObject groundCheck;
-    public GameObject redBackground;
+
     [Space(10)]
     // Ladder booleans (make private at the end)
     [Header("Ladder booleans")]
@@ -27,7 +27,6 @@ public class Controls : MonoBehaviour
     public bool onNoJumpArea;
     public bool canGoUp;
     public bool canGoDown;
-    public bool onTop;
     //
     public SpriteRenderer GateHighlight;
     public Camera Camera;
@@ -47,7 +46,7 @@ public class Controls : MonoBehaviour
 
     public string horizontal;
     public string vertical;
-    bool canMove = true;
+    public bool canMove = true;
     public float cameraSpeed = 30;
     public float direction = 1;
     bool speedIncreased;
@@ -57,12 +56,13 @@ public class Controls : MonoBehaviour
     public GameObject currentRoom;
     public GameObject lastRoom;
     float speedMultiplier;
-    private bool goUp;
-    private bool goDown;
+    public bool goUp;
+    public bool goDown;
     private float gravityScale;
-
+    private GameObject ladder;
     void Start()
     {
+        // Save players gravity scale
         gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale;
         // Get rigidbody of the player at start
         rb = GetComponent<Rigidbody2D>();
@@ -73,12 +73,10 @@ public class Controls : MonoBehaviour
         // Spped of the player when he runs from screen to screen while transitioning
         playerTransitionSpeed = playerSpeed / 4;
         dead = false;
-        
     }
 
     void Update()
     {
-   
         if (speedIncreased)
         {
             timeSpeedIncreased += Time.deltaTime;
@@ -100,7 +98,6 @@ public class Controls : MonoBehaviour
             {
                 if (hit.collider.tag == "Ground" && hit.distance < 1.3f)
                 {
-                    // Debug.Log(hit.distance);
                     onGround = true;
                     //Animator.SetBool("InAir", false);
                     TorsoAnimator.SetBool("Jumping", false);
@@ -116,26 +113,11 @@ public class Controls : MonoBehaviour
                     LegsAnimator.SetBool("Jumping", true);
                 }
             }
-            /*
-            // If player is on a ladder can go down -> go down
-            if ((onLadder) && (canGoDown) && ((Input.GetAxis(vertical) < 0)))
-            {
-                move = new Vector3(0, Input.GetAxis(vertical), 0);
-                transform.position += move * playerClimbSpeed * Time.deltaTime;
-            }
-            // If player is on a ladder and not at the top and can go up -> go up
-            if ((onLadder) && (canGoUp) && ((Input.GetAxis(vertical) > 0)) && (!onTop))
-            {
-                move = new Vector3(0, Input.GetAxis(vertical), 0);
-                transform.position += move * playerClimbSpeed * Time.deltaTime;
-            }
-            */
-
             // Create move vector
             move = new Vector3(Input.GetAxis(horizontal), 0, 0);
             // Move the player
             transform.position += move * playerSpeed * Time.deltaTime;
-
+            
             if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
             {
                 TorsoAnimator.SetBool("Running", false);
@@ -166,10 +148,10 @@ public class Controls : MonoBehaviour
                 direction = 1;
             }
             // If player is on ground and space button hit -> jump
-            if (Input.GetKeyDown(KeyCode.Space) && (onGround) && (!onNoJumpArea))
+            if (Input.GetKeyDown(KeyCode.Space) && (onGround))
             {
                 rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
-                Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), topPlatform.GetComponent<Collider2D>(), false);
+               // Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), topPlatform.GetComponent<Collider2D>(), false);
             }
         }
         //go to main menu
@@ -212,7 +194,6 @@ public class Controls : MonoBehaviour
             }
             if (moveCameraToCenter == true)
             {
-
                 Camera.transform.position = Vector3.MoveTowards(Camera.transform.position, MenuRoom.transform.position, cameraSpeed * Time.deltaTime);
                 canMove = false;
                 Vector3 direction;
@@ -237,10 +218,13 @@ public class Controls : MonoBehaviour
             TorsoAnimator.SetBool("Dead", false);
             LegsAnimator.SetBool("Dead", false);
         }
+        // if player hits upArrow on the ladder go up
         if(Input.GetKeyDown(KeyCode.UpArrow)&&(canGoUp))
         {
             goUp = true;
+            gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         }
+        // Go up
         if (goUp)
         {
             canMove = false;
@@ -248,10 +232,13 @@ public class Controls : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
             transform.position += new Vector3(0,1,0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
         }
+        // if player hits downArrow on the ladder go up
         if (Input.GetKeyDown(KeyCode.DownArrow) && (canGoDown))
         {
             goDown = true;
+            gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         }
+        // Go down
         if (goDown)
         {
             canMove = false;
@@ -259,11 +246,13 @@ public class Controls : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
             transform.position += new Vector3(0, -1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
         }
+        // Change player animation to run while transitioning up or down
         if (goDown || goUp)
         {
             TorsoAnimator.SetBool("Jumping", true);
             LegsAnimator.SetBool("Jumping", true);
         }
+        // If camera transitioning between rooms
         if (moveCamera)
         {
             Vector3 nextRoomCamPos = currentRoom.transform.position;
@@ -273,6 +262,7 @@ public class Controls : MonoBehaviour
             nextRoomCamPos.z = -10;
             Camera.transform.position = Vector3.MoveTowards(Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
             canMove = false;
+            // Change player animation to run while transitioning left or right
             if ((!goUp)&&(!goDown))
             {
                 TorsoAnimator.SetBool("Running", true);
@@ -333,19 +323,21 @@ public class Controls : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
+
         // While player is at the bottom of a ladder they can't go down and can go up
         if (other.gameObject.tag == "BotLadder")
         {
+            ladder = other.gameObject;
             canGoDown = false;
             canGoUp = true;
         }
         // At the top of a ladder turn off the collision of a player and the platform above them
         if (other.tag == "TopLadder")
         {
+            ladder = other.gameObject;
             canGoDown = true;
             canGoUp = false;
         }
-
         //change highlight on play button and change level on button input
         if (other.gameObject.tag == "Gate")
         {
@@ -371,8 +363,13 @@ public class Controls : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.tag == "ColorSelection")
+        {
+            GameObject.Find("ColorManager").GetComponent<ColorManager>().playerCanSelect = true; 
+        }
         if (other.tag == "BotLadder")
         {
+
             canMove = true;
             goDown = false;
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
@@ -384,6 +381,7 @@ public class Controls : MonoBehaviour
         {
             canMove = true;
             goUp = false;
+            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
             gameObject.GetComponent<Collider2D>().enabled = true;
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
@@ -404,11 +402,6 @@ public class Controls : MonoBehaviour
         {
             // Teleport to another room
             Destroy(other.gameObject);
-        }
-        // At the bottom of a ladder player can go up, but not down
-        if (other.gameObject.tag == "BotLadder")
-        {
-
         }
         //set bools to start panning
         if (other.gameObject.tag == "OptionsRoom")
@@ -433,6 +426,10 @@ public class Controls : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
+        if (other.tag == "ColorSelection")
+        {
+            GameObject.Find("ColorManager").GetComponent<ColorManager>().playerCanSelect = false;
+        }
         if (other.tag == "Room")
         {
             lastRoom = other.gameObject;
@@ -448,14 +445,8 @@ public class Controls : MonoBehaviour
             moveCameraRight = false;
             moveCameraToCenter = true;
         }
-
-        if (other.gameObject.tag == "TopLadder")
-        {
-            
-        }
-
         //only works on main menu scene
-        if (Application.loadedLevel == 1)
+        if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             GateHighlight.enabled = false;
         }
