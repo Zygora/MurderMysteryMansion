@@ -30,6 +30,10 @@ public class Controls : MonoBehaviour
     //
     public SpriteRenderer GateHighlight;
     public Camera Camera;
+    public GameObject player1Camera;
+    public GameObject player2Camera;
+    public GameObject player3Camera;
+    public GameObject player4Camera;
     public GameObject OptionsRoom;
     public GameObject PlayerCustomizationRoom;
     public GameObject MenuRoom;
@@ -73,6 +77,11 @@ public class Controls : MonoBehaviour
         // Spped of the player when he runs from screen to screen while transitioning
         playerTransitionSpeed = playerSpeed / 4;
         dead = false;
+        //grab cameras in scene
+        player1Camera = GameObject.FindGameObjectWithTag("Player1Camera");
+        player2Camera = GameObject.FindGameObjectWithTag("Player2Camera");
+        player3Camera = GameObject.FindGameObjectWithTag("Player3Camera");
+        player4Camera = GameObject.FindGameObjectWithTag("Player4Camera");
     }
 
     void Update()
@@ -206,7 +215,7 @@ public class Controls : MonoBehaviour
                 }
             }
         }
-        // Test death animation
+        /*Test death animation
         if (Input.GetKey(KeyCode.Q))
         {
             TorsoAnimator.SetBool("Dead", true);
@@ -217,7 +226,8 @@ public class Controls : MonoBehaviour
         {
             TorsoAnimator.SetBool("Dead", false);
             LegsAnimator.SetBool("Dead", false);
-        }
+        }*/
+
         // if player hits upArrow on the ladder go up
         if(Input.GetKeyDown(KeyCode.UpArrow)&&(canGoUp))
         {
