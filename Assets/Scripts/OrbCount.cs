@@ -44,7 +44,7 @@ public class OrbCount : MonoBehaviour {
         {
             if (carryingOrbs == 1 && orbsAtAltar1 == 0)
             {
-                Instantiate(Orb, other.gameObject.transform.position + transform.up * .95f, Quaternion.identity);
+                Instantiate(Orb, other.gameObject.transform.position + transform.up * 20f, Quaternion.identity);
                 carryingOrbs -= 1;
                 orbsAtAltar1 += 1;
             }
@@ -55,7 +55,7 @@ public class OrbCount : MonoBehaviour {
         {
             if (carryingOrbs == 1 && orbsAtAltar2 == 0)
             {
-                Instantiate(Orb, other.gameObject.transform.position + transform.up * .95f, Quaternion.identity);
+                Instantiate(Orb, other.gameObject.transform.position + transform.up * 20f, Quaternion.identity);
                 carryingOrbs -= 1;
                 orbsAtAltar2 += 1;
             }
@@ -66,7 +66,7 @@ public class OrbCount : MonoBehaviour {
         {
             if (carryingOrbs == 1 && orbsAtAltar3 == 0)
             {
-                Instantiate(Orb, other.gameObject.transform.position + transform.up * .95f, Quaternion.identity);
+                Instantiate(Orb, other.gameObject.transform.position + transform.up * 20f, Quaternion.identity);
                 carryingOrbs -= 1;
                 orbsAtAltar3 += 1;
             }
