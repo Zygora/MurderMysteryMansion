@@ -24,7 +24,7 @@ public class Controls : MonoBehaviour
     [Header("Ladder booleans")]
     public bool onLadder;
     public bool onGround;
-    public bool onNoJumpArea;
+    //public bool onNoJumpArea;
     public bool canGoUp;
     public bool canGoDown;
     //
@@ -255,13 +255,14 @@ public class Controls : MonoBehaviour
             gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         }
         // Go up
-        if (goUp)
+       if (goUp)
         {
             canMove = false;
             groundCheck.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
             transform.position += new Vector3(0,1,0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
         }
+        
         // if player hits downArrow on the ladder go up
         if (Input.GetKeyDown(KeyCode.DownArrow) && (canGoDown))
         {
@@ -406,7 +407,7 @@ public class Controls : MonoBehaviour
             }
 
 
-            if (direction.x == 1)
+          /*  if (direction.x == 1)
             {
                 transform.eulerAngles = new Vector3(0, 0, 0);
             }
@@ -414,6 +415,7 @@ public class Controls : MonoBehaviour
             {
                 transform.eulerAngles = new Vector3(0, 180, 0);
             }
+            */
         }
     }
 
@@ -469,7 +471,7 @@ public class Controls : MonoBehaviour
             canMove = true;
             goDown = false;
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-            gameObject.GetComponent<Collider2D>().enabled = true;
+           // gameObject.GetComponent<Collider2D>().enabled = true;
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
         }
@@ -478,7 +480,7 @@ public class Controls : MonoBehaviour
             canMove = true;
             goUp = false;
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-            gameObject.GetComponent<Collider2D>().enabled = true;
+           // gameObject.GetComponent<Collider2D>().enabled = true;
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
         }
@@ -518,6 +520,7 @@ public class Controls : MonoBehaviour
             gameObject.layer = 8;
             dead = true;
         }
+            
     }
 
     void OnTriggerExit2D(Collider2D other)
