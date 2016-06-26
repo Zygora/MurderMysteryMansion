@@ -270,7 +270,25 @@ public class Controls : MonoBehaviour
             direction = new Vector3(currentRoom.transform.position.x - gameObject.transform.position.x, 0, 0);
             direction.Normalize();
             nextRoomCamPos.z = -10;
-            Camera.transform.position = Vector3.MoveTowards(Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
+            if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
+            {
+               player1Camera.transform.position = Vector3.MoveTowards(player1Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
+            }
+
+            else if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
+            {
+                player2Camera.transform.position = Vector3.MoveTowards(player2Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
+            }
+
+            else if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
+            {
+                player3Camera.transform.position = Vector3.MoveTowards(player3Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
+            }
+
+            else if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
+            {
+                player4Camera.transform.position = Vector3.MoveTowards(player4Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
+            }
             canMove = false;
             // Change player animation to run while transitioning left or right
             if ((!goUp)&&(!goDown))
@@ -309,17 +327,64 @@ public class Controls : MonoBehaviour
                     speedMultiplier = 2;
                 }
             }
-            
-            if ((Camera.transform.position.x == currentRoom.transform.position.x) 
-                && (Camera.transform.position.y == currentRoom.transform.position.y))
+
+            if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
             {
-                if (speedMultiplier != 1)
+                if ((player1Camera.transform.position.x == currentRoom.transform.position.x)
+                    && (player1Camera.transform.position.y == currentRoom.transform.position.y))
                 {
-                    speedMultiplier = 1;
+                    if (speedMultiplier != 1)
+                    {
+                        speedMultiplier = 1;
+                    }
+                    moveCamera = false;
+                    canMove = true;
                 }
-                moveCamera = false;
-                canMove = true;
             }
+
+            else if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
+            {
+                if ((player2Camera.transform.position.x == currentRoom.transform.position.x)
+                    && (player2Camera.transform.position.y == currentRoom.transform.position.y))
+                {
+                    if (speedMultiplier != 1)
+                    {
+                        speedMultiplier = 1;
+                    }
+                    moveCamera = false;
+                    canMove = true;
+                }
+            }
+
+            else if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
+            {
+                if ((player3Camera.transform.position.x == currentRoom.transform.position.x)
+                    && (player3Camera.transform.position.y == currentRoom.transform.position.y))
+                {
+                    if (speedMultiplier != 1)
+                    {
+                        speedMultiplier = 1;
+                    }
+                    moveCamera = false;
+                    canMove = true;
+                }
+            }
+
+            else if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
+            {
+                if ((player4Camera.transform.position.x == currentRoom.transform.position.x)
+                    && (player4Camera.transform.position.y == currentRoom.transform.position.y))
+                {
+                    if (speedMultiplier != 1)
+                    {
+                        speedMultiplier = 1;
+                    }
+                    moveCamera = false;
+                    canMove = true;
+                }
+            }
+
+
             if (direction.x == 1)
             {
                 transform.eulerAngles = new Vector3(0, 0, 0);
