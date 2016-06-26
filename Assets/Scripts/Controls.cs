@@ -124,6 +124,26 @@ public class Controls : MonoBehaviour
             }
             // Create move vector
             move = new Vector3(Input.GetAxis(horizontal), 0, 0);
+            //set movement bounds on player
+            if (transform.position.x <= -120) {
+                transform.position = new Vector3(-110,transform.position.y,transform.position.z);
+            }
+
+            if (transform.position.x >= 1080)
+            {
+                transform.position = new Vector3(1070, transform.position.y, transform.position.z);
+            }
+
+            if (transform.position.y <= -363.5f)
+            {
+                transform.position = new Vector3(transform.position.x,-343.5f, transform.position.z);
+            }
+
+            if (transform.position.y >= 311.5f)
+            {
+                transform.position = new Vector3(transform.position.x, 291.5f, transform.position.z);
+            }
+
             // Move the player
             transform.position += move * playerSpeed * Time.deltaTime;
             
@@ -256,7 +276,7 @@ public class Controls : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
             transform.position += new Vector3(0, -1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
         }
-        // Change player animation to run while transitioning up or down
+        // Change player animation to jump while transitioning up or down
         if (goDown || goUp)
         {
             TorsoAnimator.SetBool("Jumping", true);
@@ -270,22 +290,23 @@ public class Controls : MonoBehaviour
             direction = new Vector3(currentRoom.transform.position.x - gameObject.transform.position.x, 0, 0);
             direction.Normalize();
             nextRoomCamPos.z = -10;
+            //change player camera according to player
             if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
             {
                player1Camera.transform.position = Vector3.MoveTowards(player1Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
             }
 
-            else if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
+            if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
             {
                 player2Camera.transform.position = Vector3.MoveTowards(player2Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
             }
 
-            else if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
+            if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
             {
                 player3Camera.transform.position = Vector3.MoveTowards(player3Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
             }
 
-            else if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
+            if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
             {
                 player4Camera.transform.position = Vector3.MoveTowards(player4Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
             }
@@ -342,7 +363,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            else if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
+            if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
             {
                 if ((player2Camera.transform.position.x == currentRoom.transform.position.x)
                     && (player2Camera.transform.position.y == currentRoom.transform.position.y))
@@ -356,7 +377,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            else if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
+            if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
             {
                 if ((player3Camera.transform.position.x == currentRoom.transform.position.x)
                     && (player3Camera.transform.position.y == currentRoom.transform.position.y))
@@ -370,7 +391,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            else if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
+            if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
             {
                 if ((player4Camera.transform.position.x == currentRoom.transform.position.x)
                     && (player4Camera.transform.position.y == currentRoom.transform.position.y))
@@ -461,7 +482,7 @@ public class Controls : MonoBehaviour
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
         }
-        if (other.tag == "Room")
+        if (other.tag == "Room" || other.tag == "MurdererStart")
         {
             lastRoom = currentRoom;
             currentRoom = other.gameObject;
@@ -505,7 +526,7 @@ public class Controls : MonoBehaviour
         {
             GameObject.Find("ColorManager").GetComponent<ColorManager>().playerCanSelect = false;
         }
-        if (other.tag == "Room")
+        if (other.tag == "Room" || other.tag == "MurdererStart")
         {
             lastRoom = other.gameObject;
         }
