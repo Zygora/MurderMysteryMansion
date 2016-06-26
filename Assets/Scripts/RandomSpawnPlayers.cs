@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class RandomSpawnPlayers : MonoBehaviour {
     public List<Transform> RoomPositions;
     public List<int> PlayerAbilities;
+    public List<int> ladderSpawnPositions;
     public bool player1Spawned = false;
     public bool player2Spawned = false;
     public bool player3Spawned = false;
@@ -16,6 +17,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
     private GameObject player4Camera;
     private GameObject buctherRoom;
     private int orbsSpawned = 0;
+    private int laddersSpawned = 0;
     private int random;
     private int randomMurdererNumber;
     private int randomMax;
@@ -24,10 +26,12 @@ public class RandomSpawnPlayers : MonoBehaviour {
     private int numberOfMurdererAbilities;
     private int randomMurdererAbility;
     private int murdererPlayerNumber;
+    private int randomLadderNumber;
     // Use this for initialization
     void Start () {
         RoomPositions = new List<Transform>();
         PlayerAbilities = new List<int>();
+        ladderSpawnPositions = new List<int>();
     
         //add rooms created into list that this script can access
         for (int x = 0; x < 25; x++)
@@ -62,6 +66,86 @@ public class RandomSpawnPlayers : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //spawn ladders
+       if (laddersSpawned < 8) {
+            if (laddersSpawned == 0) {
+                randomLadderNumber = Random.Range(0, 6);
+                Instantiate(Resources.Load("Ladder"), RoomPositions[randomLadderNumber].position, Quaternion.identity);
+                ladderSpawnPositions.Add(randomLadderNumber);
+                laddersSpawned += 1;
+            }
+
+            if (laddersSpawned == 1) {
+                randomLadderNumber = Random.Range(0, 6);
+                while (ladderSpawnPositions.Contains(randomLadderNumber)) {
+                    randomLadderNumber = Random.Range(0, 6);
+                }
+                Instantiate(Resources.Load("Ladder"), RoomPositions[randomLadderNumber].position, Quaternion.identity);
+                ladderSpawnPositions.Add(randomLadderNumber);
+                laddersSpawned += 1;
+            }
+
+            if(laddersSpawned == 2) {
+                randomLadderNumber = Random.Range(6, 11);
+                Instantiate(Resources.Load("Ladder"), RoomPositions[randomLadderNumber].position, Quaternion.identity);
+                ladderSpawnPositions.Add(randomLadderNumber);
+                laddersSpawned += 1;
+            }
+
+            if (laddersSpawned == 3)
+            {
+                randomLadderNumber = Random.Range(6, 11);
+                while (ladderSpawnPositions.Contains(randomLadderNumber))
+                {
+                    randomLadderNumber = Random.Range(6, 11);
+                }
+                Instantiate(Resources.Load("Ladder"), RoomPositions[randomLadderNumber].position, Quaternion.identity);
+                ladderSpawnPositions.Add(randomLadderNumber);
+                laddersSpawned += 1;
+            }
+
+            if (laddersSpawned == 4)
+            {
+                randomLadderNumber = Random.Range(11, 16);
+                Instantiate(Resources.Load("Ladder"), RoomPositions[randomLadderNumber].position, Quaternion.identity);
+                ladderSpawnPositions.Add(randomLadderNumber);
+                laddersSpawned += 1;
+            }
+
+            if (laddersSpawned == 5)
+            {
+                randomLadderNumber = Random.Range(11, 16);
+                while (ladderSpawnPositions.Contains(randomLadderNumber))
+                {
+                    randomLadderNumber = Random.Range(11, 16);
+                }
+                Instantiate(Resources.Load("Ladder"), RoomPositions[randomLadderNumber].position, Quaternion.identity);
+                ladderSpawnPositions.Add(randomLadderNumber);
+                laddersSpawned += 1;
+            }
+
+            if (laddersSpawned == 6)
+            {
+                randomLadderNumber = Random.Range(16, 21);
+                Instantiate(Resources.Load("Ladder"), RoomPositions[randomLadderNumber].position, Quaternion.identity);
+                ladderSpawnPositions.Add(randomLadderNumber);
+                laddersSpawned += 1;
+            }
+
+            if (laddersSpawned == 7)
+            {
+                randomLadderNumber = Random.Range(16, 21);
+                while (ladderSpawnPositions.Contains(randomLadderNumber))
+                {
+                    randomLadderNumber = Random.Range(16, 21);
+                }
+                Instantiate(Resources.Load("Ladder"), RoomPositions[randomLadderNumber].position, Quaternion.identity);
+                ladderSpawnPositions.Add(randomLadderNumber);
+                laddersSpawned += 1;
+            }
+
+        }
+        
         //spawn player1 if not murderer in a random room not containing another player
         if (player1Spawned == false && randomMurdererNumber != 0)
         {
