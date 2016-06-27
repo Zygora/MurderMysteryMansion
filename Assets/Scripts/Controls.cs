@@ -125,13 +125,13 @@ public class Controls : MonoBehaviour
             // Create move vector
             move = new Vector3(Input.GetAxis(horizontal), 0, 0);
             //set movement bounds on player
-            if (transform.position.x <= -120) {
-                transform.position = new Vector3(-110,transform.position.y,transform.position.z);
+            if (transform.position.x <= -110) {
+                transform.position = new Vector3(-105,transform.position.y,transform.position.z);
             }
 
-            if (transform.position.x >= 1080)
+            if (transform.position.x >= 1070)
             {
-                transform.position = new Vector3(1070, transform.position.y, transform.position.z);
+                transform.position = new Vector3(1065, transform.position.y, transform.position.z);
             }
 
             if (transform.position.y <= -363.5f)
