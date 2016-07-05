@@ -37,12 +37,12 @@ public class MurdererScripts : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
+        if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f && Controls.murderTransitioning == false)
         {
             ShirtAnimator.SetBool("MurdererRunning", false);
             ShirtAnimator.SetBool("MurdererIdle", true);
         }
-
+        
         if (Input.GetAxis(horizontal) < -0.1f)
         {
             ShirtAnimator.SetBool("MurdererRunning", true);
@@ -60,6 +60,7 @@ public class MurdererScripts : MonoBehaviour {
             LegsAnimator.Play("LegsMurdererAttack");
             ShirtAnimator.Play("MurdererAttack");
         }
+
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
         // Debug.DrawRay(transform.position, Vector2.down, Color.red);

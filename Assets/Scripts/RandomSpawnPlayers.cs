@@ -28,6 +28,8 @@ public class RandomSpawnPlayers : MonoBehaviour {
     private int randomMurdererAbility;
     private int murdererPlayerNumber;
     private int randomLadderNumber;
+    private int ladderXOffset = 90;
+    private int ladderYoffset = 50;
     // Use this for initialization
     void Start () {
         RoomPositions = new List<Transform>();
@@ -64,7 +66,8 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //grab butcher room from scene
         buctherRoom = GameObject.FindGameObjectWithTag("MurdererStart");
         //random number for deciding the murderer
-        randomMurdererNumber = Random.Range(0, 4);
+        //randomMurdererNumber = Random.Range(0, 4);
+        randomMurdererNumber = 0;
         //random number for deciding murderer ability
         randomMurdererAbility = Random.Range(0, numberOfMurdererAbilities);
         //set the number of the player that is the murderer
@@ -78,7 +81,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
        if (laddersSpawned < 8) {
             if (laddersSpawned == 0) {
                 randomLadderNumber = Random.Range(0, 5);
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * -50) + (transform.up * 50), Quaternion.identity);
+                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * -ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
                 ladderSpawnPositions.Add(randomLadderNumber);
                 laddersSpawned += 1;
             }
@@ -88,14 +91,14 @@ public class RandomSpawnPlayers : MonoBehaviour {
                 while (ladderSpawnPositions.Contains(randomLadderNumber)) {
                     randomLadderNumber = Random.Range(0, 5);
                 }
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * -50) + (transform.up * 50), Quaternion.identity);
+                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * -ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
                 ladderSpawnPositions.Add(randomLadderNumber);
                 laddersSpawned += 1;
             }
 
             if(laddersSpawned == 2) {
                 randomLadderNumber = Random.Range(5, 10);
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * 50) + (transform.up * 50), Quaternion.identity);
+                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
                 ladderSpawnPositions.Add(randomLadderNumber);
                 laddersSpawned += 1;
             }
@@ -107,7 +110,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
                 {
                     randomLadderNumber = Random.Range(5, 10);
                 }
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * 50) + (transform.up * 50), Quaternion.identity);
+                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
                 ladderSpawnPositions.Add(randomLadderNumber);
                 laddersSpawned += 1;
             }
@@ -115,7 +118,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (laddersSpawned == 4)
             {
                 randomLadderNumber = Random.Range(10, 15);
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * -50) + (transform.up * 50), Quaternion.identity);
+                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * -ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
                 ladderSpawnPositions.Add(randomLadderNumber);
                 laddersSpawned += 1;
             }
@@ -127,7 +130,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
                 {
                     randomLadderNumber = Random.Range(10, 15);
                 }
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * -50) + (transform.up * 50), Quaternion.identity);
+                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * -ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
                 ladderSpawnPositions.Add(randomLadderNumber);
                 laddersSpawned += 1;
             }
@@ -135,7 +138,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (laddersSpawned == 6)
             {
                 randomLadderNumber = Random.Range(15, 20);
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * 50) + (transform.up * 50), Quaternion.identity);
+                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
                 ladderSpawnPositions.Add(randomLadderNumber);
                 laddersSpawned += 1;
             }
@@ -147,7 +150,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
                 {
                     randomLadderNumber = Random.Range(15, 20);
                 }
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * 50) + (transform.up * 50), Quaternion.identity);
+                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
                 ladderSpawnPositions.Add(randomLadderNumber);
                 laddersSpawned += 1;
             }

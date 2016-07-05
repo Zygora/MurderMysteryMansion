@@ -39,6 +39,7 @@ public class Controls : MonoBehaviour
     public GameObject MenuRoom;
     public Animator TorsoAnimator;
     public Animator LegsAnimator;
+    public Animator ShirtAnimator;
     private Collider2D col;
 
     public bool moveCameraLeft;
@@ -64,8 +65,11 @@ public class Controls : MonoBehaviour
     public bool goDown;
     private float gravityScale;
     private GameObject ladder;
+    private GameObject[] Shirts;
+    public static bool murderTransitioning= false;
     void Start()
     {
+        
         // Save players gravity scale
         gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale;
         // Get rigidbody of the player at start
@@ -86,6 +90,7 @@ public class Controls : MonoBehaviour
 
     void Update()
     {
+     
         if (speedIncreased)
         {
             timeSpeedIncreased += Time.deltaTime;
@@ -282,6 +287,10 @@ public class Controls : MonoBehaviour
         {
             TorsoAnimator.SetBool("Jumping", true);
             LegsAnimator.SetBool("Jumping", true);
+            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4") {
+                ShirtAnimator.SetBool("MurdererJumping", true);
+                murderTransitioning = true;
+            }
         }
         // If camera transitioning between rooms
         if (moveCamera)
@@ -319,6 +328,12 @@ public class Controls : MonoBehaviour
                 LegsAnimator.SetBool("Running", true);
                 TorsoAnimator.SetBool("Idle", false);
                 LegsAnimator.SetBool("Idle", false);
+                if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+                {
+                    ShirtAnimator.SetBool("MurdererRunning", true);
+                    ShirtAnimator.SetBool("MurdererIdle", false);
+                    murderTransitioning = true;
+                }
                 transform.position += direction * playerSpeed / 4 * Time.deltaTime * speedMultiplier;
             }
             if (Input.GetKey(KeyCode.LeftArrow) && (direction.x == 1) && (!goDown) && (!goUp))
@@ -361,6 +376,7 @@ public class Controls : MonoBehaviour
                     }
                     moveCamera = false;
                     canMove = true;
+                    murderTransitioning = false;
                 }
             }
 
@@ -375,6 +391,7 @@ public class Controls : MonoBehaviour
                     }
                     moveCamera = false;
                     canMove = true;
+                    murderTransitioning = false;
                 }
             }
 
@@ -389,6 +406,7 @@ public class Controls : MonoBehaviour
                     }
                     moveCamera = false;
                     canMove = true;
+                    murderTransitioning = false;
                 }
             }
 
@@ -403,6 +421,7 @@ public class Controls : MonoBehaviour
                     }
                     moveCamera = false;
                     canMove = true;
+                    murderTransitioning = false;
                 }
             }
 
@@ -435,6 +454,7 @@ public class Controls : MonoBehaviour
             ladder = other.gameObject;
             canGoDown = true;
             canGoUp = false;
+            murderTransitioning = false;
         }
         //change highlight on play button and change level on button input
         if (other.gameObject.tag == "Gate")
@@ -513,12 +533,79 @@ public class Controls : MonoBehaviour
             moveCameraToCenter = false;
         }
 
-        if (other.gameObject.tag == "Knife" && dead == false && gameObject.tag != "Murderer")
+        if (other.gameObject.tag == "Knife1" || other.gameObject.tag == "Knife2" || other.gameObject.tag == "Knife3" || other.gameObject.tag == "Knife4")
         {
-            TorsoAnimator.SetBool("Dead", true);
-            LegsAnimator.SetBool("Dead", true);
-            gameObject.layer = 8;
-            dead = true;
+            if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
+            {
+                TorsoAnimator.SetBool("Dead", true);
+                LegsAnimator.SetBool("Dead", true);
+                gameObject.layer = 8;
+                dead = true;
+                gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+                transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 5, this.transform.position.z);
+                if (other.gameObject.tag == "Knife1") {
+                    Invoke("turnOnBloodShirt1", 1);
+                }
+
+                if (other.gameObject.tag == "Knife2")
+                {
+                    Invoke("turnOnBloodShirt2", 1);
+                }
+
+                if (other.gameObject.tag == "Knife3")
+                {
+                    Invoke("turnOnBloodShirt3", 1);
+                }
+
+                if (other.gameObject.tag == "Knife4")
+                {
+                    Invoke("turnOnBloodShirt4", 1);
+                }
+                
+            }
+        }
+
+        if (other.gameObject.tag == "Sink") {
+           
+            if (gameObject.tag == "Murderer1")
+            {
+                GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = false;
+                Shirts = GameObject.FindGameObjectsWithTag("Blood");
+                for (int i = 0; i < Shirts.Length; i++) {
+                    Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
+                }
+            }
+
+            if (gameObject.tag == "Murderer2")
+            {
+                GameObject.FindGameObjectWithTag("MurdererShirt2").GetComponent<Animator>().enabled = false;
+                Shirts = GameObject.FindGameObjectsWithTag("Blood");
+                for (int i = 0; i < Shirts.Length; i++)
+                {
+                    Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
+                }
+            }
+
+            if (gameObject.tag == "Murderer3")
+            {
+                GameObject.FindGameObjectWithTag("MurdererShirt3").GetComponent<Animator>().enabled = false;
+                Shirts = GameObject.FindGameObjectsWithTag("Blood");
+                for (int i = 0; i < Shirts.Length; i++)
+                {
+                    Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
+                }
+            }
+
+            if (gameObject.tag == "Murderer4")
+            {
+                GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = false;
+                Shirts = GameObject.FindGameObjectsWithTag("Blood");
+                for (int i = 0; i < Shirts.Length; i++)
+                {
+                    Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
+                }
+            }
+            
         }
             
     }
@@ -549,5 +636,25 @@ public class Controls : MonoBehaviour
         {
             GateHighlight.enabled = false;
         }
+    }
+
+    void turnOnBloodShirt1()
+    {
+        GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = true;
+    }
+
+    void turnOnBloodShirt2()
+    {
+        GameObject.FindGameObjectWithTag("MurdererShirt2").GetComponent<Animator>().enabled = true;
+    }
+
+    void turnOnBloodShirt3()
+    {
+        GameObject.FindGameObjectWithTag("MurdererShirt3").GetComponent<Animator>().enabled = true;
+    }
+
+    void turnOnBloodShirt4()
+    {
+        GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = true;
     }
 }
