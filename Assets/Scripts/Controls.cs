@@ -67,6 +67,7 @@ public class Controls : MonoBehaviour
     private GameObject ladder;
     private GameObject[] Shirts;
     public static bool murderTransitioning= false;
+    public static bool bloodStained = false;
     void Start()
     {
         
@@ -533,6 +534,7 @@ public class Controls : MonoBehaviour
             moveCameraToCenter = false;
         }
 
+        //kill player and turn on blood on murderer's shirt
         if (other.gameObject.tag == "Knife1" || other.gameObject.tag == "Knife2" || other.gameObject.tag == "Knife3" || other.gameObject.tag == "Knife4")
         {
             if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
@@ -544,68 +546,25 @@ public class Controls : MonoBehaviour
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
                 transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 5, this.transform.position.z);
                 if (other.gameObject.tag == "Knife1") {
-                    Invoke("turnOnBloodShirt1", 1);
+                    Invoke("TurnOnBloodShirt1", .5f);
                 }
 
                 if (other.gameObject.tag == "Knife2")
                 {
-                    Invoke("turnOnBloodShirt2", 1);
+                    Invoke("TurnOnBloodShirt2", .5f);
                 }
 
                 if (other.gameObject.tag == "Knife3")
                 {
-                    Invoke("turnOnBloodShirt3", 1);
+                    Invoke("TurnOnBloodShirt3", .5f);
                 }
 
                 if (other.gameObject.tag == "Knife4")
                 {
-                    Invoke("turnOnBloodShirt4", 1);
+                    Invoke("TurnOnBloodShirt4", .5f);
                 }
-                
+                bloodStained = true;
             }
-        }
-
-        if (other.gameObject.tag == "Sink") {
-           
-            if (gameObject.tag == "Murderer1")
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = false;
-                Shirts = GameObject.FindGameObjectsWithTag("Blood");
-                for (int i = 0; i < Shirts.Length; i++) {
-                    Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
-                }
-            }
-
-            if (gameObject.tag == "Murderer2")
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt2").GetComponent<Animator>().enabled = false;
-                Shirts = GameObject.FindGameObjectsWithTag("Blood");
-                for (int i = 0; i < Shirts.Length; i++)
-                {
-                    Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
-                }
-            }
-
-            if (gameObject.tag == "Murderer3")
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt3").GetComponent<Animator>().enabled = false;
-                Shirts = GameObject.FindGameObjectsWithTag("Blood");
-                for (int i = 0; i < Shirts.Length; i++)
-                {
-                    Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
-                }
-            }
-
-            if (gameObject.tag == "Murderer4")
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = false;
-                Shirts = GameObject.FindGameObjectsWithTag("Blood");
-                for (int i = 0; i < Shirts.Length; i++)
-                {
-                    Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
-                }
-            }
-            
         }
             
     }
@@ -638,22 +597,21 @@ public class Controls : MonoBehaviour
         }
     }
 
-    void turnOnBloodShirt1()
-    {
+    void TurnOnBloodShirt1() {
         GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = true;
     }
 
-    void turnOnBloodShirt2()
+    void TurnOnBloodShirt2()
     {
         GameObject.FindGameObjectWithTag("MurdererShirt2").GetComponent<Animator>().enabled = true;
     }
 
-    void turnOnBloodShirt3()
+    void TurnOnBloodShirt3()
     {
         GameObject.FindGameObjectWithTag("MurdererShirt3").GetComponent<Animator>().enabled = true;
     }
 
-    void turnOnBloodShirt4()
+    void TurnOnBloodShirt4()
     {
         GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = true;
     }

@@ -15,6 +15,7 @@ public class Squeler : MonoBehaviour
 
     void Update()
     {
+        /*
         if (timePassed > 0)
         {
             timePassed -= Time.deltaTime;
@@ -64,5 +65,6 @@ public class Squeler : MonoBehaviour
                 timePassed = squealerCooldown;
             }
         }
+        */
     }
 }
