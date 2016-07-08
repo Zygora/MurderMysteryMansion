@@ -551,11 +551,9 @@ public class Controls : MonoBehaviour
         }
         if (other.tag == "BotLadder")
         {
-
             canMove = true;
             goDown = false;
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-           // gameObject.GetComponent<Collider2D>().enabled = true;
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
         }
@@ -637,6 +635,16 @@ public class Controls : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
+        if (other.tag == "BotLadder")
+        {
+            canGoDown = false;
+            canGoUp = false;
+        }
+        if (other.tag == "TopLadder")
+        {
+            canGoDown = false;
+            canGoUp = false;
+        }
         if (other.tag == "ColorSelection")
         {
             GameObject.Find("ColorManager").GetComponent<ColorManager>().playerCanSelect = false;
