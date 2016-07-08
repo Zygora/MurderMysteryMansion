@@ -10,12 +10,34 @@ public class Stronk : MonoBehaviour
 
     bool nearWimp;                          // Flag showing that this wimp is near another one
     bool grabbed;                           // Flag showing if this wimp is holding to another one
+    private string ability;
+    void Start() {
+        //set input from input manager
+        if (gameObject.tag == "Player1")
+        {
+            ability = "Ability_P1";
+        }
 
+        if (gameObject.tag == "Player2")
+        {
+            ability = "Ability_P2";
+        }
+
+        if (gameObject.tag == "Player3")
+        {
+            ability = "Ability_P3";
+        }
+
+        if (gameObject.tag == "Player4")
+        {
+            ability = "Ability_P4";
+        }
+    }
     // Update is called once per frame
     void Update()
     {
         // If player is near a wimp and presses E
-        if ((Input.GetKeyDown(KeyCode.E)) && (nearWimp))
+        if ((Input.GetButtonDown(ability)) && (nearWimp))
         {
             // Grab a wimp
             player.GetComponent<Rigidbody2D>().isKinematic = true;
@@ -32,7 +54,7 @@ public class Stronk : MonoBehaviour
             player.transform.parent = gameObject.transform;
         }
         // If player holds a wimp and presses R
-        if ((Input.GetKeyDown(KeyCode.R)) && (grabbed))
+        if ((Input.GetButtonDown(ability)) && (grabbed))
         {
             // Throw the wimp
             player.transform.parent = null;

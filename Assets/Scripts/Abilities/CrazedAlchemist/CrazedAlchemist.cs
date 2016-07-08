@@ -7,6 +7,30 @@ public class CrazedAlchemist : MonoBehaviour
     public float potionCooldown = 5;     // Time that must pass before the next potion can be thrown
     float timeSincePotionUsed;           // Time that passed since a potion was last used
     bool potionUsed;                     // Flag that shows if the potion was used
+    private string ability;
+
+    void Start() {
+        //set input from input manager
+        if (gameObject.tag == "Player1")
+        {
+            ability = "Ability_P1";
+        }
+
+        if (gameObject.tag == "Player2")
+        {
+            ability = "Ability_P2";
+        }
+
+        if (gameObject.tag == "Player3")
+        {
+            ability = "Ability_P3";
+        }
+
+        if (gameObject.tag == "Player4")
+        {
+            ability = "Ability_P4";
+        }
+    }
 
     void Update()
     {
@@ -22,7 +46,7 @@ public class CrazedAlchemist : MonoBehaviour
             }
         }
         // If player presses P and potion is not on cooldown
-        if ((Input.GetKeyDown(KeyCode.P)) && (!potionUsed))
+        if ((Input.GetButtonDown(ability)) && (!potionUsed))
         {
             potionUsed = true;
             // And if player can use potions

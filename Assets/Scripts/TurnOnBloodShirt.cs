@@ -7,12 +7,11 @@ public class TurnOnBloodShirt : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Aniamtor = GetComponent<Animator>();
-      
-
     }
 	
 	// Update is called once per frame
 	void Update () {
+        //change tag of game object this script is atatched to so it can be accessed in other script
         if (player.tag == "Murderer1")
         {
             gameObject.tag = "MurdererShirt1";

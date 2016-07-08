@@ -12,7 +12,7 @@ public class Squeler : MonoBehaviour
     public float squealerCooldown = 30; // Cooldown of the ability
 
     float timePassed;                   // Time passed since the ability was last used
-
+    
     void Update()
     {
         /*

@@ -16,6 +16,8 @@ public class MurdererScripts : MonoBehaviour {
     // Use this for initialization
     void Start () {
         isMurderer = true;
+        //change inputs in input manager
+        //change tag of player
         if (gameObject.tag == "Player1")
         {
             gameObject.tag = "Murderer1";
@@ -48,6 +50,7 @@ public class MurdererScripts : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //play blood animations for murderer when enabled;
         if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f && Controls.murderTransitioning == false)
         {
             ShirtAnimator.SetBool("MurdererRunning", false);
@@ -66,7 +69,7 @@ public class MurdererScripts : MonoBehaviour {
             ShirtAnimator.SetBool("MurdererIdle", false);
         }
 
-        if (Input.GetButtonDown(attack)) {
+        if (Input.GetButtonDown(attack) && Controls.wimpKilled == false) {
             TorsoAnimator.Play("TorsoMurdererAttack");
             LegsAnimator.Play("LegsMurdererAttack");
             if (Controls.bloodStained == true)
@@ -96,28 +99,33 @@ public class MurdererScripts : MonoBehaviour {
     }
 
     void OnTriggerStay2D(Collider2D other) {
+        //check collision with sink
         if (other.gameObject.tag == "Sink" && Input.GetButtonDown(interact)) {
-            Debug.Log("clothes washed");
             washingClothes = true;
             if (gameObject.tag == "Murderer1")
             {
+                //disable the bloody shirt animator
                 GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = false;
+                //find all blood splatter tagged blood and put them into an array
                 Shirts = GameObject.FindGameObjectsWithTag("Blood");
                 for (int i = 0; i < Shirts.Length; i++)
                 {
+                    //disable the sprite renderer for each blood splatter in array
                     Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
                 }
+                //play non bloody washing animation if murderer is not blood stained
                 if (Controls.bloodStained == false)
                 {
                     TorsoAnimator.Play("TorsoMurdererWash");
                 }
 
+                //play  bloody washing animation if murderer is not blood stained
                 if (Controls.bloodStained == true)
                 {
                     TorsoAnimator.Play("TorsoMurdererBloodyWash");
                     Controls.bloodStained = false;
                 }
-
+                //disable the leg sprite of player during animation
                 LegsAnimator.Play("LegsMurdererWashing");
             }
 
@@ -189,108 +197,12 @@ public class MurdererScripts : MonoBehaviour {
 
                 LegsAnimator.Play("LegsMurdererWashing");
             }
+            //makes washing clothes false after animations play
             Invoke("StopWashingClothes", 1.2f);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Sink" && Input.GetButtonDown(interact))
-        {
-            washingClothes = true;
-            if (gameObject.tag == "Murderer1")
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = false;
-                Shirts = GameObject.FindGameObjectsWithTag("Blood");
-                for (int i = 0; i < Shirts.Length; i++)
-                {
-                    Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
-                }
-                if (Controls.bloodStained == false)
-                {
-                    TorsoAnimator.Play("TorsoMurdererWash");
-                }
-
-                if (Controls.bloodStained == true) {
-                    TorsoAnimator.Play("TorsoMurdererBloodyWash");
-                    Controls.bloodStained = false;
-                }
-
-                LegsAnimator.Play("LegsMurdererWashing");
-            }
-
-            if (gameObject.tag == "Murderer2")
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt2").GetComponent<Animator>().enabled = false;
-                Shirts = GameObject.FindGameObjectsWithTag("Blood");
-                for (int i = 0; i < Shirts.Length; i++)
-                {
-                    Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
-                }
-
-                if (Controls.bloodStained == false)
-                {
-                    TorsoAnimator.Play("TorsoMurdererWash");
-                }
-
-                if (Controls.bloodStained == true)
-                {
-                    TorsoAnimator.Play("TorsoMurdererBloodyWash");
-                    Controls.bloodStained = false;
-                }
-
-                LegsAnimator.Play("LegsMurdererWashing");
-            }
-
-            if (gameObject.tag == "Murderer3")
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt3").GetComponent<Animator>().enabled = false;
-                Shirts = GameObject.FindGameObjectsWithTag("Blood");
-                for (int i = 0; i < Shirts.Length; i++)
-                {
-                    Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
-                }
-
-                if (Controls.bloodStained == false)
-                {
-                    TorsoAnimator.Play("TorsoMurdererWash");
-                }
-
-                if (Controls.bloodStained == true)
-                {
-                    TorsoAnimator.Play("TorsoMurdererBloodyWash");
-                    Controls.bloodStained = false;
-                }
-
-                LegsAnimator.Play("LegsMurdererWashing");
-            }
-
-            if (gameObject.tag == "Murderer4")
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = false;
-                Shirts = GameObject.FindGameObjectsWithTag("Blood");
-                for (int i = 0; i < Shirts.Length; i++)
-                {
-                    Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
-                }
-
-                if (Controls.bloodStained == false)
-                {
-                    TorsoAnimator.Play("TorsoMurdererWash");
-                }
-
-                if (Controls.bloodStained == true)
-                {
-                    TorsoAnimator.Play("TorsoMurdererBloodyWash");
-                    Controls.bloodStained = false;
-                }
-
-                LegsAnimator.Play("LegsMurdererWashing");
-            }
-            Invoke("StopWashingClothes", 1.2f);
-        }
-    }
-
+    //function to make washing clothes false used as a global static variable to disable movement while washing clothes
     void StopWashingClothes() {
         washingClothes = false;
     }

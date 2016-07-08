@@ -51,6 +51,7 @@ public class Controls : MonoBehaviour
 
     public string horizontal;
     public string vertical;
+    public string jump;
     public bool canMove = true;
     public float cameraSpeed = 30;
     public float direction = 1;
@@ -68,6 +69,8 @@ public class Controls : MonoBehaviour
     private GameObject[] Shirts;
     public static bool murderTransitioning= false;
     public static bool bloodStained = false;
+    public int speedWhileCarryOrb;
+    public static bool wimpKilled = false;
     void Start()
     {
         
@@ -91,7 +94,48 @@ public class Controls : MonoBehaviour
 
     void Update()
     {
-     
+        //decrease speed of player if carrying an orb
+        if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == true)
+        {
+            playerSpeed = speedWhileCarryOrb;
+        }
+
+        if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == true)
+        {
+            playerSpeed = speedWhileCarryOrb;
+        }
+
+        if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == true)
+        {
+            playerSpeed = speedWhileCarryOrb;
+        }
+
+        if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == true)
+        {
+            playerSpeed = speedWhileCarryOrb;
+        }
+
+        //restore speed of player if not carrying an orb
+        if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == false)
+        {
+            playerSpeed = 40;
+        }
+
+        if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == false)
+        {
+            playerSpeed = 40;
+        }
+
+        if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == false)
+        {
+            playerSpeed = 40;
+        }
+
+        if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == false)
+        {
+            playerSpeed = 40;
+        }
+
         if (speedIncreased)
         {
             timeSpeedIncreased += Time.deltaTime;
@@ -152,6 +196,8 @@ public class Controls : MonoBehaviour
 
             // Move the player
             transform.position += move * playerSpeed * Time.deltaTime;
+
+            //disable movement for murderer if murderer is washing clothes
             if (MurdererScripts.washingClothes == true) {
                 if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4") {
                     playerSpeed = 0;
@@ -159,6 +205,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
+            //enable movement for murderer if murderer is not washing clothes
             if (MurdererScripts.washingClothes == false)
             {
                 if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
@@ -168,6 +215,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
+            //play idle animation
             if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
             {
                 TorsoAnimator.SetBool("Running", false);
@@ -198,7 +246,7 @@ public class Controls : MonoBehaviour
                 direction = 1;
             }
             // If player is on ground and space button hit -> jump
-            if (Input.GetKeyDown(KeyCode.Space) && (onGround))
+            if (Input.GetButtonDown(jump) && (onGround))
             {
                 rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
                // Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), topPlatform.GetComponent<Collider2D>(), false);
@@ -270,7 +318,7 @@ public class Controls : MonoBehaviour
         }*/
 
         // if player hits upArrow on the ladder go up
-        if(Input.GetKeyDown(KeyCode.UpArrow)&&(canGoUp))
+        if(Input.GetAxis(vertical) > 0 &&(canGoUp))
         {
             goUp = true;
             gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
@@ -285,7 +333,7 @@ public class Controls : MonoBehaviour
         }
         
         // if player hits downArrow on the ladder go up
-        if (Input.GetKeyDown(KeyCode.DownArrow) && (canGoDown))
+        if (Input.GetAxis(vertical) < 0 && (canGoDown))
         {
             goDown = true;
             gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
@@ -352,7 +400,7 @@ public class Controls : MonoBehaviour
                 }
                 transform.position += direction * playerSpeed / 4 * Time.deltaTime * speedMultiplier;
             }
-            if (Input.GetKey(KeyCode.LeftArrow) && (direction.x == 1) && (!goDown) && (!goUp))
+            if (Input.GetAxis(horizontal) < 0 && (direction.x == 1) && (!goDown) && (!goUp))
             {
                 GameObject buffer;
                 buffer = currentRoom;
@@ -366,7 +414,7 @@ public class Controls : MonoBehaviour
                     speedMultiplier = 2;
                 }
             }
-            if (Input.GetKey(KeyCode.RightArrow) && (direction.x == -1)&&(!goDown)&&(!goUp))
+            if (Input.GetAxis(horizontal) > 0 && (direction.x == -1)&&(!goDown)&&(!goUp))
             {
                 GameObject buffer;
                 buffer = currentRoom;
@@ -558,8 +606,10 @@ public class Controls : MonoBehaviour
                 LegsAnimator.SetBool("Dead", true);
                 gameObject.layer = 8;
                 dead = true;
+                wimpKilled = true;
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-                transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 5, this.transform.position.z);
+                gameObject.GetComponent<Collider2D>().isTrigger = true;
+               // transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 5, this.transform.position.z);
                 if (other.gameObject.tag == "Knife1") {
                     Invoke("TurnOnBloodShirt1", .5f);
                 }
@@ -578,6 +628,7 @@ public class Controls : MonoBehaviour
                 {
                     Invoke("TurnOnBloodShirt4", .5f);
                 }
+                Invoke("RechargeWeapon", 5);
                 bloodStained = true;
             }
         }
@@ -629,5 +680,9 @@ public class Controls : MonoBehaviour
     void TurnOnBloodShirt4()
     {
         GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = true;
+    }
+
+    void RechargeWeapon() {
+        wimpKilled = false;
     }
 }
