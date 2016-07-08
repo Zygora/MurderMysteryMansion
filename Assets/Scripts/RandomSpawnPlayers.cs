@@ -67,7 +67,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
         buctherRoom = GameObject.FindGameObjectWithTag("MurdererStart");
         //random number for deciding the murderer
         //randomMurdererNumber = Random.Range(0, 4);
-        randomMurdererNumber = 0;
+        randomMurdererNumber = 1;
         //random number for deciding murderer ability
         randomMurdererAbility = Random.Range(0, numberOfMurdererAbilities);
         //set the number of the player that is the murderer
