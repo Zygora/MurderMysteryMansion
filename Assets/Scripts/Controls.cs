@@ -103,7 +103,7 @@ public class Controls : MonoBehaviour
             }
         }
 
-        if (canMove && dead == false)
+        if (canMove && dead == false )
         {
             // Create a ray down checking if there is anything underneath the player
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
@@ -152,7 +152,22 @@ public class Controls : MonoBehaviour
 
             // Move the player
             transform.position += move * playerSpeed * Time.deltaTime;
-            
+            if (MurdererScripts.washingClothes == true) {
+                if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4") {
+                    playerSpeed = 0;
+                    playerJumpForce = 0;
+                }
+            }
+
+            if (MurdererScripts.washingClothes == false)
+            {
+                if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+                {
+                    playerSpeed = 40;
+                    playerJumpForce = 75;
+                }
+            }
+
             if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
             {
                 TorsoAnimator.SetBool("Running", false);

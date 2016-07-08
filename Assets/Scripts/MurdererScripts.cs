@@ -12,6 +12,7 @@ public class MurdererScripts : MonoBehaviour {
     public string attack;
     public string interact;
     private GameObject[] Shirts;
+    public static bool washingClothes = false;
     // Use this for initialization
     void Start () {
         isMurderer = true;
@@ -97,6 +98,7 @@ public class MurdererScripts : MonoBehaviour {
     void OnTriggerStay2D(Collider2D other) {
         if (other.gameObject.tag == "Sink" && Input.GetButtonDown(interact)) {
             Debug.Log("clothes washed");
+            washingClothes = true;
             if (gameObject.tag == "Murderer1")
             {
                 GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = false;
@@ -187,7 +189,7 @@ public class MurdererScripts : MonoBehaviour {
 
                 LegsAnimator.Play("LegsMurdererWashing");
             }
-
+            Invoke("StopWashingClothes", 1.2f);
         }
     }
 
@@ -195,7 +197,7 @@ public class MurdererScripts : MonoBehaviour {
     {
         if (other.gameObject.tag == "Sink" && Input.GetButtonDown(interact))
         {
-            Debug.Log("clothes washed");
+            washingClothes = true;
             if (gameObject.tag == "Murderer1")
             {
                 GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = false;
@@ -285,7 +287,11 @@ public class MurdererScripts : MonoBehaviour {
 
                 LegsAnimator.Play("LegsMurdererWashing");
             }
-
+            Invoke("StopWashingClothes", 1.2f);
         }
+    }
+
+    void StopWashingClothes() {
+        washingClothes = false;
     }
 }
