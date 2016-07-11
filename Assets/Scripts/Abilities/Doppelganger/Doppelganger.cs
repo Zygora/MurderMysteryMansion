@@ -3,10 +3,10 @@ using System.Collections;
 
 public class Doppelganger : MonoBehaviour
 {
-    public int clonesAvailable;      // The amount of clones available to player
-    public float cooldown;           // Cooldown time player has to wait before he is able to summon another clone
-    public float arrowSpeed;         // Speed with which arrow moves
-    public float timeBeforeDestroyed;// Time after which a clone is destroyed after reaching the point
+    public int clonesAvailable = 2;      // The amount of clones available to player
+    public float cooldown = 30;           // Cooldown time player has to wait before he is able to summon another clone
+    public float arrowSpeed = 12;         // Speed with which arrow moves
+    public float timeBeforeDestroyed = 5;// Time after which a clone is destroyed after reaching the point
     public GameObject arrow;         // Arrow object (Has to be in the scene and disabled)
     Vector3 CloneDestination;        // Point to which clone should travel after a player releases the ability button
     Vector2 direction;               // Direction in which clone and arrow will be moving
@@ -15,8 +15,8 @@ public class Doppelganger : MonoBehaviour
     bool down;                       // Flag that show that ability buttin was pressed
     bool hold;                       // Flag that show that ability buttin was holded (We need them so player cant just hold button through cooldown and release it after and activate clone without arrow)
     private string ability;
-
     void Start() {
+        arrow = GameObject.Find("DoppelgangerArrow");
         //set input from input manager
         if (gameObject.tag == "Player1")
         {
