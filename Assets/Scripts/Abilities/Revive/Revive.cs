@@ -32,7 +32,7 @@ public class Revive : MonoBehaviour
     void OnTriggerStay2D(Collider2D other)
     {
         // If this wimp is standing near a downed wimp make the flag true and keep the reference to that wimp
-        if (other.gameObject.tag == "DownedWimp")
+        if (other.gameObject.tag == "DownedWimp1" || other.gameObject.tag == "DownedWimp2" || other.gameObject.tag == "DownedWimp3" || other.gameObject.tag == "DownedWimp4")
         {
             nearDownedWimp = true;
             downedWimp = other.gameObject;
@@ -42,7 +42,8 @@ public class Revive : MonoBehaviour
     void OnTriggerExit2D(Collider2D other)
     {
         // When this wimp leaves a downed wimp make the flag false
-        if (other.gameObject.tag == "DownedWimp")
+
+        if (other.gameObject.tag == "DownedWimp1" || other.gameObject.tag == "DownedWimp2" || other.gameObject.tag == "DownedWimp3" || other.gameObject.tag == "DownedWimp4")
         {
             nearDownedWimp = false;
         }

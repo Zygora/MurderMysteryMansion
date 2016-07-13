@@ -51,6 +51,8 @@ public class Controls : MonoBehaviour
 
     public string horizontal;
     public string vertical;
+    public string revive;
+
     public string jump;
     public bool canMove = true;
     public float cameraSpeed = 30;
@@ -71,6 +73,7 @@ public class Controls : MonoBehaviour
     public static bool bloodStained = false;
     public int speedWhileCarryOrb;
     public static bool wimpKilled = false;
+
     void Start()
     {
         
@@ -541,6 +544,11 @@ public class Controls : MonoBehaviour
                 MenuDownHoldTime = 0;
             }
         }
+
+        if (other.gameObject.tag == "Player1" || other.gameObject.tag == "Player2" || other.gameObject.tag == "Player3" || other.gameObject.tag == "Player4")
+        {
+
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -607,6 +615,21 @@ public class Controls : MonoBehaviour
                 wimpKilled = true;
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
+
+                switch(gameObject.tag)
+                {
+                    case "Player1": gameObject.tag = "DownedWimp1";
+                        break;
+                    case "Player2":
+                        gameObject.tag = "DownedWimp2";
+                        break;
+                    case "Player3":
+                        gameObject.tag = "DownedWimp3";
+                        break;
+                    case "Player4":
+                        gameObject.tag = "DownedWimp4";
+                        break;
+                }
                // transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 5, this.transform.position.z);
                 if (other.gameObject.tag == "Knife1") {
                     Invoke("TurnOnBloodShirt1", .5f);
