@@ -5,7 +5,7 @@ using System.Collections;
 public class Traps : MonoBehaviour {
 
     public int trapsAvailable = 2; // The amount of traps available to murderer to set
-    public float trapCooldown;     // Time that must pass before murderer can set next trap
+    public float trapCooldown = 10;     // Time that must pass before murderer can set next trap
     public float timeSinceSet;     // Time since last trap was set
     private string ability;
 	void Start ()

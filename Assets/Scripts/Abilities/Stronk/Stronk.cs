@@ -4,8 +4,8 @@ public class Stronk : MonoBehaviour
 {
 
     public GameObject player;               // Reference to the player that can be trown
-    public Vector2 throwDirectionRight;     // Direction to throw a wimp to the right
-    public Vector2 throwDirectionLeft;      // Direction to throw a wimp to the left
+    public Vector2 throwDirectionRight = new Vector2 (1, 0.8f);     // Direction to throw a wimp to the right
+    public Vector2 throwDirectionLeft  = new Vector2(-1, 0.8f);      // Direction to throw a wimp to the left
     public float throwForce;                // Force of the throw
 
     bool nearWimp;                          // Flag showing that this wimp is near another one
@@ -37,7 +37,7 @@ public class Stronk : MonoBehaviour
     void Update()
     {
         // If player is near a wimp and presses E
-        if ((Input.GetButtonDown(ability)) && (nearWimp))
+        if ((Input.GetButtonDown(ability)) && (nearWimp)&&(player!=null))
         {
             // Grab a wimp
             player.GetComponent<Rigidbody2D>().isKinematic = true;
@@ -79,6 +79,7 @@ public class Stronk : MonoBehaviour
         if (other.gameObject.tag == "Wimp")
         {
             nearWimp = true;
+            player = other.gameObject;
         }
     }
 
@@ -87,6 +88,7 @@ public class Stronk : MonoBehaviour
         if (other.gameObject.tag == "Wimp")
         {
             nearWimp = false;
+            player = null;
         }
     }
 }

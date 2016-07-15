@@ -15,6 +15,7 @@ public class Doppelganger : MonoBehaviour
     bool down;                       // Flag that show that ability buttin was pressed
     bool hold;                       // Flag that show that ability buttin was holded (We need them so player cant just hold button through cooldown and release it after and activate clone without arrow)
     private string ability;
+
     void Start() {
         arrow = GameObject.Find("DoppelgangerArrow");
         //set input from input manager

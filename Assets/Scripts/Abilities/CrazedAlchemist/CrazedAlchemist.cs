@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CrazedAlchemist : MonoBehaviour
 {
-    public int numberOfPotionsAvailable; // The number of potions available to a wimp to use
+    public int numberOfPotionsAvailable = 3; // The number of potions available to a wimp to use
     public float potionCooldown = 5;     // Time that must pass before the next potion can be thrown
     float timeSincePotionUsed;           // Time that passed since a potion was last used
     bool potionUsed;                     // Flag that shows if the potion was used
@@ -15,7 +15,7 @@ public class CrazedAlchemist : MonoBehaviour
         {
             ability = "Ability_P1";
         }
-
+        
         if (gameObject.tag == "Player2")
         {
             ability = "Ability_P2";

@@ -3,10 +3,10 @@ using System.Collections;
 
 public class ThrillOfTheHunt : MonoBehaviour
 {
-    public float boostTime;     // Time showing for how long bonus will be active
-    public float speedBoost;    // The amount of bonus speed
+    public float boostTime = 30.0f;     // Time showing for how long bonus will be active
+    public float speedBoost = 20.0f;    // The amount of bonus speed
     float boostActiveTimeLeft;  // Time until bonus is up
-    bool bonusActive;           // Flag showing wether or not bonus is active
+    public bool bonusActive;           // Flag showing wether or not bonus is active
 
     // Update is called once per frame
     void Update()
@@ -24,10 +24,12 @@ public class ThrillOfTheHunt : MonoBehaviour
             boostActiveTimeLeft = 0;
         }
         // If took down a wimp
-        {
+        
+    }
+    public void ActivateBonus()
+    {
             gameObject.GetComponent<Controls>().playerSpeed += speedBoost;
             bonusActive = true;
             boostActiveTimeLeft = boostTime;
-        }
     }
 }

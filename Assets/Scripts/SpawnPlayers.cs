@@ -18,7 +18,7 @@ public class SpawnPlayers : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (Input.GetButtonDown("Spawn_P2") && player2Spawned == false) {
-            Instantiate(player2, this.transform.position, Quaternion.identity);
+            GameObject clone = Instantiate(player2, this.transform.position, Quaternion.identity) as GameObject;
             player2Spawned = true;
         }
 
