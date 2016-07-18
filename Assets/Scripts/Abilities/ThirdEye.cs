@@ -6,7 +6,7 @@ public class ThirdEye : MonoBehaviour
     private float time = 0;
     private float cooldown = 0;
     private string ability;
-    
+    public int k;
 
     void Start() {
         //set input from input manager
@@ -32,12 +32,14 @@ public class ThirdEye : MonoBehaviour
     }
     void Update()
     {
-
-        if (Input.GetButtonDown(ability) && Time.time > time + cooldown)
-        {
-            Debug.Log("Third Eye Used");
-            time = Time.time;
-            cooldown = 5;
-        }
+           // Physics.OverlapSphere
+           
+       
+        
+    }
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position, k);
     }
 }

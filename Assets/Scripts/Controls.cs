@@ -529,7 +529,7 @@ public class Controls : MonoBehaviour
             GateHighlight.enabled = true;
             if (Input.GetKey(KeyCode.UpArrow))
             {
-                SceneManager.LoadScene(2);
+                
             }
             if (Input.GetKey(KeyCode.DownArrow))
             {
@@ -537,7 +537,7 @@ public class Controls : MonoBehaviour
             }
             if (MenuDownHoldTime > 5)
             {
-                SceneManager.LoadScene(3);
+                SceneManager.LoadScene(4);
             }
             if (Input.GetKeyUp(KeyCode.DownArrow))
             {
@@ -615,7 +615,11 @@ public class Controls : MonoBehaviour
                 wimpKilled = true;
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
-
+                // if murderer has thrill of the hunt script atached activate the bonus
+                if(other.gameObject.GetComponent<ThrillOfTheHunt>()!=null)
+                {
+                    other.gameObject.GetComponent<ThrillOfTheHunt>().ActivateBonus();
+                }
                 switch(gameObject.tag)
                 {
                     case "Player1": gameObject.tag = "DownedWimp1";

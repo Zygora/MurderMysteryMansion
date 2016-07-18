@@ -23,7 +23,7 @@ public class ThrillOfTheHunt : MonoBehaviour
             bonusActive = false;
             boostActiveTimeLeft = 0;
         }
-        // If took down a wimp
+        
         
     }
     public void ActivateBonus()
