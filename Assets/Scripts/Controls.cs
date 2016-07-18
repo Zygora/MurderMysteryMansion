@@ -616,7 +616,7 @@ public class Controls : MonoBehaviour
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
                 // if murderer has thrill of the hunt script atached activate the bonus
-                if(other.gameObject.GetComponent<ThrillOfTheHunt>()!=null)
+                if((other.gameObject.GetComponent<ThrillOfTheHunt>() as ThrillOfTheHunt)!=null)
                 {
                     other.gameObject.GetComponent<ThrillOfTheHunt>().ActivateBonus();
                 }
