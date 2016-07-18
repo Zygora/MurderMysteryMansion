@@ -5,17 +5,23 @@ using UnityEngine.UI;
 public class OrbCount : MonoBehaviour {
     private int carryingOrbs;
     public Text orbCount;
-    public Text wimpWinText;
+    public static bool wimpsWin = false;
+    public static int wimpsExited = 0;
     public GameObject Orb;
     public static int orbsAtAltar1;
     public static int orbsAtAltar2;
     public static int orbsAtAltar3;
-    private string interact;
+    public string interact;
     public static bool player1CarryOrb = false;
     public static bool player2CarryOrb = false;
     public static bool player3CarryOrb = false;
     public static bool player4CarryOrb = false;
     private bool canDropOrb = false;
+    public static bool player1Exited = false;
+    public static bool player2Exited = false;
+    public static bool player3Exited = false;
+    public static bool player4Exited = false;
+    
     // Use this for initialization
     void Start () {
         //set amount of orbs carried to 0
@@ -56,6 +62,7 @@ public class OrbCount : MonoBehaviour {
             Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 28, Quaternion.identity);
             carryingOrbs = 0;
             Debug.Log("orb dropped");
+            canDropOrb = false;
         }
     }
 
@@ -190,8 +197,28 @@ public class OrbCount : MonoBehaviour {
         if (other.gameObject.tag == "WimpExit") {
             if(orbsAtAltar1 == 1 && orbsAtAltar2 == 1 && orbsAtAltar3 == 1 && Input.GetButtonDown(interact))
             {
-                Debug.Log("Exit");
-                wimpWinText.text = "Wimps Win";
+                //increment wimps exited needed for wimp win condition
+                wimpsExited += 1;
+
+                if (gameObject.tag == "Player1")
+                {
+                    player1Exited = true;
+                }
+
+                if (gameObject.tag == "Player2")
+                {
+                    player2Exited = true;
+                }
+
+                if (gameObject.tag == "Player3")
+                {
+                    player3Exited = true;
+                }
+
+                if (gameObject.tag == "Player4")
+                {
+                    player4Exited = true;
+                }
             }
         }
     }

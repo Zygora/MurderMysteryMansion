@@ -73,6 +73,7 @@ public class Controls : MonoBehaviour
     public static bool bloodStained = false;
     public int speedWhileCarryOrb;
     public static bool wimpKilled = false;
+    public static int wimpsDowned = 0;
 
     void Start()
     {
@@ -97,6 +98,37 @@ public class Controls : MonoBehaviour
 
     void Update()
     {
+        //disable sprite renderer if wimp has exited
+        if (gameObject.tag == "Player1" && OrbCount.player1Exited == true) {
+            for (int x = 0; x < transform.childCount; x++) {
+                transform.GetChild(x).gameObject.SetActive(false);
+            }
+        }
+
+        if (gameObject.tag == "Player2" && OrbCount.player2Exited == true)
+        {
+            for (int x = 0; x < transform.childCount; x++)
+            {
+                transform.GetChild(x).gameObject.SetActive(false);
+            }
+        }
+
+        if (gameObject.tag == "Player3" && OrbCount.player3Exited == true)
+        {
+            for (int x = 0; x < transform.childCount; x++)
+            {
+                transform.GetChild(x).gameObject.SetActive(false);
+            }
+        }
+
+        if (gameObject.tag == "Player4" && OrbCount.player4Exited == true)
+        {
+            for (int x = 0; x < transform.childCount; x++)
+            {
+                transform.GetChild(x).gameObject.SetActive(false);
+            }
+        }
+        //enable sprite renderer if wimp has re entered
         //decrease speed of player if carrying an orb
         if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == true)
         {
@@ -613,6 +645,8 @@ public class Controls : MonoBehaviour
                 gameObject.layer = 8;
                 dead = true;
                 wimpKilled = true;
+                //increment wimps down needed for murderer win condition
+                wimpsDowned += 1;
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
                 // if murderer has thrill of the hunt script atached activate the bonus
