@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Squeler : MonoBehaviour
 {
-    public GameObject player1;          // Reference to the first player          
-    public GameObject player2;          // Reference to the second player
+    public GameObject player1 = null;          // Reference to the first player          
+    public GameObject player2 = null;          // Reference to the second player
     public GameObject murderer;
     public GameObject arrow;            // Arrow prefab
     public Vector3 arrowSpawn1;      // Arrow spawner for the first player
@@ -17,25 +17,133 @@ public class Squeler : MonoBehaviour
 
     void Start()
     {
-        if (gameObject.name == "MainPlayer_2(Clone)")
+        if (gameObject.tag == "Player1")
         {
-            player1 = GameObject.Find("MainPlayer_3(Clone)");
-            player2 = GameObject.Find("MainPlayer_4(Clone)");
+            if (GameObject.FindGameObjectWithTag("Player2") != null)
+            {
+                player1 = GameObject.FindGameObjectWithTag("Player2");
+            }
+            if ((GameObject.FindGameObjectWithTag("Player3") != null)&&(player1==null))
+            {
+                player1 = GameObject.FindGameObjectWithTag("Player3");
+            }
+            if ((GameObject.FindGameObjectWithTag("Player4") != null)&&(player1 == null))
+            {
+                player1 = GameObject.FindGameObjectWithTag("Player4");
+            }
+
+            if ((GameObject.FindGameObjectWithTag("Player3") != null) && (player2 == null) &&
+                ((GameObject.FindGameObjectWithTag("Player3")!=player1)))
+            {
+                player2 = GameObject.FindGameObjectWithTag("Player3");
+            }
+            if ((GameObject.FindGameObjectWithTag("Player4") != null) && (player2 == null) &&
+                ((GameObject.FindGameObjectWithTag("Player4") != player1)))
+            {
+                player2 = GameObject.FindGameObjectWithTag("Player4");
+            }
+            camera = GameObject.Find("Player 1 Camera").GetComponent<Camera>();
+        }
+
+        if (gameObject.tag == "Player2")
+        {
+            if (GameObject.FindGameObjectWithTag("Player1") != null)
+            {
+                player1 = GameObject.FindGameObjectWithTag("Player1");
+            }
+            if ((GameObject.FindGameObjectWithTag("Player3") != null) && (player1 == null))
+            {
+                player1 = GameObject.FindGameObjectWithTag("Player3");
+            }
+            if ((GameObject.FindGameObjectWithTag("Player4") != null) && (player1 == null))
+            {
+                player1 = GameObject.FindGameObjectWithTag("Player4");
+            }
+
+            if ((GameObject.FindGameObjectWithTag("Player3") != null) && (player2 == null) &&
+                ((GameObject.FindGameObjectWithTag("Player3") != player1)))
+            {
+                player2 = GameObject.FindGameObjectWithTag("Player3");
+            }
+            if ((GameObject.FindGameObjectWithTag("Player4") != null) && (player2 == null) &&
+                ((GameObject.FindGameObjectWithTag("Player4") != player1)))
+            {
+                player2 = GameObject.FindGameObjectWithTag("Player4");
+            }
             camera = GameObject.Find("Player 2 Camera").GetComponent<Camera>();
         }
-        if (gameObject.name == "MainPlayer_3(Clone)")
+        if (gameObject.tag == "Player3")
         {
-            player1 = GameObject.Find("MainPlayer_2(Clone)");
-            player2 = GameObject.Find("MainPlayer_4(Clone)");
+            if (GameObject.FindGameObjectWithTag("Player1") != null)
+            {
+                player1 = GameObject.FindGameObjectWithTag("Player1");
+            }
+            if ((GameObject.FindGameObjectWithTag("Player2") != null) && (player1 == null))
+            {
+                player1 = GameObject.FindGameObjectWithTag("Player2");
+            }
+            if ((GameObject.FindGameObjectWithTag("Player4") != null) && (player1 == null))
+            {
+                player1 = GameObject.FindGameObjectWithTag("Player4");
+            }
+
+            if ((GameObject.FindGameObjectWithTag("Player2") != null) && (player2 == null) &&
+                ((GameObject.FindGameObjectWithTag("Player2") != player1)))
+            {
+                player2 = GameObject.FindGameObjectWithTag("Player3");
+            }
+            if ((GameObject.FindGameObjectWithTag("Player4") != null) && (player2 == null) &&
+                ((GameObject.FindGameObjectWithTag("Player4") != player1)))
+            {
+                player2 = GameObject.FindGameObjectWithTag("Player4");
+            }
             camera = GameObject.Find("Player 3 Camera").GetComponent<Camera>();
         }
-        if (gameObject.name == "MainPlayer_4(Clone)")
+        if (gameObject.tag == "Player4")
         {
-            player1 = GameObject.Find("MainPlayer_2(Clone)");
-            player2 = GameObject.Find("MainPlayer_3(Clone)");
+            if (GameObject.FindGameObjectWithTag("Player1") != null)
+            {
+                player1 = GameObject.FindGameObjectWithTag("Player1");
+            }
+            if ((GameObject.FindGameObjectWithTag("Player2") != null) && (player1 == null))
+            {
+                player1 = GameObject.FindGameObjectWithTag("Player2");
+            }
+            if ((GameObject.FindGameObjectWithTag("Player3") != null) && (player1 == null))
+            {
+                player1 = GameObject.FindGameObjectWithTag("Player3");
+            }
+
+            if ((GameObject.FindGameObjectWithTag("Player2") != null) && (player2 == null) &&
+                ((GameObject.FindGameObjectWithTag("Player2") != player1)))
+            {
+                player2 = GameObject.FindGameObjectWithTag("Player2");
+            }
+            if ((GameObject.FindGameObjectWithTag("Player3") != null) && (player2 == null) &&
+                ((GameObject.FindGameObjectWithTag("Player3") != player1)))
+            {
+                player2 = GameObject.FindGameObjectWithTag("Player3");
+            }
             camera = GameObject.Find("Player 4 Camera").GetComponent<Camera>();
         }
-        murderer = GameObject.Find("MainPlayer_1(Clone)");
+        if (GameObject.FindGameObjectWithTag("Murderer1") != null)
+        {
+            murderer = GameObject.FindGameObjectWithTag("Murderer1");
+        }
+        else 
+        if(GameObject.FindGameObjectWithTag("Murderer2")!=null)
+        {
+            murderer = GameObject.FindGameObjectWithTag("Murderer2");
+        }else 
+        if(GameObject.FindGameObjectWithTag("Murderer3")!=null)
+        {
+            murderer = GameObject.FindGameObjectWithTag("Murderer3");
+        }
+        else
+        {
+            murderer = GameObject.FindGameObjectWithTag("Murderer4");
+        }
+
         arrowSpawn1 = player1.transform.position;
 
         arrowSpawn2 = player2.transform.position;

@@ -23,13 +23,18 @@ public class ThrillOfTheHunt : MonoBehaviour
             bonusActive = false;
             boostActiveTimeLeft = 0;
         }
-        
-        
     }
     public void ActivateBonus()
     {
+        if (boostActiveTimeLeft <= 0)
+        {
             gameObject.GetComponent<Controls>().playerSpeed += speedBoost;
             bonusActive = true;
             boostActiveTimeLeft = boostTime;
+        }
+        else
+        {
+            boostActiveTimeLeft = boostTime;
+        }
     }
 }
