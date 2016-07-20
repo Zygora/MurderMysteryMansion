@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Masterofdisguise : MonoBehaviour {
     bool nearDownedWimp;
+    GameObject downedWimp;
     private string ability;
 	// Use this for initialization
 	void Start ()
@@ -35,6 +36,7 @@ public class Masterofdisguise : MonoBehaviour {
         if (Input.GetButtonDown(ability))
         {
             // If pressed near downed wimp copy their clothes colors
+            gameObject.GetComponent<SpriteRenderer>().color = downedWimp.GetComponent<SpriteRenderer>().color;
         }
     }
 
@@ -43,6 +45,7 @@ public class Masterofdisguise : MonoBehaviour {
         if (other.tag == "DownedWimp")
         {
             nearDownedWimp = true;
+            downedWimp = other.gameObject;
         }
     }
 
@@ -51,6 +54,7 @@ public class Masterofdisguise : MonoBehaviour {
         if (other.tag == "DownedWimp")
         {
             nearDownedWimp = false;
+            downedWimp = null;
         }
     }
 }

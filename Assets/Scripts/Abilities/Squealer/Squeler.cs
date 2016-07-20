@@ -10,140 +10,52 @@ public class Squeler : MonoBehaviour
     public Vector3 arrowSpawn1;      // Arrow spawner for the first player
     public Vector3 arrowSpawn2;      // Arrow spawner for the second player
     public new Camera camera;           // Reference to the camera
-
+    private GameObject[] gameObjects;
     public float squealerCooldown = 30; // Cooldown of the ability
 
     float timePassed;                   // Time passed since the ability was last used
 
     void Start()
     {
-        if (gameObject.tag == "Player1")
+        
+        gameObjects = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        for (int i = 0;i<gameObjects.Length;i++)
         {
-            if (GameObject.FindGameObjectWithTag("Player2") != null)
+            if(player1==null&&gameObjects[i].tag.Contains("Player")&&
+                gameObjects[i]!=gameObject)
             {
-                player1 = GameObject.FindGameObjectWithTag("Player2");
+                player1 = gameObjects[i]; 
             }
-            if ((GameObject.FindGameObjectWithTag("Player3") != null)&&(player1==null))
+            if(player2==null && gameObjects[i].tag.Contains("Player") && 
+                player1 != gameObjects[i] && 
+                gameObjects[i] != gameObject)
             {
-                player1 = GameObject.FindGameObjectWithTag("Player3");
+                player2 = gameObjects[i];
             }
-            if ((GameObject.FindGameObjectWithTag("Player4") != null)&&(player1 == null))
+            if(murderer==null&&
+                gameObjects[i].tag.Contains("Murderer")&&
+                gameObjects[i].name.Contains("MainPlayer"))
             {
-                player1 = GameObject.FindGameObjectWithTag("Player4");
+                murderer = gameObjects[i];
             }
-
-            if ((GameObject.FindGameObjectWithTag("Player3") != null) && (player2 == null) &&
-                ((GameObject.FindGameObjectWithTag("Player3")!=player1)))
-            {
-                player2 = GameObject.FindGameObjectWithTag("Player3");
-            }
-            if ((GameObject.FindGameObjectWithTag("Player4") != null) && (player2 == null) &&
-                ((GameObject.FindGameObjectWithTag("Player4") != player1)))
-            {
-                player2 = GameObject.FindGameObjectWithTag("Player4");
-            }
+        }
+        if(gameObject.name == "MainPlayer_1(Clone)"&&camera==null)
+        {
             camera = GameObject.Find("Player 1 Camera").GetComponent<Camera>();
         }
-
-        if (gameObject.tag == "Player2")
+        if (gameObject.name == "MainPlayer_2(Clone)" && camera == null)
         {
-            if (GameObject.FindGameObjectWithTag("Player1") != null)
-            {
-                player1 = GameObject.FindGameObjectWithTag("Player1");
-            }
-            if ((GameObject.FindGameObjectWithTag("Player3") != null) && (player1 == null))
-            {
-                player1 = GameObject.FindGameObjectWithTag("Player3");
-            }
-            if ((GameObject.FindGameObjectWithTag("Player4") != null) && (player1 == null))
-            {
-                player1 = GameObject.FindGameObjectWithTag("Player4");
-            }
-
-            if ((GameObject.FindGameObjectWithTag("Player3") != null) && (player2 == null) &&
-                ((GameObject.FindGameObjectWithTag("Player3") != player1)))
-            {
-                player2 = GameObject.FindGameObjectWithTag("Player3");
-            }
-            if ((GameObject.FindGameObjectWithTag("Player4") != null) && (player2 == null) &&
-                ((GameObject.FindGameObjectWithTag("Player4") != player1)))
-            {
-                player2 = GameObject.FindGameObjectWithTag("Player4");
-            }
             camera = GameObject.Find("Player 2 Camera").GetComponent<Camera>();
         }
-        if (gameObject.tag == "Player3")
+        if (gameObject.name == "MainPlayer_3(Clone)" && camera == null)
         {
-            if (GameObject.FindGameObjectWithTag("Player1") != null)
-            {
-                player1 = GameObject.FindGameObjectWithTag("Player1");
-            }
-            if ((GameObject.FindGameObjectWithTag("Player2") != null) && (player1 == null))
-            {
-                player1 = GameObject.FindGameObjectWithTag("Player2");
-            }
-            if ((GameObject.FindGameObjectWithTag("Player4") != null) && (player1 == null))
-            {
-                player1 = GameObject.FindGameObjectWithTag("Player4");
-            }
-
-            if ((GameObject.FindGameObjectWithTag("Player2") != null) && (player2 == null) &&
-                ((GameObject.FindGameObjectWithTag("Player2") != player1)))
-            {
-                player2 = GameObject.FindGameObjectWithTag("Player3");
-            }
-            if ((GameObject.FindGameObjectWithTag("Player4") != null) && (player2 == null) &&
-                ((GameObject.FindGameObjectWithTag("Player4") != player1)))
-            {
-                player2 = GameObject.FindGameObjectWithTag("Player4");
-            }
             camera = GameObject.Find("Player 3 Camera").GetComponent<Camera>();
         }
-        if (gameObject.tag == "Player4")
+        if (gameObject.name == "MainPlayer_4(Clone)" && camera == null)
         {
-            if (GameObject.FindGameObjectWithTag("Player1") != null)
-            {
-                player1 = GameObject.FindGameObjectWithTag("Player1");
-            }
-            if ((GameObject.FindGameObjectWithTag("Player2") != null) && (player1 == null))
-            {
-                player1 = GameObject.FindGameObjectWithTag("Player2");
-            }
-            if ((GameObject.FindGameObjectWithTag("Player3") != null) && (player1 == null))
-            {
-                player1 = GameObject.FindGameObjectWithTag("Player3");
-            }
-
-            if ((GameObject.FindGameObjectWithTag("Player2") != null) && (player2 == null) &&
-                ((GameObject.FindGameObjectWithTag("Player2") != player1)))
-            {
-                player2 = GameObject.FindGameObjectWithTag("Player2");
-            }
-            if ((GameObject.FindGameObjectWithTag("Player3") != null) && (player2 == null) &&
-                ((GameObject.FindGameObjectWithTag("Player3") != player1)))
-            {
-                player2 = GameObject.FindGameObjectWithTag("Player3");
-            }
             camera = GameObject.Find("Player 4 Camera").GetComponent<Camera>();
         }
-        if (GameObject.FindGameObjectWithTag("Murderer1") != null)
-        {
-            murderer = GameObject.FindGameObjectWithTag("Murderer1");
-        }
-        else 
-        if(GameObject.FindGameObjectWithTag("Murderer2")!=null)
-        {
-            murderer = GameObject.FindGameObjectWithTag("Murderer2");
-        }else 
-        if(GameObject.FindGameObjectWithTag("Murderer3")!=null)
-        {
-            murderer = GameObject.FindGameObjectWithTag("Murderer3");
-        }
-        else
-        {
-            murderer = GameObject.FindGameObjectWithTag("Murderer4");
-        }
-
+        
         arrowSpawn1 = player1.transform.position;
 
         arrowSpawn2 = player2.transform.position;
@@ -153,7 +65,6 @@ public class Squeler : MonoBehaviour
 
     void Update()
     {
-
         arrowSpawn1 = new Vector3(player1.transform.position.x, player1.transform.position.y + 60, player1.transform.position.z);
         arrowSpawn2 = new Vector3(player2.transform.position.x, player2.transform.position.y + 60, player2.transform.position.z);
         if (timePassed > 0)
