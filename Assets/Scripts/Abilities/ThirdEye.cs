@@ -32,14 +32,6 @@ public class ThirdEye : MonoBehaviour
     }
     void Update()
     {
-           // Physics.OverlapSphere
            
-       
-        
-    }
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, k);
     }
 }

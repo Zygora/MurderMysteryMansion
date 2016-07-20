@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class ColorManager : MonoBehaviour {
-    private int[] colorArray;
     public GameObject[] colorObjects;
     public GameObject[] gameObjects;
     public int selected;
@@ -13,7 +12,6 @@ public class ColorManager : MonoBehaviour {
     bool changed;
     // Use this for initialization
     void Start () {
-        colorArray = new int[11];
         selected = 0;
 	}
 
@@ -27,13 +25,11 @@ public class ColorManager : MonoBehaviour {
                 selected++;
                 if (selected > 10)
                 {
-
                     selected = 0;
                     changed = true;
                 }
                 else
                 {
-
                     changed = true;
                 }
             }
@@ -42,7 +38,6 @@ public class ColorManager : MonoBehaviour {
                 selected--;
                 if (selected < 0)
                 {
-
                     selected = 10;
                     changed = true;
                 }
