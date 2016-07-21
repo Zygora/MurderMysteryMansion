@@ -74,6 +74,7 @@ public class Controls : MonoBehaviour
     public int speedWhileCarryOrb;
     public static bool wimpKilled = false;
     public static int wimpsDowned = 0;
+    private string interact;
 
     void Start()
     {
@@ -94,6 +95,26 @@ public class Controls : MonoBehaviour
         player2Camera = GameObject.FindGameObjectWithTag("Player2Camera");
         player3Camera = GameObject.FindGameObjectWithTag("Player3Camera");
         player4Camera = GameObject.FindGameObjectWithTag("Player4Camera");
+        //set input in input manager
+        if (gameObject.tag == "Player1")
+        {
+            interact = "Interact_P1";
+        }
+
+        if (gameObject.tag == "Player2")
+        {
+            interact = "Interact_P2";
+        }
+
+        if (gameObject.tag == "Player3")
+        {
+            interact = "Interact_P3";
+        }
+
+        if (gameObject.tag == "Player4")
+        {
+            interact = "Interact_P4";
+        }
     }
 
     void Update()
@@ -103,6 +124,10 @@ public class Controls : MonoBehaviour
             for (int x = 0; x < transform.childCount; x++) {
                 transform.GetChild(x).gameObject.SetActive(false);
             }
+            canMove = false;
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+            gameObject.GetComponent<Collider2D>().isTrigger = true;
+
         }
 
         if (gameObject.tag == "Player2" && OrbCount.player2Exited == true)
@@ -111,6 +136,9 @@ public class Controls : MonoBehaviour
             {
                 transform.GetChild(x).gameObject.SetActive(false);
             }
+            canMove = false;
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+            gameObject.GetComponent<Collider2D>().isTrigger = true;
         }
 
         if (gameObject.tag == "Player3" && OrbCount.player3Exited == true)
@@ -119,6 +147,9 @@ public class Controls : MonoBehaviour
             {
                 transform.GetChild(x).gameObject.SetActive(false);
             }
+            canMove = false;
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+            gameObject.GetComponent<Collider2D>().isTrigger = true;
         }
 
         if (gameObject.tag == "Player4" && OrbCount.player4Exited == true)
@@ -127,8 +158,59 @@ public class Controls : MonoBehaviour
             {
                 transform.GetChild(x).gameObject.SetActive(false);
             }
+            canMove = false;
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+            gameObject.GetComponent<Collider2D>().isTrigger = true;
         }
         //enable sprite renderer if wimp has re entered
+        if (gameObject.tag == "Player1" && OrbCount.player1Exited == true && Input.GetButtonDown(interact)) 
+        {
+            for (int x = 0; x < transform.childCount; x++)
+            {
+                transform.GetChild(x).gameObject.SetActive(true);
+            }
+            canMove = true;
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+            gameObject.GetComponent<Collider2D>().isTrigger = false;
+            OrbCount.player1Exited = false;
+        }
+
+        if (gameObject.tag == "Player2" && OrbCount.player2Exited == true && Input.GetButtonDown(interact))
+        {
+            for(int x = 0; x < transform.childCount; x++)
+            {
+                transform.GetChild(x).gameObject.SetActive(true);
+            }
+            canMove = true;
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+            gameObject.GetComponent<Collider2D>().isTrigger = false;
+            OrbCount.player1Exited = false;
+        }
+
+        if (gameObject.tag == "Player3" && OrbCount.player3Exited == true && Input.GetButtonDown(interact))
+        {
+            for (int x = 0; x < transform.childCount; x++)
+            {
+                transform.GetChild(x).gameObject.SetActive(true);
+            }
+            canMove = true;
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+            gameObject.GetComponent<Collider2D>().isTrigger = false;
+            OrbCount.player1Exited = false;
+        }
+
+        if (gameObject.tag == "Player4" && OrbCount.player4Exited == true && Input.GetButtonDown(interact))
+        {
+            for (int x = 0; x < transform.childCount; x++)
+            {
+                transform.GetChild(x).gameObject.SetActive(true);
+            }
+            canMove = true;
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+            gameObject.GetComponent<Collider2D>().isTrigger = false;
+            OrbCount.player1Exited = false;
+        }
+
         //decrease speed of player if carrying an orb
         if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == true)
         {

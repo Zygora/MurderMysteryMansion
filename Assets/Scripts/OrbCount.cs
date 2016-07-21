@@ -200,22 +200,22 @@ public class OrbCount : MonoBehaviour {
                 //increment wimps exited needed for wimp win condition
                 wimpsExited += 1;
 
-                if (gameObject.tag == "Player1")
+                if (gameObject.tag == "Player1" && player1Exited == false)
                 {
                     player1Exited = true;
                 }
 
-                if (gameObject.tag == "Player2")
+                if (gameObject.tag == "Player2" && player2Exited == false)
                 {
                     player2Exited = true;
                 }
 
-                if (gameObject.tag == "Player3")
+                if (gameObject.tag == "Player3" && player3Exited == false)
                 {
                     player3Exited = true;
                 }
 
-                if (gameObject.tag == "Player4")
+                if (gameObject.tag == "Player4" && player4Exited == false)
                 {
                     player4Exited = true;
                 }
