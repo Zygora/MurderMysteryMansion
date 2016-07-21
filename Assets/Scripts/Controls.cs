@@ -75,6 +75,7 @@ public class Controls : MonoBehaviour
     public static bool wimpKilled = false;
     public static int wimpsDowned = 0;
     private string interact;
+	public bool exited;
 
     void Start()
     {
@@ -124,9 +125,10 @@ public class Controls : MonoBehaviour
             for (int x = 0; x < transform.childCount; x++) {
                 transform.GetChild(x).gameObject.SetActive(false);
             }
-            canMove = false;
+			playerSpeed = 0;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
+			exited = true;
 
         }
 
@@ -136,9 +138,10 @@ public class Controls : MonoBehaviour
             {
                 transform.GetChild(x).gameObject.SetActive(false);
             }
-            canMove = false;
+			playerSpeed = 0;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
+			exited = true;
         }
 
         if (gameObject.tag == "Player3" && OrbCount.player3Exited == true)
@@ -147,9 +150,10 @@ public class Controls : MonoBehaviour
             {
                 transform.GetChild(x).gameObject.SetActive(false);
             }
-            canMove = false;
+			playerSpeed = 0;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
+			exited = true;
         }
 
         if (gameObject.tag == "Player4" && OrbCount.player4Exited == true)
@@ -158,57 +162,91 @@ public class Controls : MonoBehaviour
             {
                 transform.GetChild(x).gameObject.SetActive(false);
             }
-            canMove = false;
+			playerSpeed = 0;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
+			exited = true;
         }
         //enable sprite renderer if wimp has re entered
-        if (gameObject.tag == "Player1" && OrbCount.player1Exited == true && Input.GetButtonDown(interact)) 
+	if (gameObject.tag == "Player1" && OrbCount.player1Exited == true && Input.GetButtonDown(interact) && OrbCount.player1CanEnter == true) 
         {
             for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(true);
             }
-            canMove = true;
+			playerSpeed = 40;
+			TorsoAnimator.SetBool("Running", false);
+			LegsAnimator.SetBool("Running", false);
+			TorsoAnimator.SetBool("Idle", true);
+			LegsAnimator.SetBool("Idle", true);
             gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
             gameObject.GetComponent<Collider2D>().isTrigger = false;
             OrbCount.player1Exited = false;
+			OrbCount.player1CanEnter = false;
+			OrbCount.wimpsExited -= 1;
+			Debug.Log("wimp entered");
+			Debug.Log (OrbCount.wimpsExited);
+			exited = false;
         }
 
-        if (gameObject.tag == "Player2" && OrbCount.player2Exited == true && Input.GetButtonDown(interact))
+	if (gameObject.tag == "Player2" && OrbCount.player2Exited == true && Input.GetButtonDown(interact)  && OrbCount.player2CanEnter == true)
         {
             for(int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(true);
             }
-            canMove = true;
+			playerSpeed = 40;
+			TorsoAnimator.SetBool("Running", false);
+			LegsAnimator.SetBool("Running", false);
+			TorsoAnimator.SetBool("Idle", true);
+			LegsAnimator.SetBool("Idle", true);
             gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
             gameObject.GetComponent<Collider2D>().isTrigger = false;
             OrbCount.player1Exited = false;
+			OrbCount.player1CanEnter = false;
+			OrbCount.wimpsExited -= 1;
+			Debug.Log("wimp entered");
+			exited = false;
         }
 
-        if (gameObject.tag == "Player3" && OrbCount.player3Exited == true && Input.GetButtonDown(interact))
+	if (gameObject.tag == "Player3" && OrbCount.player3Exited == true && Input.GetButtonDown(interact)  && OrbCount.player3CanEnter == true)
         {
             for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(true);
             }
-            canMove = true;
+			playerSpeed = 40;
+			TorsoAnimator.SetBool("Running", false);
+			LegsAnimator.SetBool("Running", false);
+			TorsoAnimator.SetBool("Idle", true);
+			LegsAnimator.SetBool("Idle", true);
             gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
             gameObject.GetComponent<Collider2D>().isTrigger = false;
             OrbCount.player1Exited = false;
+			OrbCount.player1CanEnter = false;
+			OrbCount.wimpsExited -= 1;
+			Debug.Log("wimp entered");
+			exited = false;
         }
 
-        if (gameObject.tag == "Player4" && OrbCount.player4Exited == true && Input.GetButtonDown(interact))
+	if (gameObject.tag == "Player4" && OrbCount.player4Exited == true && Input.GetButtonDown(interact)  && OrbCount.player4CanEnter == true)
         {
             for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(true);
             }
-            canMove = true;
+			playerSpeed = 40;
+			TorsoAnimator.SetBool("Running", false);
+			LegsAnimator.SetBool("Running", false);
+			TorsoAnimator.SetBool("Idle", true);
+			LegsAnimator.SetBool("Idle", true);
             gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
             gameObject.GetComponent<Collider2D>().isTrigger = false;
             OrbCount.player1Exited = false;
+			OrbCount.player1CanEnter = false;
+			OrbCount.wimpsExited -= 1;
+			Debug.Log("wimp entered");
+			exited = false;
         }
 
         //decrease speed of player if carrying an orb
@@ -264,7 +302,7 @@ public class Controls : MonoBehaviour
             }
         }
 
-        if (canMove && dead == false )
+        if (canMove && dead == false && exited == false)
         {
             // Create a ray down checking if there is anything underneath the player
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
@@ -503,7 +541,7 @@ public class Controls : MonoBehaviour
             }
             canMove = false;
             // Change player animation to run while transitioning left or right
-            if ((!goUp)&&(!goDown))
+	    if ((!goUp)&&(!goDown))
             {
                 TorsoAnimator.SetBool("Running", true);
                 LegsAnimator.SetBool("Running", true);

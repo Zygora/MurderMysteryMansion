@@ -21,14 +21,18 @@ public class OrbCount : MonoBehaviour {
     public static bool player2Exited = false;
     public static bool player3Exited = false;
     public static bool player4Exited = false;
+    public static bool player1CanEnter = false;
+    public static bool player2CanEnter = false;
+    public static bool player3CanEnter = false;
+    public static bool player4CanEnter = false;
     
     // Use this for initialization
     void Start () {
         //set amount of orbs carried to 0
         carryingOrbs = 0;
-        orbsAtAltar1 = 0;
-        orbsAtAltar2 = 0;
-        orbsAtAltar3 = 0;
+        orbsAtAltar1 = 1;
+        orbsAtAltar2 = 1;
+        orbsAtAltar3 = 1;
 
         //set input in input manager
         if (gameObject.tag == "Player1")
@@ -197,27 +201,38 @@ public class OrbCount : MonoBehaviour {
         if (other.gameObject.tag == "WimpExit") {
             if(orbsAtAltar1 == 1 && orbsAtAltar2 == 1 && orbsAtAltar3 == 1 && Input.GetButtonDown(interact))
             {
-                //increment wimps exited needed for wimp win condition
-                wimpsExited += 1;
-
+                
+				Debug.Log("wimp exited");
                 if (gameObject.tag == "Player1" && player1Exited == false)
                 {
                     player1Exited = true;
+					Invoke ("P1CanReenter", 2);
+					//increment wimps exited needed for wimp win condition
+					wimpsExited += 1;
                 }
 
                 if (gameObject.tag == "Player2" && player2Exited == false)
                 {
                     player2Exited = true;
+					Invoke ("P2CanReenter", 2);
+					//increment wimps exited needed for wimp win condition
+					wimpsExited += 1;
                 }
 
                 if (gameObject.tag == "Player3" && player3Exited == false)
                 {
                     player3Exited = true;
+					Invoke ("P3CanReenter", 2);
+					//increment wimps exited needed for wimp win condition
+					wimpsExited += 1;
                 }
 
                 if (gameObject.tag == "Player4" && player4Exited == false)
                 {
                     player4Exited = true;
+					Invoke ("P4CanReenter", 2);
+					//increment wimps exited needed for wimp win condition
+					wimpsExited += 1;
                 }
             }
         }
@@ -226,4 +241,20 @@ public class OrbCount : MonoBehaviour {
     void CanDropOrb() {
         canDropOrb = true;
     }
+
+    void P1CanReenter(){
+	player1CanEnter = true;
+    }
+
+    void P2CanReenter(){
+	player2CanEnter = true;
+    }
+
+	void P3CanReenter(){
+		player3CanEnter = true;
+	}
+
+	void P4CanReenter(){
+		player4CanEnter = true;
+	}
 }
