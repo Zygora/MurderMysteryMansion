@@ -5,7 +5,7 @@ public class Squeler : MonoBehaviour
 {
     public GameObject player1 = null;          // Reference to the first player          
     public GameObject player2 = null;          // Reference to the second player
-    public GameObject murderer;
+    public GameObject murderer = null;
     public GameObject arrow;            // Arrow prefab
     public Vector3 arrowSpawn1;      // Arrow spawner for the first player
     public Vector3 arrowSpawn2;      // Arrow spawner for the second player
@@ -18,53 +18,57 @@ public class Squeler : MonoBehaviour
     void Start()
     {
         
-        gameObjects = FindObjectsOfType(typeof(GameObject)) as GameObject[];
-        for (int i = 0;i<gameObjects.Length;i++)
-        {
-            if(player1==null&&gameObjects[i].tag.Contains("Player")&&
-                gameObjects[i]!=gameObject)
-            {
-                player1 = gameObjects[i]; 
-            }
-            if(player2==null && gameObjects[i].tag.Contains("Player") && 
-                player1 != gameObjects[i] && 
-                gameObjects[i] != gameObject)
-            {
-                player2 = gameObjects[i];
-            }
-            if(murderer==null&&
-                gameObjects[i].tag.Contains("Murderer")&&
-                gameObjects[i].name.Contains("MainPlayer"))
-            {
-                murderer = gameObjects[i];
-            }
-        }
-        if(gameObject.name == "MainPlayer_1(Clone)"&&camera==null)
-        {
-            camera = GameObject.Find("Player 1 Camera").GetComponent<Camera>();
-        }
-        if (gameObject.name == "MainPlayer_2(Clone)" && camera == null)
-        {
-            camera = GameObject.Find("Player 2 Camera").GetComponent<Camera>();
-        }
-        if (gameObject.name == "MainPlayer_3(Clone)" && camera == null)
-        {
-            camera = GameObject.Find("Player 3 Camera").GetComponent<Camera>();
-        }
-        if (gameObject.name == "MainPlayer_4(Clone)" && camera == null)
-        {
-            camera = GameObject.Find("Player 4 Camera").GetComponent<Camera>();
-        }
         
-        arrowSpawn1 = player1.transform.position;
-
-        arrowSpawn2 = player2.transform.position;
-
-        arrow = Resources.Load("Arrow", typeof(GameObject)) as GameObject;
     }
 
     void Update()
     {
+        if(murderer == null || player1 == null || player2 == null)
+        {
+            gameObjects = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+            for (int i = 0; i < gameObjects.Length; i++)
+            {
+                if (player1 == null && gameObjects[i].tag.Contains("Player") &&
+                    gameObjects[i] != gameObject)
+                {
+                    player1 = gameObjects[i];
+                }
+                if (player2 == null && gameObjects[i].tag.Contains("Player") &&
+                    player1 != gameObjects[i] &&
+                    gameObjects[i] != gameObject)
+                {
+                    player2 = gameObjects[i];
+                }
+                if (murderer == null &&
+                    gameObjects[i].tag.Contains("Murderer") && (
+                    gameObjects[i].GetComponent<MurdererScripts>() != null))
+                {
+                    murderer = gameObjects[i];
+                }
+            }
+            if (gameObject.name == "MainPlayer_1(Clone)" && camera == null)
+            {
+                camera = GameObject.Find("Player 1 Camera").GetComponent<Camera>();
+            }
+            if (gameObject.name == "MainPlayer_2(Clone)" && camera == null)
+            {
+                camera = GameObject.Find("Player 2 Camera").GetComponent<Camera>();
+            }
+            if (gameObject.name == "MainPlayer_3(Clone)" && camera == null)
+            {
+                camera = GameObject.Find("Player 3 Camera").GetComponent<Camera>();
+            }
+            if (gameObject.name == "MainPlayer_4(Clone)" && camera == null)
+            {
+                camera = GameObject.Find("Player 4 Camera").GetComponent<Camera>();
+            }
+
+            arrowSpawn1 = player1.transform.position;
+
+            arrowSpawn2 = player2.transform.position;
+
+            arrow = Resources.Load("Arrow", typeof(GameObject)) as GameObject;
+        }
         arrowSpawn1 = new Vector3(player1.transform.position.x, player1.transform.position.y + 60, player1.transform.position.z);
         arrowSpawn2 = new Vector3(player2.transform.position.x, player2.transform.position.y + 60, player2.transform.position.z);
         if (timePassed > 0)
