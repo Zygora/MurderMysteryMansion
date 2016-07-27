@@ -81,6 +81,8 @@ public class Controls : MonoBehaviour
     public static int wimpsDowned = 0;
     private string interact;
     public bool exited;
+    private float wimpDownedCooldown;
+    private float wimpDownedDelay = 1;
 
     void Start()
     {
@@ -133,6 +135,7 @@ public class Controls : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(wimpsDowned);
         //disable sprite renderer if wimp has exited
         if (gameObject.tag == "Player1" && OrbCount.player1Exited == true)
         {
@@ -848,7 +851,11 @@ public class Controls : MonoBehaviour
                 dead = true;
                 wimpKilled = true;
                 //increment wimps down needed for murderer win condition
-                wimpsDowned += 1;
+                if(Time.time>wimpDownedCooldown + wimpDownedDelay)
+                {
+                    wimpsDowned += 1;
+                    wimpDownedCooldown = Time.time;
+                }
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
                 // if murderer has thrill of the hunt script atached activate the bonus
@@ -974,6 +981,7 @@ public class Controls : MonoBehaviour
     {
         GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = true;
     }
+
 
     void RechargeWeapon()
     {
