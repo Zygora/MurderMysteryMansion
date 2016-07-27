@@ -345,24 +345,24 @@ public class Controls : MonoBehaviour
             // Create move vector
             move = new Vector3(Input.GetAxis(horizontal), 0, 0);
             //set movement bounds on player
-            if (transform.position.x <= -110)
+            if (transform.position.x <= -580)
             {
-                transform.position = new Vector3(-105, transform.position.y, transform.position.z);
+                transform.position = new Vector3(-570, transform.position.y, transform.position.z);
             }
 
-            if (transform.position.x >= 1070)
+            if (transform.position.x >= 580)
             {
-                transform.position = new Vector3(1065, transform.position.y, transform.position.z);
+                transform.position = new Vector3(570, transform.position.y, transform.position.z);
             }
 
-            if (transform.position.y <= -363.5f)
+            if (transform.position.y <= -337.5f)
             {
-                transform.position = new Vector3(transform.position.x, -343.5f, transform.position.z);
+                transform.position = new Vector3(transform.position.x, -327.5f, transform.position.z);
             }
 
-            if (transform.position.y >= 311.5f)
+            if (transform.position.y >= 337.5f)
             {
-                transform.position = new Vector3(transform.position.x, 291.5f, transform.position.z);
+                transform.position = new Vector3(transform.position.x, 327.5f, transform.position.z);
             }
 
             // Move the player
@@ -489,7 +489,7 @@ public class Controls : MonoBehaviour
         {
 
 
-            Debug.Log(gameObject.tag);
+            //Debug.Log(gameObject.tag);
 
 
             if (Input.GetButton(revive1) || Input.GetButton(revive2) || Input.GetButton(revive3) || Input.GetButton(revive4))
