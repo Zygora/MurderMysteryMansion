@@ -11,6 +11,8 @@ public class Controls : MonoBehaviour
     public float playerSpeed;
     public float playerJumpForce;
     public float playerClimbSpeed;
+    public int speedWhileCarryOrb= 40;
+    public int speedWhileNotCarryOrb = 55;
     // System variables
     private Rigidbody2D rb;
     private Vector3 move;
@@ -74,7 +76,7 @@ public class Controls : MonoBehaviour
     private GameObject[] Shirts;
     public static bool murderTransitioning= false;
     public static bool bloodStained = false;
-    public int speedWhileCarryOrb;
+    
     public static bool wimpKilled = false;
     public static int wimpsDowned = 0;
     private string interact;
@@ -185,7 +187,7 @@ public class Controls : MonoBehaviour
             {
                 transform.GetChild(x).gameObject.SetActive(true);
             }
-			playerSpeed = 40;
+			playerSpeed = speedWhileNotCarryOrb;
 			TorsoAnimator.SetBool("Running", false);
 			LegsAnimator.SetBool("Running", false);
 			TorsoAnimator.SetBool("Idle", true);
@@ -206,7 +208,7 @@ public class Controls : MonoBehaviour
             {
                 transform.GetChild(x).gameObject.SetActive(true);
             }
-			playerSpeed = 40;
+			playerSpeed = speedWhileNotCarryOrb;
 			TorsoAnimator.SetBool("Running", false);
 			LegsAnimator.SetBool("Running", false);
 			TorsoAnimator.SetBool("Idle", true);
@@ -226,7 +228,7 @@ public class Controls : MonoBehaviour
             {
                 transform.GetChild(x).gameObject.SetActive(true);
             }
-			playerSpeed = 40;
+			playerSpeed = speedWhileNotCarryOrb;
 			TorsoAnimator.SetBool("Running", false);
 			LegsAnimator.SetBool("Running", false);
 			TorsoAnimator.SetBool("Idle", true);
@@ -246,7 +248,7 @@ public class Controls : MonoBehaviour
             {
                 transform.GetChild(x).gameObject.SetActive(true);
             }
-			playerSpeed = 40;
+			playerSpeed = speedWhileNotCarryOrb;
 			TorsoAnimator.SetBool("Running", false);
 			LegsAnimator.SetBool("Running", false);
 			TorsoAnimator.SetBool("Idle", true);
@@ -284,22 +286,22 @@ public class Controls : MonoBehaviour
         //restore speed of player if not carrying an orb
         if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == false)
         {
-            playerSpeed = 40;
+            playerSpeed = speedWhileNotCarryOrb;
         }
 
         if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == false)
         {
-            playerSpeed = 40;
+            playerSpeed = speedWhileNotCarryOrb;
         }
 
         if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == false)
         {
-            playerSpeed = 40;
+            playerSpeed = speedWhileNotCarryOrb;
         }
 
         if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == false)
         {
-            playerSpeed = 40;
+            playerSpeed = speedWhileNotCarryOrb;
         }
 
         if (speedIncreased)
@@ -376,10 +378,11 @@ public class Controls : MonoBehaviour
             {
                 if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                 {
-                    playerSpeed = 40;
+                    playerSpeed = speedWhileNotCarryOrb;
                     playerJumpForce = 75;
                 }
             }
+
 
             //play idle animation
             if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
@@ -416,6 +419,10 @@ public class Controls : MonoBehaviour
             {
                 rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
                // Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), topPlatform.GetComponent<Collider2D>(), false);
+            }
+            if (Input.GetKeyUp(KeyCode.R))
+            {
+                SceneManager.LoadScene(4); // load level generator
             }
         }
         //go to main menu
