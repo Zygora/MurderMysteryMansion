@@ -13,8 +13,13 @@ public class MurdererScripts : MonoBehaviour {
     public string interact;
     private GameObject[] Shirts;
     public static bool washingClothes = false;
+    public bool diseased;
+    public float diseasedTime;
+    public float diseasedForSeconds = 10;
+    public int lastPlayerWhileNotCarryingOrbSpeed;
     // Use this for initialization
     void Start () {
+        lastPlayerWhileNotCarryingOrbSpeed = gameObject.GetComponent<Controls>().speedWhileNotCarryOrb;
         isMurderer = true;
         //change inputs in input manager
         //change tag of player
@@ -47,9 +52,29 @@ public class MurdererScripts : MonoBehaviour {
         }
         gameObject.layer = 9;
 	}
-	
+
+	public void Diseased()
+    {
+        
+        //lastPlayerSpeed = gameObject.GetComponent<Controls>().playerSpeed;
+        //gameObject.GetComponent<Controls>().playerSpeed = 0.1f;
+        gameObject.GetComponent<Controls>().speedWhileNotCarryOrb = 0;
+        diseasedTime = diseasedForSeconds;
+        diseased = true;
+    }
+
 	// Update is called once per frame
 	void Update () {
+        if(diseased)
+        {
+            diseasedTime -= Time.deltaTime;
+            if(diseasedTime<=0)
+            {
+                //gameObject.GetComponent<Controls>().playerSpeed = lastPlayerSpeed;
+                gameObject.GetComponent<Controls>().speedWhileNotCarryOrb = lastPlayerWhileNotCarryingOrbSpeed;
+                diseased = false;
+            }
+        }
         //play blood animations for murderer when enabled;
         if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f && Controls.murderTransitioning == false)
         {

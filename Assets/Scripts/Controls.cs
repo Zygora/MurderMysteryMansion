@@ -466,6 +466,27 @@ public class Controls : MonoBehaviour
                 }
             }
         }
+        if(Input.GetKeyUp(KeyCode.V))
+        {
+           
+                if (GameObject.FindGameObjectWithTag("Murderer1") != null)
+                {
+                    GameObject.FindGameObjectWithTag("Murderer1").GetComponent<MurdererScripts>().Diseased();
+                }
+                if (GameObject.FindGameObjectWithTag("Murderer2") != null)
+                {
+                    GameObject.FindGameObjectWithTag("Murderer2").GetComponent<MurdererScripts>().Diseased();
+                }
+                if (GameObject.FindGameObjectWithTag("Murderer3") != null)
+                {
+                    GameObject.FindGameObjectWithTag("Murderer3").GetComponent<MurdererScripts>().Diseased();
+                }
+                if (GameObject.FindGameObjectWithTag("Murderer4") != null)
+                {
+                    GameObject.FindGameObjectWithTag("Murderer4").GetComponent<MurdererScripts>().Diseased();
+                }
+            
+        }
         /*Test death animation
         if (Input.GetKey(KeyCode.Q))
         {
@@ -780,6 +801,25 @@ public class Controls : MonoBehaviour
                 if((other.gameObject.GetComponent<ThrillOfTheHunt>() as ThrillOfTheHunt)!=null)
                 {
                     other.gameObject.GetComponent<ThrillOfTheHunt>().ActivateBonus();
+                }
+                if(other.gameObject.GetComponent<Diseased>() as Diseased != null)
+                {
+                    if(GameObject.FindGameObjectWithTag("Murderer1")!=null)
+                    {
+                        GameObject.FindGameObjectWithTag("Murderer1").GetComponent<MurdererScripts>().Diseased();
+                    }
+                    if (GameObject.FindGameObjectWithTag("Murderer2") != null)
+                    {
+                        GameObject.FindGameObjectWithTag("Murderer2").GetComponent<MurdererScripts>().Diseased();
+                    }
+                    if (GameObject.FindGameObjectWithTag("Murderer3") != null)
+                    {
+                        GameObject.FindGameObjectWithTag("Murderer3").GetComponent<MurdererScripts>().Diseased();
+                    }
+                    if (GameObject.FindGameObjectWithTag("Murderer4") != null)
+                    {
+                        GameObject.FindGameObjectWithTag("Murderer4").GetComponent<MurdererScripts>().Diseased();
+                    }
                 }
                 switch(gameObject.tag)
                 {
