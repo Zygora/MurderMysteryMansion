@@ -319,6 +319,17 @@ public class Controls : MonoBehaviour
 
         if (canMove && dead == false && exited == false)
         {
+            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4") {
+                if(ShittyPossum.possumed == true)
+                {
+                    playerSpeed = 0;
+                }
+
+                if (ShittyPossum.possumed == false)
+                {
+                    playerSpeed = speedWhileNotCarryOrb;
+                }
+            }
             // Create a ray down checking if there is anything underneath the player
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
             // Debug.DrawRay(transform.position, Vector2.down, Color.red);

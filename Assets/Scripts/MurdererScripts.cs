@@ -12,6 +12,7 @@ public class MurdererScripts : MonoBehaviour {
     public string attack;
     public string interact;
     private GameObject[] Shirts;
+    private GameObject[] Shirts2;
     public static bool washingClothes = false;
     public bool diseased;
     public float diseasedTime;
@@ -65,7 +66,23 @@ public class MurdererScripts : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if(diseased)
+        if (ShittyPossum.possumed == true) {
+            TorsoAnimator.SetBool("Dead", true);
+            LegsAnimator.SetBool("Dead", true);
+            Shirts2 = GameObject.FindGameObjectsWithTag("Blood");
+            for (int i = 0; i < Shirts2.Length; i++)
+            {
+                //disable the sprite renderer for each blood splatter in array
+                Shirts2[i].GetComponent<SpriteRenderer>().enabled = false;
+            }
+        }
+
+        if (ShittyPossum.possumed == false && Controls.bloodStained == true)
+        {
+            TorsoAnimator.SetBool("Dead", false);
+            LegsAnimator.SetBool("Dead", false);
+        }
+        if (diseased)
         {
             diseasedTime -= Time.deltaTime;
             if(diseasedTime<=0)
