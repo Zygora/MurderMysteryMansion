@@ -11,7 +11,7 @@ public class Controls : MonoBehaviour
     public float playerSpeed;
     public float playerJumpForce;
     public float playerClimbSpeed;
-    public int speedWhileCarryOrb= 40;
+    public int speedWhileCarryOrb = 40;
     public int speedWhileNotCarryOrb = 55;
     // System variables
     private Rigidbody2D rb;
@@ -53,7 +53,10 @@ public class Controls : MonoBehaviour
 
     public string horizontal;
     public string vertical;
-    public string revive;
+    public string revive1;
+    public string revive2;
+    public string revive3;
+    public string revive4;
 
     public string jump;
     public bool canMove = true;
@@ -71,17 +74,17 @@ public class Controls : MonoBehaviour
     private float gravityScale;
     private GameObject ladder;
     private GameObject[] Shirts;
-    public static bool murderTransitioning= false;
+    public static bool murderTransitioning = false;
     public static bool bloodStained = false;
-    
+
     public static bool wimpKilled = false;
     public static int wimpsDowned = 0;
     private string interact;
-	public bool exited;
+    public bool exited;
 
     void Start()
     {
-        
+
         // Save players gravity scale
         gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale;
         // Get rigidbody of the player at start
@@ -118,19 +121,29 @@ public class Controls : MonoBehaviour
         {
             interact = "Interact_P4";
         }
+
+
+        //Assign Revive Buttons
+
+        revive1 = "Attack/Revive_P1";
+        revive2 = "Attack/Revive_P2";
+        revive3 = "Attack/Revive_P3";
+        revive4 = "Attack/Revive_P4";
     }
 
     void Update()
     {
         //disable sprite renderer if wimp has exited
-        if (gameObject.tag == "Player1" && OrbCount.player1Exited == true) {
-            for (int x = 0; x < transform.childCount; x++) {
+        if (gameObject.tag == "Player1" && OrbCount.player1Exited == true)
+        {
+            for (int x = 0; x < transform.childCount; x++)
+            {
                 transform.GetChild(x).gameObject.SetActive(false);
             }
-			playerSpeed = 0;
+            playerSpeed = 0;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
-			exited = true;
+            exited = true;
 
         }
 
@@ -140,10 +153,10 @@ public class Controls : MonoBehaviour
             {
                 transform.GetChild(x).gameObject.SetActive(false);
             }
-			playerSpeed = 0;
+            playerSpeed = 0;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
-			exited = true;
+            exited = true;
         }
 
         if (gameObject.tag == "Player3" && OrbCount.player3Exited == true)
@@ -152,10 +165,10 @@ public class Controls : MonoBehaviour
             {
                 transform.GetChild(x).gameObject.SetActive(false);
             }
-			playerSpeed = 0;
+            playerSpeed = 0;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
-			exited = true;
+            exited = true;
         }
 
         if (gameObject.tag == "Player4" && OrbCount.player4Exited == true)
@@ -164,91 +177,91 @@ public class Controls : MonoBehaviour
             {
                 transform.GetChild(x).gameObject.SetActive(false);
             }
-			playerSpeed = 0;
+            playerSpeed = 0;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
-			exited = true;
+            exited = true;
         }
         //enable sprite renderer if wimp has re entered
-	if (gameObject.tag == "Player1" && OrbCount.player1Exited == true && Input.GetButtonDown(interact) && OrbCount.player1CanEnter == true) 
+        if (gameObject.tag == "Player1" && OrbCount.player1Exited == true && Input.GetButtonDown(interact) && OrbCount.player1CanEnter == true)
         {
             for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(true);
             }
-			playerSpeed = speedWhileNotCarryOrb;
-			TorsoAnimator.SetBool("Running", false);
-			LegsAnimator.SetBool("Running", false);
-			TorsoAnimator.SetBool("Idle", true);
-			LegsAnimator.SetBool("Idle", true);
+            playerSpeed = speedWhileNotCarryOrb;
+            TorsoAnimator.SetBool("Running", false);
+            LegsAnimator.SetBool("Running", false);
+            TorsoAnimator.SetBool("Idle", true);
+            LegsAnimator.SetBool("Idle", true);
             gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
             gameObject.GetComponent<Collider2D>().isTrigger = false;
             OrbCount.player1Exited = false;
-			OrbCount.player1CanEnter = false;
-			OrbCount.wimpsExited -= 1;
-			Debug.Log("wimp entered");
-			Debug.Log (OrbCount.wimpsExited);
-			exited = false;
+            OrbCount.player1CanEnter = false;
+            OrbCount.wimpsExited -= 1;
+            Debug.Log("wimp entered");
+            Debug.Log(OrbCount.wimpsExited);
+            exited = false;
         }
 
-	if (gameObject.tag == "Player2" && OrbCount.player2Exited == true && Input.GetButtonDown(interact)  && OrbCount.player2CanEnter == true)
-        {
-            for(int x = 0; x < transform.childCount; x++)
-            {
-                transform.GetChild(x).gameObject.SetActive(true);
-            }
-			playerSpeed = speedWhileNotCarryOrb;
-			TorsoAnimator.SetBool("Running", false);
-			LegsAnimator.SetBool("Running", false);
-			TorsoAnimator.SetBool("Idle", true);
-			LegsAnimator.SetBool("Idle", true);
-            gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-            gameObject.GetComponent<Collider2D>().isTrigger = false;
-            OrbCount.player1Exited = false;
-			OrbCount.player1CanEnter = false;
-			OrbCount.wimpsExited -= 1;
-			Debug.Log("wimp entered");
-			exited = false;
-        }
-
-	if (gameObject.tag == "Player3" && OrbCount.player3Exited == true && Input.GetButtonDown(interact)  && OrbCount.player3CanEnter == true)
+        if (gameObject.tag == "Player2" && OrbCount.player2Exited == true && Input.GetButtonDown(interact) && OrbCount.player2CanEnter == true)
         {
             for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(true);
             }
-			playerSpeed = speedWhileNotCarryOrb;
-			TorsoAnimator.SetBool("Running", false);
-			LegsAnimator.SetBool("Running", false);
-			TorsoAnimator.SetBool("Idle", true);
-			LegsAnimator.SetBool("Idle", true);
+            playerSpeed = speedWhileNotCarryOrb;
+            TorsoAnimator.SetBool("Running", false);
+            LegsAnimator.SetBool("Running", false);
+            TorsoAnimator.SetBool("Idle", true);
+            LegsAnimator.SetBool("Idle", true);
             gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
             gameObject.GetComponent<Collider2D>().isTrigger = false;
             OrbCount.player1Exited = false;
-			OrbCount.player1CanEnter = false;
-			OrbCount.wimpsExited -= 1;
-			Debug.Log("wimp entered");
-			exited = false;
+            OrbCount.player1CanEnter = false;
+            OrbCount.wimpsExited -= 1;
+            Debug.Log("wimp entered");
+            exited = false;
         }
 
-	if (gameObject.tag == "Player4" && OrbCount.player4Exited == true && Input.GetButtonDown(interact)  && OrbCount.player4CanEnter == true)
+        if (gameObject.tag == "Player3" && OrbCount.player3Exited == true && Input.GetButtonDown(interact) && OrbCount.player3CanEnter == true)
         {
             for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(true);
             }
-			playerSpeed = speedWhileNotCarryOrb;
-			TorsoAnimator.SetBool("Running", false);
-			LegsAnimator.SetBool("Running", false);
-			TorsoAnimator.SetBool("Idle", true);
-			LegsAnimator.SetBool("Idle", true);
+            playerSpeed = speedWhileNotCarryOrb;
+            TorsoAnimator.SetBool("Running", false);
+            LegsAnimator.SetBool("Running", false);
+            TorsoAnimator.SetBool("Idle", true);
+            LegsAnimator.SetBool("Idle", true);
             gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
             gameObject.GetComponent<Collider2D>().isTrigger = false;
             OrbCount.player1Exited = false;
-			OrbCount.player1CanEnter = false;
-			OrbCount.wimpsExited -= 1;
-			Debug.Log("wimp entered");
-			exited = false;
+            OrbCount.player1CanEnter = false;
+            OrbCount.wimpsExited -= 1;
+            Debug.Log("wimp entered");
+            exited = false;
+        }
+
+        if (gameObject.tag == "Player4" && OrbCount.player4Exited == true && Input.GetButtonDown(interact) && OrbCount.player4CanEnter == true)
+        {
+            for (int x = 0; x < transform.childCount; x++)
+            {
+                transform.GetChild(x).gameObject.SetActive(true);
+            }
+            playerSpeed = speedWhileNotCarryOrb;
+            TorsoAnimator.SetBool("Running", false);
+            LegsAnimator.SetBool("Running", false);
+            TorsoAnimator.SetBool("Idle", true);
+            LegsAnimator.SetBool("Idle", true);
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+            gameObject.GetComponent<Collider2D>().isTrigger = false;
+            OrbCount.player1Exited = false;
+            OrbCount.player1CanEnter = false;
+            OrbCount.wimpsExited -= 1;
+            Debug.Log("wimp entered");
+            exited = false;
         }
 
         //decrease speed of player if carrying an orb
@@ -332,8 +345,9 @@ public class Controls : MonoBehaviour
             // Create move vector
             move = new Vector3(Input.GetAxis(horizontal), 0, 0);
             //set movement bounds on player
-            if (transform.position.x <= -110) {
-                transform.position = new Vector3(-105,transform.position.y,transform.position.z);
+            if (transform.position.x <= -110)
+            {
+                transform.position = new Vector3(-105, transform.position.y, transform.position.z);
             }
 
             if (transform.position.x >= 1070)
@@ -343,7 +357,7 @@ public class Controls : MonoBehaviour
 
             if (transform.position.y <= -363.5f)
             {
-                transform.position = new Vector3(transform.position.x,-343.5f, transform.position.z);
+                transform.position = new Vector3(transform.position.x, -343.5f, transform.position.z);
             }
 
             if (transform.position.y >= 311.5f)
@@ -355,8 +369,10 @@ public class Controls : MonoBehaviour
             transform.position += move * playerSpeed * Time.deltaTime;
 
             //disable movement for murderer if murderer is washing clothes
-            if (MurdererScripts.washingClothes == true) {
-                if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4") {
+            if (MurdererScripts.washingClothes == true)
+            {
+                if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+                {
                     playerSpeed = 0;
                     playerJumpForce = 0;
                 }
@@ -407,7 +423,7 @@ public class Controls : MonoBehaviour
             if (Input.GetButtonDown(jump) && (onGround))
             {
                 rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
-               // Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), topPlatform.GetComponent<Collider2D>(), false);
+                // Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), topPlatform.GetComponent<Collider2D>(), false);
             }
             if (Input.GetKeyUp(KeyCode.R))
             {
@@ -466,26 +482,44 @@ public class Controls : MonoBehaviour
                 }
             }
         }
-        if(Input.GetKeyUp(KeyCode.V))
+
+
+        //Revive Player if dead
+        if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
         {
-           
-                if (GameObject.FindGameObjectWithTag("Murderer1") != null)
+
+
+            Debug.Log(gameObject.tag);
+
+
+            if (Input.GetButton(revive1) || Input.GetButton(revive2) || Input.GetButton(revive3) || Input.GetButton(revive4))
+            {
+                if (GetComponent<MurdererScripts>().isActiveAndEnabled)
+                    return;
+                TorsoAnimator.SetBool("Dead", false);
+                LegsAnimator.SetBool("Dead", false);
+                gameObject.layer = 11;
+                dead = false;
+                gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+
+                switch (gameObject.tag)
                 {
-                    GameObject.FindGameObjectWithTag("Murderer1").GetComponent<MurdererScripts>().Diseased();
+                    case "DownedWimp1":
+                        gameObject.tag = "Player1";
+                        break;
+                    case "DownedWimp2":
+                        gameObject.tag = "Player2";
+                        break;
+                    case "DownedWimp3":
+                        gameObject.tag = "Player3";
+                        break;
+                    case "DownedWimp4":
+                        gameObject.tag = "Player4";
+                        break;
+
+
                 }
-                if (GameObject.FindGameObjectWithTag("Murderer2") != null)
-                {
-                    GameObject.FindGameObjectWithTag("Murderer2").GetComponent<MurdererScripts>().Diseased();
-                }
-                if (GameObject.FindGameObjectWithTag("Murderer3") != null)
-                {
-                    GameObject.FindGameObjectWithTag("Murderer3").GetComponent<MurdererScripts>().Diseased();
-                }
-                if (GameObject.FindGameObjectWithTag("Murderer4") != null)
-                {
-                    GameObject.FindGameObjectWithTag("Murderer4").GetComponent<MurdererScripts>().Diseased();
-                }
-            
+            }
         }
         /*Test death animation
         if (Input.GetKey(KeyCode.Q))
@@ -501,20 +535,20 @@ public class Controls : MonoBehaviour
         }*/
 
         // if player hits upArrow on the ladder go up
-        if(Input.GetAxis(vertical) > 0 &&(canGoUp))
+        if (Input.GetAxis(vertical) > 0 && (canGoUp))
         {
             goUp = true;
             gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         }
         // Go up
-       if (goUp)
+        if (goUp)
         {
             canMove = false;
             groundCheck.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-            transform.position += new Vector3(0,1,0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
+            transform.position += new Vector3(0, 1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
         }
-        
+
         // if player hits downArrow on the ladder go up
         if (Input.GetAxis(vertical) < 0 && (canGoDown))
         {
@@ -534,7 +568,8 @@ public class Controls : MonoBehaviour
         {
             TorsoAnimator.SetBool("Jumping", true);
             LegsAnimator.SetBool("Jumping", true);
-            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4") {
+            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+            {
                 ShirtAnimator.SetBool("MurdererJumping", true);
                 murderTransitioning = true;
             }
@@ -550,7 +585,7 @@ public class Controls : MonoBehaviour
             //change player camera according to player
             if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
             {
-               player1Camera.transform.position = Vector3.MoveTowards(player1Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
+                player1Camera.transform.position = Vector3.MoveTowards(player1Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
             }
 
             if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
@@ -569,7 +604,7 @@ public class Controls : MonoBehaviour
             }
             canMove = false;
             // Change player animation to run while transitioning left or right
-	    if ((!goUp)&&(!goDown))
+            if ((!goUp) && (!goDown))
             {
                 TorsoAnimator.SetBool("Running", true);
                 LegsAnimator.SetBool("Running", true);
@@ -592,12 +627,12 @@ public class Controls : MonoBehaviour
                 direction *= -1;
                 canMove = false;
                 transform.eulerAngles = new Vector3(0, 180, 0);
-                if(speedMultiplier <=2)
+                if (speedMultiplier <= 2)
                 {
                     speedMultiplier = 2;
                 }
             }
-            if (Input.GetAxis(horizontal) > 0 && (direction.x == -1)&&(!goDown)&&(!goUp))
+            if (Input.GetAxis(horizontal) > 0 && (direction.x == -1) && (!goDown) && (!goUp))
             {
                 GameObject buffer;
                 buffer = currentRoom;
@@ -673,15 +708,15 @@ public class Controls : MonoBehaviour
             }
 
 
-          /*  if (direction.x == 1)
-            {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-            }
-            if (direction.x == -1)
-            {
-                transform.eulerAngles = new Vector3(0, 180, 0);
-            }
-            */
+            /*  if (direction.x == 1)
+              {
+                  transform.eulerAngles = new Vector3(0, 0, 0);
+              }
+              if (direction.x == -1)
+              {
+                  transform.eulerAngles = new Vector3(0, 180, 0);
+              }
+              */
         }
     }
 
@@ -709,7 +744,7 @@ public class Controls : MonoBehaviour
             GateHighlight.enabled = true;
             if (Input.GetKey(KeyCode.UpArrow))
             {
-                
+
             }
             if (Input.GetKey(KeyCode.DownArrow))
             {
@@ -735,7 +770,7 @@ public class Controls : MonoBehaviour
     {
         if (other.tag == "ColorSelection")
         {
-            GameObject.Find("ColorManager").GetComponent<ColorManager>().playerCanSelect = true; 
+            GameObject.Find("ColorManager").GetComponent<ColorManager>().playerCanSelect = true;
         }
         if (other.tag == "BotLadder")
         {
@@ -750,7 +785,7 @@ public class Controls : MonoBehaviour
             canMove = true;
             goUp = false;
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-           // gameObject.GetComponent<Collider2D>().enabled = true;
+            // gameObject.GetComponent<Collider2D>().enabled = true;
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
         }
@@ -798,32 +833,14 @@ public class Controls : MonoBehaviour
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
                 // if murderer has thrill of the hunt script atached activate the bonus
-                if((other.gameObject.GetComponent<ThrillOfTheHunt>() as ThrillOfTheHunt)!=null)
+                if ((other.gameObject.GetComponent<ThrillOfTheHunt>() as ThrillOfTheHunt) != null)
                 {
                     other.gameObject.GetComponent<ThrillOfTheHunt>().ActivateBonus();
                 }
-                if(other.gameObject.GetComponent<Diseased>() as Diseased != null)
+                switch (gameObject.tag)
                 {
-                    if(GameObject.FindGameObjectWithTag("Murderer1")!=null)
-                    {
-                        GameObject.FindGameObjectWithTag("Murderer1").GetComponent<MurdererScripts>().Diseased();
-                    }
-                    if (GameObject.FindGameObjectWithTag("Murderer2") != null)
-                    {
-                        GameObject.FindGameObjectWithTag("Murderer2").GetComponent<MurdererScripts>().Diseased();
-                    }
-                    if (GameObject.FindGameObjectWithTag("Murderer3") != null)
-                    {
-                        GameObject.FindGameObjectWithTag("Murderer3").GetComponent<MurdererScripts>().Diseased();
-                    }
-                    if (GameObject.FindGameObjectWithTag("Murderer4") != null)
-                    {
-                        GameObject.FindGameObjectWithTag("Murderer4").GetComponent<MurdererScripts>().Diseased();
-                    }
-                }
-                switch(gameObject.tag)
-                {
-                    case "Player1": gameObject.tag = "DownedWimp1";
+                    case "Player1":
+                        gameObject.tag = "DownedWimp1";
                         break;
                     case "Player2":
                         gameObject.tag = "DownedWimp2";
@@ -835,8 +852,9 @@ public class Controls : MonoBehaviour
                         gameObject.tag = "DownedWimp4";
                         break;
                 }
-               // transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 5, this.transform.position.z);
-                if (other.gameObject.tag == "Knife1") {
+                // transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 5, this.transform.position.z);
+                if (other.gameObject.tag == "Knife1")
+                {
                     Invoke("TurnOnBloodShirt1", .5f);
                 }
 
@@ -858,7 +876,7 @@ public class Controls : MonoBehaviour
                 bloodStained = true;
             }
         }
-            
+
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -899,7 +917,8 @@ public class Controls : MonoBehaviour
         }
     }
 
-    void TurnOnBloodShirt1() {
+    void TurnOnBloodShirt1()
+    {
         GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = true;
     }
 
@@ -918,7 +937,8 @@ public class Controls : MonoBehaviour
         GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = true;
     }
 
-    void RechargeWeapon() {
+    void RechargeWeapon()
+    {
         wimpKilled = false;
     }
 }
