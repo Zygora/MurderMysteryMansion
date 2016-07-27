@@ -51,7 +51,10 @@ public class Controls : MonoBehaviour
 
     public string horizontal;
     public string vertical;
-    public string revive;
+    public string revive1;
+    public string revive2;
+    public string revive3;
+    public string revive4;
 
     public string jump;
     public bool canMove = true;
@@ -116,6 +119,14 @@ public class Controls : MonoBehaviour
         {
             interact = "Interact_P4";
         }
+
+
+        //Assign Revive Buttons
+
+        revive1 = "Attack/Revive_P1";
+        revive2 = "Attack/Revive_P2";
+        revive3 = "Attack/Revive_P3";
+        revive4 = "Attack/Revive_P4";
     }
 
     void Update()
@@ -459,6 +470,42 @@ public class Controls : MonoBehaviour
                 }
             }
         }
+
+
+        //Revive Player if dead
+        if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
+        {
+
+
+            Debug.Log(gameObject.tag);
+
+
+            if (Input.GetButton(revive1) || Input.GetButton(revive2) || Input.GetButton(revive3) || Input.GetButton(revive4))
+            {
+                TorsoAnimator.SetBool("Dead", false);
+                LegsAnimator.SetBool("Dead", false);
+                gameObject.layer = 11;
+                dead = false;
+                gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+                switch (gameObject.tag)
+                {
+                    case "DownedWimp1":
+                        gameObject.tag = "Player1";
+                        break;
+                    case "DownedWimp2":
+                        gameObject.tag = "Player2";
+                        break;
+                    case "DownedWimp3":
+                        gameObject.tag = "Player3";
+                        break;
+                    case "DownedWimp4":
+                        gameObject.tag = "Player4";
+                        break;
+
+
+                }
+            }
+        }
         /*Test death animation
         if (Input.GetKey(KeyCode.Q))
         {
@@ -473,7 +520,7 @@ public class Controls : MonoBehaviour
         }*/
 
         // if player hits upArrow on the ladder go up
-        if(Input.GetAxis(vertical) > 0 &&(canGoUp))
+        if (Input.GetAxis(vertical) > 0 &&(canGoUp))
         {
             goUp = true;
             gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
