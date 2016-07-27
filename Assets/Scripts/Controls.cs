@@ -136,10 +136,11 @@ public class Controls : MonoBehaviour
         //disable sprite renderer if wimp has exited
         if (gameObject.tag == "Player1" && OrbCount.player1Exited == true)
         {
-            for (int x = 0; x < transform.childCount; x++)
+            /*for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(false);
-            }
+            }*/
+            this.transform.position =  new Vector3(this.transform.position.x, this.transform.position.y, -50);
             playerSpeed = 0;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
@@ -149,10 +150,11 @@ public class Controls : MonoBehaviour
 
         if (gameObject.tag == "Player2" && OrbCount.player2Exited == true)
         {
-            for (int x = 0; x < transform.childCount; x++)
+            /*for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(false);
-            }
+            }*/
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -50);
             playerSpeed = 0;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
@@ -161,10 +163,11 @@ public class Controls : MonoBehaviour
 
         if (gameObject.tag == "Player3" && OrbCount.player3Exited == true)
         {
-            for (int x = 0; x < transform.childCount; x++)
+            /*for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(false);
-            }
+            }*/
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -50);
             playerSpeed = 0;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
@@ -173,10 +176,11 @@ public class Controls : MonoBehaviour
 
         if (gameObject.tag == "Player4" && OrbCount.player4Exited == true)
         {
-            for (int x = 0; x < transform.childCount; x++)
+            /*for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(false);
-            }
+            }*/
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -50);
             playerSpeed = 0;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
@@ -185,10 +189,11 @@ public class Controls : MonoBehaviour
         //enable sprite renderer if wimp has re entered
         if (gameObject.tag == "Player1" && OrbCount.player1Exited == true && Input.GetButtonDown(interact) && OrbCount.player1CanEnter == true)
         {
-            for (int x = 0; x < transform.childCount; x++)
+            /*for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(true);
-            }
+            }*/
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
             playerSpeed = speedWhileNotCarryOrb;
             TorsoAnimator.SetBool("Running", false);
             LegsAnimator.SetBool("Running", false);
@@ -206,10 +211,11 @@ public class Controls : MonoBehaviour
 
         if (gameObject.tag == "Player2" && OrbCount.player2Exited == true && Input.GetButtonDown(interact) && OrbCount.player2CanEnter == true)
         {
-            for (int x = 0; x < transform.childCount; x++)
+            /*for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(true);
-            }
+            }*/
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
             playerSpeed = speedWhileNotCarryOrb;
             TorsoAnimator.SetBool("Running", false);
             LegsAnimator.SetBool("Running", false);
@@ -226,10 +232,11 @@ public class Controls : MonoBehaviour
 
         if (gameObject.tag == "Player3" && OrbCount.player3Exited == true && Input.GetButtonDown(interact) && OrbCount.player3CanEnter == true)
         {
-            for (int x = 0; x < transform.childCount; x++)
+            /*for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(true);
-            }
+            }*/
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
             playerSpeed = speedWhileNotCarryOrb;
             TorsoAnimator.SetBool("Running", false);
             LegsAnimator.SetBool("Running", false);
@@ -246,10 +253,11 @@ public class Controls : MonoBehaviour
 
         if (gameObject.tag == "Player4" && OrbCount.player4Exited == true && Input.GetButtonDown(interact) && OrbCount.player4CanEnter == true)
         {
-            for (int x = 0; x < transform.childCount; x++)
+            /*for (int x = 0; x < transform.childCount; x++)
             {
                 transform.GetChild(x).gameObject.SetActive(true);
-            }
+            }*/
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
             playerSpeed = speedWhileNotCarryOrb;
             TorsoAnimator.SetBool("Running", false);
             LegsAnimator.SetBool("Running", false);
