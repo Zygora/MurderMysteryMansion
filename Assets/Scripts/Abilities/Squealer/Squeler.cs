@@ -140,13 +140,6 @@ public class Squeler : MonoBehaviour
                 arrow2.transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
                 timePassed = squealerCooldown;
             }
-        }  
+        }       
     }
-
-    /*void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Room" || other.gameObject.tag == "MurdererStart") {
-            Debug.Log(other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate);
-        }
-    }*/
 }
