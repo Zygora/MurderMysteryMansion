@@ -349,14 +349,14 @@ public class Controls : MonoBehaviour
 
         if (canMove && dead == false && exited == false)
         {
-            //turn of movement of murderer if murderer used possum ability
+            //turn off movement of murderer during certain times
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4") {
-                if(ShittyPossum.possumed == true)
+                if(ShittyPossum.possumed == true || MurdererScripts.washingClothes == true)
                 {
                     playerSpeed = 0;
                 }
-                //restore movement of movement after using possum ability again
-                if (ShittyPossum.possumed == false)
+                //restore movement of movement after
+                if (ShittyPossum.possumed == false && MurdererScripts.washingClothes == false)
                 {
                     playerSpeed = speedWhileNotCarryOrb;
                 }
@@ -405,27 +405,6 @@ public class Controls : MonoBehaviour
 
             // Move the player
             transform.position += move * playerSpeed * Time.deltaTime;
-
-            //disable movement for murderer if murderer is washing clothes
-            if (MurdererScripts.washingClothes == true)
-            {
-                if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
-                {
-                    playerSpeed = 0;
-                    playerJumpForce = 0;
-                }
-            }
-
-            //enable movement for murderer if murderer is not washing clothes
-            if (MurdererScripts.washingClothes == false)
-            {
-                if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
-                {
-                    playerSpeed = speedWhileNotCarryOrb;
-                    playerJumpForce = 75;
-                }
-            }
-
 
             //play idle animation
             if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)

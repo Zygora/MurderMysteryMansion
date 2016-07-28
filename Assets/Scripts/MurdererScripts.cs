@@ -66,6 +66,7 @@ public class MurdererScripts : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+      
         //play dead animtion and disable bloody shirt if possum used
         if (ShittyPossum.possumed == true) {
             TorsoAnimator.SetBool("Dead", true);
@@ -78,7 +79,7 @@ public class MurdererScripts : MonoBehaviour {
             }
         }
 
-        if (ShittyPossum.possumed == false && Controls.bloodStained == true)
+        if (ShittyPossum.possumed == false)
         {
             TorsoAnimator.SetBool("Dead", false);
             LegsAnimator.SetBool("Dead", false);
@@ -143,7 +144,7 @@ public class MurdererScripts : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other) {
         //check collision with sink
-        if (other.gameObject.tag == "Sink" && Input.GetButtonDown(interact)) {
+        if (other.gameObject.tag == "Sink" && Input.GetButtonDown(interact) && ShittyPossum.possumed == false) {
             washingClothes = true;
             if (gameObject.tag == "Murderer1")
             {
