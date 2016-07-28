@@ -161,7 +161,8 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //spawn player1 if not murderer in a random room not containing another player
         if (player1Spawned == false && randomMurdererNumber != 0)
         {
-            random = Random.Range(0, randomMax);
+            random = 1;
+            //random = Random.Range(0, randomMax);
             //instantiate from resources folder
             Instantiate(Resources.Load("MainPlayer_1"), RoomPositions[random].position, Quaternion.identity);
             //move player 1 camera to same position as player1
@@ -201,8 +202,12 @@ public class RandomSpawnPlayers : MonoBehaviour {
 
         //spawn player 1 if murderer in butcher room
         else if (player1Spawned == false && randomMurdererNumber == 0) {
+
+
             //instantiate from resources folder
-            Instantiate(Resources.Load("MainPlayer_1"), buctherRoom.transform.position, Quaternion.identity);
+
+            Instantiate(Resources.Load("MainPlayer_1"), RoomPositions[1].transform.position, Quaternion.identity);
+            //Instantiate(Resources.Load("MainPlayer_1"), buctherRoom.transform.position, Quaternion.identity);
             //move player 1 camera to same position as player1
             player1Camera.transform.position = new Vector3(buctherRoom.transform.position.x, buctherRoom.transform.position.y, -15);
             player1Spawned = true;
@@ -211,7 +216,8 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //spawn player2 if not murderer  in a random room not containing another player
         if (player2Spawned == false && randomMurdererNumber != 1)
         {
-            random = Random.Range(0, randomMax);
+            //random = Random.Range(0, randomMax);
+            random = 1;
             //instantiate from resources folder
             Instantiate(Resources.Load("MainPlayer_2"), RoomPositions[random].position, Quaternion.identity);
             //move player 2 camera to same position as player2
@@ -267,7 +273,8 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //spawn player3 if not murderer  in a random room not containing another player
         if (player3Spawned == false && randomMurdererNumber != 2)
         {
-            random = Random.Range(0, randomMax);
+            random = 1;
+           // random = Random.Range(0, randomMax);
             //instantiate from resources folder
             Instantiate(Resources.Load("MainPlayer_3"), RoomPositions[random].position, Quaternion.identity);
             //move player 3 camera to same position as player3
@@ -324,7 +331,8 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //spawn player4 if not murderer in a random room not containing another player
         if (player4Spawned == false && randomMurdererNumber != 3)
         {
-            random = Random.Range(0, randomMax);
+            random = 1;
+            //random = Random.Range(0, randomMax);
             //instantiate from resources folder
             Instantiate(Resources.Load("MainPlayer_4"), RoomPositions[random].position, Quaternion.identity);
             //move player 4 camera to same position as player4
