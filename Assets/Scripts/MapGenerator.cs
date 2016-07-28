@@ -130,7 +130,6 @@ public class MapGenerator : MonoBehaviour {
             {
                 if (currentColumn!=4)
                 {
-                    Debug.Log("currentcolumn=" + currentColumn);
                     //instantiate room based on random number
                     GameObject gridObject1 = Instantiate(Rooms[x - 1], currentLocation, Quaternion.identity) as GameObject;
                     currentObjectCount++;

@@ -25,6 +25,7 @@ public class OrbCount : MonoBehaviour {
     public static bool player2CanEnter = false;
     public static bool player3CanEnter = false;
     public static bool player4CanEnter = false;
+    public static bool doorOpen;
     
     // Use this for initialization
     void Start () {
@@ -64,6 +65,35 @@ public class OrbCount : MonoBehaviour {
             carryingOrbs = 0;
             Debug.Log("orb dropped");
             canDropOrb = false;
+            //keeps track of player carrying orb globally
+            if (gameObject.tag == "Player1")
+            {
+                player1CarryOrb = false;
+            }
+
+            if (gameObject.tag == "Player2")
+            {
+                player2CarryOrb = false;
+            }
+
+            if (gameObject.tag == "Player3")
+            {
+                player3CarryOrb = false;
+            }
+
+            if (gameObject.tag == "Player4")
+            {
+                player4CarryOrb = false;
+            }
+        }
+
+        if (orbsAtAltar1 == 1 && orbsAtAltar2 == 1 && orbsAtAltar3 == 1)
+        {
+            doorOpen = true;
+        }
+
+        else {
+            doorOpen = false;
         }
     }
 
@@ -129,6 +159,7 @@ public class OrbCount : MonoBehaviour {
                     player4CarryOrb = false;
                 }
                 orbsAtAltar1 += 1;
+                canDropOrb = false;
             }
         }
 
@@ -160,6 +191,7 @@ public class OrbCount : MonoBehaviour {
                     player4CarryOrb = false;
                 }
                 orbsAtAltar2 += 1;
+                canDropOrb = false;
             }
         }
 
@@ -191,6 +223,7 @@ public class OrbCount : MonoBehaviour {
                     player4CarryOrb = false;
                 }
                 orbsAtAltar3 += 1;
+                canDropOrb = false;
             }
         }
 
@@ -199,7 +232,6 @@ public class OrbCount : MonoBehaviour {
             if(orbsAtAltar1 == 1 && orbsAtAltar2 == 1 && orbsAtAltar3 == 1 && Input.GetButtonDown(interact))
             {
                 
-				Debug.Log("wimp exited");
                 if (gameObject.tag == "Player1" && player1Exited == false)
                 {
                     player1Exited = true;
