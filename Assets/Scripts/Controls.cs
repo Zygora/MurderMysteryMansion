@@ -87,6 +87,10 @@ public class Controls : MonoBehaviour
     public static Vector2 currentPlayer2Pos;
     public static Vector2 currentPlayer3Pos;
     public static Vector2 currentPlayer4Pos;
+    float revivetime = 2.0f;
+    float revivetimepassed = 0.0f;   
+    public string revive;
+
 
     void Start()
     {
@@ -111,34 +115,39 @@ public class Controls : MonoBehaviour
         if (gameObject.tag == "Player1")
         {
             interact = "Interact_P1";
+
+            revive = "Attack/Revive_P1";
         }
 
         if (gameObject.tag == "Player2")
         {
             interact = "Interact_P2";
+            revive = "Attack/Revive_P2";
         }
 
         if (gameObject.tag == "Player3")
         {
             interact = "Interact_P3";
+            revive = "Attack/Revive_P3";
         }
 
         if (gameObject.tag == "Player4")
         {
             interact = "Interact_P4";
+            revive = "Attack/Revive_P4";
         }
 
 
-        //Assign Revive Buttons
-
-        revive1 = "Attack/Revive_P1";
-        revive2 = "Attack/Revive_P2";
-        revive3 = "Attack/Revive_P3";
-        revive4 = "Attack/Revive_P4";
     }
 
     void Update()
     {
+        if (gameObject.tag == "Player1" || gameObject.tag == "Player2" || gameObject.tag == "Player3" || gameObject.tag == "Player4")
+        {
+            dead = false;
+            TorsoAnimator.SetBool("Dead", false);
+            LegsAnimator.SetBool("Dead", false);
+        }
         //disable sprite renderer if wimp has exited
         if (gameObject.tag == "Player1" && OrbCount.player1Exited == true)
         {
@@ -509,43 +518,7 @@ public class Controls : MonoBehaviour
         }
 
 
-        //Revive Player if dead
-        if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
-        {
-
-
-            //Debug.Log(gameObject.tag);
-
-
-            if (Input.GetButton(revive1) || Input.GetButton(revive2) || Input.GetButton(revive3) || Input.GetButton(revive4))
-            {
-                if (GetComponent<MurdererScripts>().isActiveAndEnabled)
-                    return;
-                TorsoAnimator.SetBool("Dead", false);
-                LegsAnimator.SetBool("Dead", false);
-                gameObject.layer = 11;
-                dead = false;
-                gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-
-                switch (gameObject.tag)
-                {
-                    case "DownedWimp1":
-                        gameObject.tag = "Player1";
-                        break;
-                    case "DownedWimp2":
-                        gameObject.tag = "Player2";
-                        break;
-                    case "DownedWimp3":
-                        gameObject.tag = "Player3";
-                        break;
-                    case "DownedWimp4":
-                        gameObject.tag = "Player4";
-                        break;
-
-
-                }
-            }
-        }
+        
         /*Test death animation
         if (Input.GetKey(KeyCode.Q))
         {
@@ -811,6 +784,49 @@ public class Controls : MonoBehaviour
                 currentPlayer4Pos = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
             }
         }
+
+        if (other.gameObject.tag == "DownedWimp1" || other.gameObject.tag == "DownedWimp2" || other.gameObject.tag == "DownedWimp3" || other.gameObject.tag == "DownedWimp4")
+        {
+            if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
+            {
+                if (Input.GetButton(revive))
+                {
+                    TorsoAnimator.SetBool("Reviving", true);
+                    LegsAnimator.SetBool("Reviving", true);
+                    Debug.Log("Reviving");
+                    other.gameObject.layer = 11;
+                    Debug.Log("Revive Time Passed:" + revivetimepassed);
+                    revivetimepassed += Time.deltaTime;
+                    if (revivetimepassed > revivetime)
+                    {
+                        TorsoAnimator.SetBool("Reviving", false);
+                        LegsAnimator.SetBool("Reviving", false);
+                        gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+                        Debug.Log("Reviving Done");
+                        switch (other.gameObject.tag)
+                        {
+                            case "DownedWimp1":
+                                other.gameObject.tag = "Player1";
+                                break;
+                            case "DownedWimp2":
+                                other.gameObject.tag = "Player2";
+                                break;
+                            case "DownedWimp3":
+                                other.gameObject.tag = "Player3";
+                                break;
+                            case "DownedWimp4":
+                                other.gameObject.tag = "Player4";
+                                break;
+                        }
+                        revivetimepassed = 0;
+                        wimpsDowned -= 1;
+                    }
+                    
+                }
+            }
+
+        }
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
