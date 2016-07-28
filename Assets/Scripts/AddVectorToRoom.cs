@@ -10,8 +10,8 @@ public class AddVectorToRoom : MonoBehaviour {
     private GameObject leftDoor;
     // Use this for initialization
     void Start () {
-	
-	}
+  
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -27,8 +27,6 @@ public class AddVectorToRoom : MonoBehaviour {
         if (currentColumn == 4 && this.gameObject.name == "Exit Room(Clone)" && doorsSet == 0)
         {
             transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
-            Debug.Log(transform.GetChild(0).name);
-            Debug.Log(currentColumn);
             doorsSet ++;
         }
     }
