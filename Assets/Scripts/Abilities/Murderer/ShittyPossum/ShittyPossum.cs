@@ -33,8 +33,10 @@ public class ShittyPossum : MonoBehaviour {
     void Update () {
         if (Input.GetButtonDown(ability) && unPossum == true)
         {
+            //turn on colliders
             gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
             gameObject.GetComponent<Collider2D>().isTrigger = false;
+            //turn on bloody shirt animtors
             if (gameObject.tag == "Murderer1" && Controls.bloodStained == true)
             {
                 GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = true;
@@ -58,9 +60,10 @@ public class ShittyPossum : MonoBehaviour {
 
         if (Input.GetButtonDown(ability) && canPossum == true)
         {
-            // Change murderer's animation state to dead
+            // turn off colliders
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
+            //turn off bloody shirt animators
             if (gameObject.tag == "Murderer1")
             {
                 GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = false;

@@ -30,9 +30,9 @@ public class OrbCount : MonoBehaviour {
     void Start () {
         //set amount of orbs carried to 0
         carryingOrbs = 0;
-        orbsAtAltar1 = 1;
-        orbsAtAltar2 = 1;
-        orbsAtAltar3 = 1;
+        orbsAtAltar1 = 0;
+        orbsAtAltar2 = 0;
+        orbsAtAltar3 = 0;
 
         //set input in input manager
         if (gameObject.tag == "Player1")
@@ -58,9 +58,6 @@ public class OrbCount : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //update orb ui text
-        //orbCount.text = "Orb Count: " + carryingOrbs;
-
         //drop orb if carrying orb
         if (carryingOrbs == 1 && Input.GetButtonDown(interact) && canDropOrb) {
             Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 28, Quaternion.identity);
@@ -206,7 +203,7 @@ public class OrbCount : MonoBehaviour {
                 if (gameObject.tag == "Player1" && player1Exited == false)
                 {
                     player1Exited = true;
-					Invoke ("P1CanReenter", 2);
+					Invoke ("P1CanReenter", 1);
 					//increment wimps exited needed for wimp win condition
 					wimpsExited += 1;
                 }
@@ -214,7 +211,7 @@ public class OrbCount : MonoBehaviour {
                 if (gameObject.tag == "Player2" && player2Exited == false)
                 {
                     player2Exited = true;
-					Invoke ("P2CanReenter", 2);
+					Invoke ("P2CanReenter", 1);
 					//increment wimps exited needed for wimp win condition
 					wimpsExited += 1;
                 }
@@ -222,7 +219,7 @@ public class OrbCount : MonoBehaviour {
                 if (gameObject.tag == "Player3" && player3Exited == false)
                 {
                     player3Exited = true;
-					Invoke ("P3CanReenter", 2);
+					Invoke ("P3CanReenter", 1);
 					//increment wimps exited needed for wimp win condition
 					wimpsExited += 1;
                 }
@@ -230,7 +227,7 @@ public class OrbCount : MonoBehaviour {
                 if (gameObject.tag == "Player4" && player4Exited == false)
                 {
                     player4Exited = true;
-					Invoke ("P4CanReenter", 2);
+					Invoke ("P4CanReenter", 1);
 					//increment wimps exited needed for wimp win condition
 					wimpsExited += 1;
                 }

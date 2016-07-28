@@ -66,6 +66,7 @@ public class MurdererScripts : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        //play dead animtion and disable bloody shirt if possum used
         if (ShittyPossum.possumed == true) {
             TorsoAnimator.SetBool("Dead", true);
             LegsAnimator.SetBool("Dead", true);

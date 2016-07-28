@@ -56,7 +56,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //set max range value for random.range equal to size of list;
         randomMax = 24;
         //set number of player and murderer abilities
-        numberOfPlayerAbilities = 6;
+        numberOfPlayerAbilities = 5;
         numberOfMurdererAbilities = 6;
         //grab cameras in scene
         player1Camera = GameObject.FindGameObjectWithTag("Player1Camera");
@@ -181,21 +181,20 @@ public class RandomSpawnPlayers : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<Doppelganger>();
             }
+           
             if (randomPlayerAbility == 2)
-            {
-                GameObject.FindGameObjectWithTag("Player1").AddComponent<Revive>();
-            }
-            if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<ScaredCat>();
             }
-            if (randomPlayerAbility == 4)
+            if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<Squeler>();
             }
-            if (randomPlayerAbility == 5)
+            if (randomPlayerAbility == 4)
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<ThirdEye>();
+                //make camera able to see arrows
+                player1Camera.GetComponent<Camera>().cullingMask = ~0;
             }
         }
 
@@ -236,25 +235,24 @@ public class RandomSpawnPlayers : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<Doppelganger>();
             }
+            
             if (randomPlayerAbility == 2)
-            {
-                GameObject.FindGameObjectWithTag("Player2").AddComponent<Revive>();
-            }
-            if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<ScaredCat>();
             }
-            if (randomPlayerAbility == 4)
+            if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<Squeler>();
             }
-            if (randomPlayerAbility == 5)
+            if (randomPlayerAbility == 4)
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<ThirdEye>();
+                //make camera able to see arrows
+                player2Camera.GetComponent<Camera>().cullingMask = ~0;
             }
         }
 
-        //spawn player 1 if murderer in butcher room
+        //spawn player 2 if murderer in butcher room
         else if (player2Spawned == false && randomMurdererNumber == 1)
         {
             //instantiate from resources folder
@@ -293,25 +291,24 @@ public class RandomSpawnPlayers : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<Doppelganger>();
             }
+            
             if (randomPlayerAbility == 2)
-            {
-                GameObject.FindGameObjectWithTag("Player3").AddComponent<Revive>();
-            }
-            if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<ScaredCat>();
             }
-            if (randomPlayerAbility == 4)
+            if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<Squeler>();
             }
-            if (randomPlayerAbility == 5)
+            if (randomPlayerAbility == 4)
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<ThirdEye>();
+                //make camera able to see arrows
+                player3Camera.GetComponent<Camera>().cullingMask = ~0;
             }
         }
 
-        //spawn player 1 if murderer in butcher room
+        //spawn player 3 if murderer in butcher room
         else if (player3Spawned == false && randomMurdererNumber == 2)
         {
             //instantiate from resources folder
@@ -350,25 +347,24 @@ public class RandomSpawnPlayers : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<Doppelganger>();
             }
+            
             if (randomPlayerAbility == 2)
-            {
-                GameObject.FindGameObjectWithTag("Player4").AddComponent<Revive>();
-            }
-            if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<ScaredCat>();
             }
-            if (randomPlayerAbility == 4)
+            if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<Squeler>();
             }
             if (randomPlayerAbility == 5)
             {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<ThirdEye>();
+                //make camera able to see arrows
+                player4Camera.GetComponent<Camera>().cullingMask = ~0;
             }
         }
 
-        //spawn player 1 if murderer in butcher room
+        //spawn player 4 if murderer in butcher room
         else if (player4Spawned == false && randomMurdererNumber == 3)
         {
             //instantiate from resources folder

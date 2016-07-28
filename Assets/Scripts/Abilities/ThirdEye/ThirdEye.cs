@@ -16,261 +16,107 @@ public class ThirdEye : MonoBehaviour
     private int rightArrow = 0;
     private int upArrow = 0;
     private int downArrow = 0;
+    private GameObject canvas;
+    private GameObject[] leftArrows;
+    private GameObject[] rightArrows;
+    private GameObject[] upArrows;
+    private GameObject[] downArrows;
 
     void Start() {
         arrow = Resources.Load("ThirdEyeArrow", typeof(GameObject)) as GameObject;
+        if (gameObject.tag == "Player1") {
+            canvas = GameObject.Find("Canvas P1");
+        }
+        if (gameObject.tag == "Player2")
+        {
+            canvas = GameObject.Find("Canvas P2");
+        }
+        if (gameObject.tag == "Player3")
+        {
+            canvas = GameObject.Find("Canvas P3");
+        }
+        if (gameObject.tag == "Player4")
+        {
+            canvas = GameObject.Find("Canvas P4");
+        }
+        leftArrows = GameObject.FindGameObjectsWithTag("LeftArrow");
+        rightArrows = GameObject.FindGameObjectsWithTag("RightArrow");
+        upArrows = GameObject.FindGameObjectsWithTag("UpArrow");
+        downArrows = GameObject.FindGameObjectsWithTag("DownArrow");
     }
 
     void Update()
     {
-        if (gameObject.tag == "Player1")
+
+        if (LeftRoomPos == Controls.currentPlayer1Pos || LeftRoomPos == Controls.currentPlayer2Pos || LeftRoomPos == Controls.currentPlayer3Pos ||
+        LeftRoomPos == Controls.currentPlayer4Pos)
         {
-            if (LeftRoomPos == Controls.currentPlayer2Pos || LeftRoomPos == Controls.currentPlayer3Pos ||
-            LeftRoomPos == Controls.currentPlayer4Pos)
+            if (leftArrow == 0)
             {
-                if (leftArrow == 0)
-                {
-                    CreateArrowLeft();
-                }
-            }
-
-            else {
-                leftArrow = 0;
-                Destroy(GameObject.Find("LeftArrow"));
-            }
-
-            if (RightRoomPos == Controls.currentPlayer2Pos || RightRoomPos == Controls.currentPlayer3Pos ||
-            RightRoomPos == Controls.currentPlayer4Pos)
-            {
-                if (rightArrow == 0)
-                {
-                    CreateArrowRight();
-                }
-            }
-
-            else
-            {
-                rightArrow = 0;
-                Destroy(GameObject.Find("RightArrow"));
-            }
-
-            if (UpRoomPos == Controls.currentPlayer2Pos || UpRoomPos == Controls.currentPlayer3Pos ||
-            UpRoomPos == Controls.currentPlayer4Pos)
-            {
-                if (upArrow == 0)
-                {
-                    CreateArrowUp();
-                }
-            }
-
-            else
-            {
-                upArrow = 0;
-                Destroy(GameObject.Find("UpArrow"));
-            }
-
-            if ( BottomRoomPos == Controls.currentPlayer2Pos || BottomRoomPos == Controls.currentPlayer3Pos ||
-            BottomRoomPos == Controls.currentPlayer4Pos)
-            {
-                if (downArrow == 0)
-                {
-                    CreateArrowDown();
-                }
-            }
-
-            else
-            {
-                downArrow = 0;
-                Destroy(GameObject.Find("DownArrow"));
+                CreateArrowLeft();
             }
         }
 
-        if (gameObject.tag == "Player2")
+        else
         {
-            if (LeftRoomPos == Controls.currentPlayer1Pos || LeftRoomPos == Controls.currentPlayer3Pos ||
-            LeftRoomPos == Controls.currentPlayer4Pos)
+           leftArrow = 0;
+            for(int x = 0; x < leftArrows.Length; x++)
             {
-                if (leftArrow == 0)
-                {
-                    CreateArrowLeft();
-                }
-            }
-
-            else
-            {
-                leftArrow = 0;
-                Destroy(GameObject.Find("LeftArrow"));
-            }
-
-            if (RightRoomPos == Controls.currentPlayer1Pos || RightRoomPos == Controls.currentPlayer3Pos ||
-            RightRoomPos == Controls.currentPlayer4Pos)
-            {
-                if (rightArrow == 0)
-                {
-                    CreateArrowRight();
-                }
-            }
-
-            else
-            {
-                rightArrow = 0;
-                Destroy(GameObject.Find("RightArrow"));
-            }
-
-            if (UpRoomPos == Controls.currentPlayer1Pos || UpRoomPos == Controls.currentPlayer3Pos ||
-            UpRoomPos == Controls.currentPlayer4Pos)
-            {
-                if (upArrow == 0)
-                {
-                    CreateArrowUp();
-                }
-            }
-
-            else
-            {
-                upArrow = 0;
-                Destroy(GameObject.Find("UpArrow"));
-            }
-
-            if (BottomRoomPos == Controls.currentPlayer1Pos || BottomRoomPos == Controls.currentPlayer3Pos ||
-            BottomRoomPos == Controls.currentPlayer4Pos)
-            {
-                if (downArrow == 0)
-                {
-                    CreateArrowDown();
-                }
-            }
-
-            else
-            {
-                downArrow = 0;
-                Destroy(GameObject.Find("DownArrow"));
+                leftArrows[x].GetComponent<SpriteRenderer>().enabled = false;
             }
         }
 
-        if (gameObject.tag == "Player3")
+        if (RightRoomPos == Controls.currentPlayer1Pos || RightRoomPos == Controls.currentPlayer2Pos || RightRoomPos == Controls.currentPlayer3Pos ||
+        RightRoomPos == Controls.currentPlayer4Pos)
         {
-            if (LeftRoomPos == Controls.currentPlayer2Pos || LeftRoomPos == Controls.currentPlayer1Pos ||
-            LeftRoomPos == Controls.currentPlayer4Pos)
+            if (rightArrow == 0)
             {
-                if (leftArrow == 0)
-                {
-                    CreateArrowLeft();
-                }
-            }
-
-            else
-            {
-                leftArrow = 0;
-                Destroy(GameObject.Find("LeftArrow"));
-            }
-
-            if (RightRoomPos == Controls.currentPlayer2Pos || RightRoomPos == Controls.currentPlayer1Pos ||
-            RightRoomPos == Controls.currentPlayer4Pos)
-            {
-                if (rightArrow == 0)
-                {
-                    CreateArrowRight();
-                }
-            }
-
-            else
-            {
-                rightArrow = 0;
-                Destroy(GameObject.Find("RightArrow"));
-            }
-
-            if (UpRoomPos == Controls.currentPlayer2Pos || UpRoomPos == Controls.currentPlayer1Pos ||
-            UpRoomPos == Controls.currentPlayer4Pos)
-            {
-                if (upArrow == 0)
-                {
-                    CreateArrowUp();
-                }
-            }
-
-            else
-            {
-                upArrow = 0;
-                Destroy(GameObject.Find("UpArrow"));
-            }
-
-            if (BottomRoomPos == Controls.currentPlayer2Pos || BottomRoomPos == Controls.currentPlayer1Pos ||
-            BottomRoomPos == Controls.currentPlayer4Pos)
-            {
-                if (downArrow == 0)
-                {
-                    CreateArrowDown();
-                }
-            }
-
-            else
-            {
-                downArrow = 0;
-                Destroy(GameObject.Find("DownArrow"));
+                CreateArrowRight();
             }
         }
 
-        if (gameObject.tag == "Player4")
+        else
         {
-            if (LeftRoomPos == Controls.currentPlayer2Pos || LeftRoomPos == Controls.currentPlayer3Pos ||
-            LeftRoomPos == Controls.currentPlayer1Pos)
+            rightArrow = 0;
+            for (int x = 0; x < rightArrows.Length; x++)
             {
-                if (leftArrow == 0)
-                {
-                    CreateArrowLeft();
-                }
+                rightArrows[x].GetComponent<SpriteRenderer>().enabled = false;
             }
+        }
 
-            else
+        if (UpRoomPos == Controls.currentPlayer1Pos || UpRoomPos == Controls.currentPlayer2Pos || UpRoomPos == Controls.currentPlayer3Pos ||
+        UpRoomPos == Controls.currentPlayer4Pos)
+        {
+            if (upArrow == 0)
             {
-                leftArrow = 0;
-                Destroy(GameObject.Find("LeftArrow"));
+                CreateArrowUp();
             }
+        }
 
-            if (RightRoomPos == Controls.currentPlayer2Pos || RightRoomPos == Controls.currentPlayer3Pos ||
-            RightRoomPos == Controls.currentPlayer1Pos)
+        else
+        {
+            upArrow = 0;
+            for (int x = 0; x < upArrows.Length; x++)
             {
-                if (rightArrow == 0)
-                {
-                    CreateArrowRight();
-                }
+                upArrows[x].GetComponent<SpriteRenderer>().enabled = false;
             }
+        }
 
-            else
+        if (BottomRoomPos == Controls.currentPlayer1Pos || BottomRoomPos == Controls.currentPlayer2Pos || BottomRoomPos == Controls.currentPlayer3Pos ||
+        BottomRoomPos == Controls.currentPlayer4Pos)
+        {
+            if (downArrow == 0)
             {
-                rightArrow = 0;
-                Destroy(GameObject.Find("RightArrow"));
+                CreateArrowDown();
             }
+        }
 
-            if (UpRoomPos == Controls.currentPlayer2Pos || UpRoomPos == Controls.currentPlayer3Pos ||
-            UpRoomPos == Controls.currentPlayer1Pos)
+        else
+        {
+            downArrow = 0;
+            for (int x = 0; x < downArrows.Length; x++)
             {
-                if (upArrow == 0)
-                {
-                    CreateArrowUp();
-                }
-            }
-
-            else
-            {
-                upArrow = 0;
-                Destroy(GameObject.Find("UpArrow"));
-            }
-
-            if (BottomRoomPos == Controls.currentPlayer2Pos || BottomRoomPos == Controls.currentPlayer3Pos ||
-            BottomRoomPos == Controls.currentPlayer1Pos)
-            {
-                if (downArrow == 0)
-                {
-                    CreateArrowDown();
-                }
-            }
-
-            else
-            {
-                downArrow = 0;
-                Destroy(GameObject.Find("DownArrow"));
+                downArrows[x].GetComponent<SpriteRenderer>().enabled = false;
             }
         }
     }
@@ -286,41 +132,25 @@ public class ThirdEye : MonoBehaviour
     }
 
     void CreateArrowLeft() {
-        GameObject arrow1 = Instantiate(arrow);
-        arrow1.transform.parent = this.transform;
-        arrow1.transform.position = new Vector3(this.transform.position.x-20, this.transform.position.y + 60, this.transform.position.z);
-        arrow1.transform.eulerAngles = new Vector3(0, 0, 0);
-        arrow1.name = "LeftArrow";
+        canvas.gameObject.transform.FindChild("LeftArrow").GetComponent<SpriteRenderer>().enabled = true;
         leftArrow += 1;
     }
 
     void CreateArrowRight()
     {
-        GameObject arrow1 = Instantiate(arrow);
-        arrow1.transform.parent = this.transform;
-        arrow1.transform.position = new Vector3(this.transform.position.x + 20, this.transform.position.y + 60, this.transform.position.z);
-        arrow1.transform.eulerAngles = new Vector3(0, 0, 180);
-        arrow1.name = "RightArrow";
+        canvas.gameObject.transform.FindChild("RightArrow").GetComponent<SpriteRenderer>().enabled = true;
         rightArrow += 1;
     }
 
     void CreateArrowDown()
     {
-        GameObject arrow1 = Instantiate(arrow);
-        arrow1.transform.parent = this.transform;
-        arrow1.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 50, this.transform.position.z);
-        arrow1.transform.eulerAngles = new Vector3(0, 0, 90);
-        arrow1.name = "DownArrow";
+        canvas.gameObject.transform.FindChild("DownArrow").GetComponent<SpriteRenderer>().enabled = true;
         downArrow += 1;
     }
 
     void CreateArrowUp()
     {
-        GameObject arrow1 = Instantiate(arrow);
-        arrow1.transform.parent = this.transform;
-        arrow1.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 80, this.transform.position.z);
-        arrow1.transform.eulerAngles = new Vector3(0, 0, 270);
-        arrow1.name = "UpArrow";
+        canvas.gameObject.transform.FindChild("UpArrow").GetComponent<SpriteRenderer>().enabled = true;
         upArrow += 1;
     }
 }
