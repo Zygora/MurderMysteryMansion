@@ -137,6 +137,8 @@ public class MapGenerator : MonoBehaviour {
                     gridObject1.transform.SetParent(rootObject.transform);
                     //set grid coordinate
                     gridObject1.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
+                    //set column
+                    gridObject1.GetComponent<AddVectorToRoom>().currentColumn = currentColumn;
                     //remove room from list so that it can't be repeated
                     Rooms.RemoveAt(x - 1);
                     //change the name of the game object from gridObject
@@ -156,6 +158,8 @@ public class MapGenerator : MonoBehaviour {
                     gridObject2.transform.SetParent(rootObject.transform);
                     //set grid coordinate
                     gridObject2.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
+                    //set column
+                    gridObject2.GetComponent<AddVectorToRoom>().currentColumn = currentColumn;
                     //remove room from list so that it can't be repeated
                     Rooms.RemoveAt(0);
                     //change the name of the game object from gridObject
@@ -182,6 +186,8 @@ public class MapGenerator : MonoBehaviour {
                 gridObject.transform.SetParent(rootObject.transform);
                 //set grid coordinate
                 gridObject.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
+                //set column
+                gridObject.GetComponent<AddVectorToRoom>().currentColumn = currentColumn;
                 //remove room from list so that it can't be repeated
                 Rooms.RemoveAt(x - 1);
                 //change the name of the game object from gridObject

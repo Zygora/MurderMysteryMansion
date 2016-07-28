@@ -5,6 +5,9 @@ public class AddVectorToRoom : MonoBehaviour {
     public Vector2 roomCoordinate;
     public Sprite exitRoomOpen;
     public Sprite exitRoomClosed;
+    public int currentColumn;
+    private int doorsSet = 0;
+    private GameObject leftDoor;
     // Use this for initialization
     void Start () {
 	
@@ -19,6 +22,14 @@ public class AddVectorToRoom : MonoBehaviour {
         if (OrbCount.doorOpen == false && this.gameObject.name == "Exit Room(Clone)")
         {
             GetComponent<SpriteRenderer>().sprite = exitRoomClosed;
+        }
+
+        if (currentColumn == 4 && this.gameObject.name == "Exit Room(Clone)" && doorsSet == 0)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
+            Debug.Log(transform.GetChild(0).name);
+            Debug.Log(currentColumn);
+            doorsSet ++;
         }
     }
 }
