@@ -126,7 +126,7 @@ public class MapGenerator : MonoBehaviour {
             Debug.Log("x="+x);
             Debug.Log("max="+maxRandomRange);
 
-            if (currentObjectCount==24)
+            if (currentObjectCount==23)
             {
                 if (Rooms[0].name == "Hall of Portraits" || Rooms[1].name == "Hall of Portraits")
                 {
