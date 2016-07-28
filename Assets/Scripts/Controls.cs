@@ -83,6 +83,10 @@ public class Controls : MonoBehaviour
     public bool exited;
     private float wimpDownedCooldown;
     private float wimpDownedDelay = 1;
+    public static Vector2 currentPlayer1Pos;
+    public static Vector2 currentPlayer2Pos;
+    public static Vector2 currentPlayer3Pos;
+    public static Vector2 currentPlayer4Pos;
 
     void Start()
     {
@@ -135,7 +139,6 @@ public class Controls : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(wimpsDowned);
         //disable sprite renderer if wimp has exited
         if (gameObject.tag == "Player1" && OrbCount.player1Exited == true)
         {
@@ -785,6 +788,28 @@ public class Controls : MonoBehaviour
         if (other.gameObject.tag == "Player1" || other.gameObject.tag == "Player2" || other.gameObject.tag == "Player3" || other.gameObject.tag == "Player4")
         {
 
+        }
+
+        if (other.gameObject.tag == "Room" || other.gameObject.tag == "MurdererStart")
+        {
+            if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1") {
+                currentPlayer1Pos = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
+            }
+
+            if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
+            {
+                currentPlayer2Pos = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
+            }
+
+            if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
+            {
+                currentPlayer3Pos = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
+            }
+
+            if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
+            {
+                currentPlayer4Pos = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
+            }
         }
     }
 

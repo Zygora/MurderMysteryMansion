@@ -142,11 +142,4 @@ public class Squeler : MonoBehaviour
             }
         }  
     }
-
-    /*void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Room" || other.gameObject.tag == "MurdererStart") {
-            Debug.Log(other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate);
-        }
-    }*/
 }
