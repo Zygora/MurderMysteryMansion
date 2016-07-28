@@ -114,8 +114,8 @@ public class MapGenerator : MonoBehaviour {
         MapGenerator MasterObj = new MapGenerator();
 
         //do while rows is still less than meax rows
-        while (currentrow < YTiles) {
-            Debug.Log("object#="+currentObjectCount);
+        while (currentrow < YTiles && currentObjectCount!=25) {
+            //Debug.Log("object#="+currentObjectCount);
             //change max random number range to length of list +1;
             int maxRandomRange = Rooms.Count + 1;
 			int x = Random.Range (2, maxRandomRange);
@@ -123,13 +123,14 @@ public class MapGenerator : MonoBehaviour {
             {
                 x = Random.Range(1, maxRandomRange);
             }
-            Debug.Log("x="+x);
-            Debug.Log("max="+maxRandomRange);
+           // Debug.Log("x="+x);
+           // Debug.Log("max="+maxRandomRange);
 
-            if (currentObjectCount==23)
+            if (Rooms[x - 1].name == "Hall of Portraits")
             {
-                if (Rooms[0].name == "Hall of Portraits" || Rooms[1].name == "Hall of Portraits")
+                if (currentColumn!=4)
                 {
+                    Debug.Log("currentcolumn=" + currentColumn);
                     //instantiate room based on random number
                     GameObject gridObject1 = Instantiate(Rooms[x - 1], currentLocation, Quaternion.identity) as GameObject;
                     currentObjectCount++;
@@ -150,14 +151,14 @@ public class MapGenerator : MonoBehaviour {
                     roomCoordinateX += 1;
 
                     //instantiate room based on random number
-                    GameObject gridObject2 = Instantiate(Rooms[x - 1], currentLocation, Quaternion.identity) as GameObject;
+                    GameObject gridObject2 = Instantiate(Rooms[0], currentLocation, Quaternion.identity) as GameObject;
                     currentObjectCount++;
                     //make room child of empty container
                     gridObject2.transform.SetParent(rootObject.transform);
                     //set grid coordinate
                     gridObject2.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
                     //remove room from list so that it can't be repeated
-                    Rooms.RemoveAt(x - 1);
+                    Rooms.RemoveAt(0);
                     //change the name of the game object from gridObject
                     //gridObject.name = RootObjectName + "_" + currentObjectCount;
                     MasterObj.seed += gridObject2.name;
@@ -169,52 +170,11 @@ public class MapGenerator : MonoBehaviour {
                     roomCoordinateX += 1;
                 }
             }
-
-            if (Rooms[x - 1].name == "Hall of Portraits" && currentObjectCount%5==0)
-            {
-                //instantiate room based on random number
-                GameObject gridObject1 = Instantiate(Rooms[x - 1], currentLocation, Quaternion.identity) as GameObject;
-                currentObjectCount++;
-                //make room child of empty container
-                gridObject1.transform.SetParent(rootObject.transform);
-                //set grid coordinate
-                gridObject1.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
-                //remove room from list so that it can't be repeated
-                Rooms.RemoveAt(x - 1);
-                //change the name of the game object from gridObject
-                //gridObject.name = RootObjectName + "_" + currentObjectCount;
-                MasterObj.seed += gridObject1.name;
-                //Debug.Log("Seed:"+seed);
-                //set location to the right of last gameobject
-                currentLocation.x = currentLocation.x + spriteX;
-                //increment number of current columns;
-                currentColumn++;
-                roomCoordinateX += 1;
-
-                //instantiate room based on random number
-                GameObject gridObject2 = Instantiate(Rooms[0], currentLocation, Quaternion.identity) as GameObject;
-                currentObjectCount++;
-                //make room child of empty container
-                gridObject2.transform.SetParent(rootObject.transform);
-                //set grid coordinate
-                gridObject2.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
-                //remove room from list so that it can't be repeated
-                Rooms.RemoveAt(0);
-                //change the name of the game object from gridObject
-                //gridObject.name = RootObjectName + "_" + currentObjectCount;
-                MasterObj.seed += gridObject2.name;
-                //Debug.Log("Seed:"+seed);
-                //set location to the right of last gameobject
-                currentLocation.x = currentLocation.x + spriteX;
-                //increment number of current columns;
-                currentColumn++;
-                roomCoordinateX += 1;
-            }
             /*Debug.Log ("size of list = " + Rooms.Count);
 			Debug.Log ("max Random range = "+ maxRandomRange);
 			Debug.Log ("Random # = "+ x);
 			*/
-            if (Rooms[x - 1].name != "Hall of Portraits")
+            else if (Rooms[x - 1].name != "Hall of Portraits")
             {
                 //instantiate room based on random number
                 GameObject gridObject = Instantiate(Rooms[x - 1], currentLocation, Quaternion.identity) as GameObject;
