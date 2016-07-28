@@ -140,6 +140,6 @@ public class Squeler : MonoBehaviour
                 arrow2.transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
                 timePassed = squealerCooldown;
             }
-        }       
+        }  
     }
 }

@@ -102,11 +102,14 @@ public class MapGenerator : MonoBehaviour {
 		int currentObjectCount = 0;
 		int currentColumn = 0;
 		int currentrow = 0;
+        int roomCoordinateX = -2;
+        int roomCoordinateY = -2;
 
 
 
-    //starting position of first room
-    Vector3 currentLocation = new Vector3 (0.0f, -296.0f, 0.0f);
+        //starting position of first room
+        //Vector3 currentLocation = new Vector3 (0.0f, -296.0f, 0.0f);
+        Vector3 currentLocation = new Vector3(-480.0f, -270.0f, 0.0f);
 
         MapGenerator MasterObj = new MapGenerator();
 
@@ -123,6 +126,8 @@ public class MapGenerator : MonoBehaviour {
 			GameObject gridObject = Instantiate (Rooms [x-1], currentLocation, Quaternion.identity) as GameObject;
 			//make room child of empty container
 			gridObject.transform.SetParent (rootObject.transform);
+            //set grid coordinate
+            gridObject.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
 			//remove room from list so that it can't be repeated
 			Rooms.RemoveAt (x-1);
             //change the name of the game object from gridObject
@@ -133,16 +138,20 @@ public class MapGenerator : MonoBehaviour {
 			currentLocation.x = currentLocation.x + spriteX;
 			//increment number of current columns;
 			currentColumn++;
+            roomCoordinateX += 1;
 
 			if (currentColumn >= XTiles) {
 				//reset column to 0 when it reaches max columns
 				currentColumn = 0;
+                roomCoordinateX = -2;
 				//increment rows when it reaches max columns
 				currentrow++;
-				//reset starting location when it reaches max columns
-				currentLocation.x = 0;
-				//move rooms down by height of rooms when it reaches max columns to start a new row
-				currentLocation.y = currentLocation.y + spriteY;
+                roomCoordinateY += 1;
+                //reset starting location when it reaches max columns
+                //currentLocation.x = 0;
+                currentLocation.x = -480;
+                //move rooms down by height of rooms when it reaches max columns to start a new row
+                currentLocation.y = currentLocation.y + spriteY;
 
 			}
 			//increase object count used for naming rooms
