@@ -319,43 +319,87 @@ public class Controls : MonoBehaviour
             //decrease speed of player if carrying an orb
             if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == true)
             {
-                playerSpeed = speedWhileCarryOrb;
+                if (speedIncreased == false)
+                {
+                    playerSpeed = speedWhileCarryOrb;
+                }
+
+                if (speedIncreased == true)
+                {
+                    playerSpeed = speedWhileCarryOrb*2;
+                }
             }
 
             if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == true)
             {
-                playerSpeed = speedWhileCarryOrb;
+                if (speedIncreased == false)
+                {
+                    playerSpeed = speedWhileCarryOrb;
+                }
+
+                if (speedIncreased == true)
+                {
+                    playerSpeed = speedWhileCarryOrb * 2;
+                }
             }
 
             if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == true)
             {
-                playerSpeed = speedWhileCarryOrb;
+                if (speedIncreased == false)
+                {
+                    playerSpeed = speedWhileCarryOrb;
+                }
+
+                if (speedIncreased == true)
+                {
+                    playerSpeed = speedWhileCarryOrb * 2;
+                }
             }
 
             if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == true)
             {
-                playerSpeed = speedWhileCarryOrb;
+                if (speedIncreased == false)
+                {
+                    playerSpeed = speedWhileCarryOrb;
+                }
+
+                if (speedIncreased == true)
+                {
+                    playerSpeed = speedWhileCarryOrb * 2;
+                }
             }
 
             //restore speed of player if not carrying an orb
             if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == false)
             {
-                playerSpeed = speedWhileNotCarryOrb;
+                if (speedIncreased == false)
+                {
+                    playerSpeed = speedWhileNotCarryOrb;
+                }
             }
 
             if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == false)
             {
-                playerSpeed = speedWhileNotCarryOrb;
+                if (speedIncreased == false)
+                {
+                    playerSpeed = speedWhileNotCarryOrb;
+                }
             }
 
             if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == false)
             {
-                playerSpeed = speedWhileNotCarryOrb;
+                if (speedIncreased == false)
+                {
+                    playerSpeed = speedWhileNotCarryOrb;
+                }
             }
 
             if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == false)
             {
-                playerSpeed = speedWhileNotCarryOrb;
+                if (speedIncreased == false)
+                {
+                    playerSpeed = speedWhileNotCarryOrb;
+                };
             }
         }
 

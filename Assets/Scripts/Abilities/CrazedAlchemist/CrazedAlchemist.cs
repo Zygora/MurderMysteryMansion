@@ -61,19 +61,13 @@ public class CrazedAlchemist : MonoBehaviour
                     if (gameObject.GetComponent<Controls>().direction < 0)
                     {
                         // Load potion prefab from Resources folder
-                        GameObject potion = Instantiate(Resources.Load("RedPotionLeft") as GameObject);
-                        Vector3 spawn = gameObject.transform.position;
-                        spawn.x -= 1;
-                        potion.transform.position = spawn;
+                        GameObject potion = Instantiate(Resources.Load("RedPotionLeft"),this.transform.position + (transform.right * 20) + (transform.up * 20 ), Quaternion.identity) as GameObject;
                     }
                     else
                     // If player moves right throw potion to right
                     {
                         // Load potion prefab from Resources folder
-                        GameObject potion = Instantiate(Resources.Load("RedPotion") as GameObject);
-                        Vector3 spawn = gameObject.transform.position;
-                        spawn.x += 1;
-                        potion.transform.position = spawn;
+                        GameObject potion = Instantiate(Resources.Load("RedPotion"), this.transform.position + (transform.right * 20) + (transform.up * 20), Quaternion.identity) as GameObject;
                     }
                 }
                 // Throw blue potion
@@ -83,19 +77,13 @@ public class CrazedAlchemist : MonoBehaviour
                     if (gameObject.GetComponent<Controls>().direction < 0)
                     {
                         // Load potion prefab from Resources folder
-                        GameObject potionBlue = Instantiate(Resources.Load("BluePotionLeft") as GameObject);
-                        Vector3 spawn = gameObject.transform.position;
-                        spawn.x -= 1;
-                        potionBlue.transform.position = spawn;
+                        GameObject potionBlue = Instantiate(Resources.Load("BluePotionLeft"), this.transform.position + (transform.right * 20) + (transform.up * 20), Quaternion.identity) as GameObject;
                     }
                     // If player moves right throw potion to right
                     else
                     {
                         // Load potion prefab from Resources folder
-                        GameObject potionBlue = Instantiate(Resources.Load("BluePotion") as GameObject);
-                        Vector3 spawn = gameObject.transform.position;
-                        spawn.x += 1;
-                        potionBlue.transform.position = spawn;
+                        GameObject potionBlue = Instantiate(Resources.Load("BluePotion"), this.transform.position + (transform.right * 20) + (transform.up * 20), Quaternion.identity) as GameObject;
                     }
                 }
                 // Decrease the amount of potions available by one
