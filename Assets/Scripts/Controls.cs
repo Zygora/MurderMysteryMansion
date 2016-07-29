@@ -421,47 +421,50 @@ public class Controls : MonoBehaviour
             //murderer animations
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
-                //play idle animation
-                if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
+                if (murderTransitioning != true)
                 {
-                    TorsoAnimator.SetBool("Running", false);
-                    LegsAnimator.SetBool("Running", false);
-                    TorsoAnimator.SetBool("Idle", true);
-                    LegsAnimator.SetBool("Idle", true);
-                }
+                    //play idle animation
+                    if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
+                    {
+                        TorsoAnimator.SetBool("Running", false);
+                        LegsAnimator.SetBool("Running", false);
+                        TorsoAnimator.SetBool("Idle", true);
+                        LegsAnimator.SetBool("Idle", true);
+                    }
 
-                if (killedWimpMovementDelay == true)
-                {
-                    TorsoAnimator.SetBool("Running", false);
-                    LegsAnimator.SetBool("Running", false);
-                    TorsoAnimator.SetBool("Idle", true);
-                    LegsAnimator.SetBool("Idle", true);
-                }
-                // Change animation from idle to run and flip the players sprite
-                if (Input.GetAxis(horizontal) < -0.1f && killedWimpMovementDelay == false)
-                {
-                    if (playerSpeed != 0)
+                    if (killedWimpMovementDelay == true)
                     {
-                        TorsoAnimator.SetBool("Running", true);
-                        LegsAnimator.SetBool("Running", true);
-                        TorsoAnimator.SetBool("Idle", false);
-                        LegsAnimator.SetBool("Idle", false);
-                        transform.eulerAngles = new Vector3(0, 180, 0);
+                        TorsoAnimator.SetBool("Running", false);
+                        LegsAnimator.SetBool("Running", false);
+                        TorsoAnimator.SetBool("Idle", true);
+                        LegsAnimator.SetBool("Idle", true);
                     }
-                    direction = -1;
-                }
-                // Change animation from idle to run and flip the sprite
-                if (Input.GetAxis(horizontal) > 0.1f && killedWimpMovementDelay == false)
-                {
-                    if (playerSpeed != 0)
+                    // Change animation from idle to run and flip the players sprite
+                    if (Input.GetAxis(horizontal) < -0.1f && killedWimpMovementDelay == false)
                     {
-                        TorsoAnimator.SetBool("Running", true);
-                        LegsAnimator.SetBool("Running", true);
-                        TorsoAnimator.SetBool("Idle", false);
-                        LegsAnimator.SetBool("Idle", false);
-                        transform.eulerAngles = new Vector3(0, 0, 0);
+                        if (playerSpeed != 0)
+                        {
+                            TorsoAnimator.SetBool("Running", true);
+                            LegsAnimator.SetBool("Running", true);
+                            TorsoAnimator.SetBool("Idle", false);
+                            LegsAnimator.SetBool("Idle", false);
+                            transform.eulerAngles = new Vector3(0, 180, 0);
+                        }
+                        direction = -1;
                     }
-                    direction = 1;
+                    // Change animation from idle to run and flip the sprite
+                    if (Input.GetAxis(horizontal) > 0.1f && killedWimpMovementDelay == false)
+                    {
+                        if (playerSpeed != 0)
+                        {
+                            TorsoAnimator.SetBool("Running", true);
+                            LegsAnimator.SetBool("Running", true);
+                            TorsoAnimator.SetBool("Idle", false);
+                            LegsAnimator.SetBool("Idle", false);
+                            transform.eulerAngles = new Vector3(0, 0, 0);
+                        }
+                        direction = 1;
+                    }
                 }
             }
 
@@ -604,7 +607,6 @@ public class Controls : MonoBehaviour
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
                 ShirtAnimator.SetBool("MurdererJumping", true);
-                murderTransitioning = true;
             }
         }
         // If camera transitioning between rooms
@@ -643,6 +645,7 @@ public class Controls : MonoBehaviour
                 LegsAnimator.SetBool("Running", true);
                 TorsoAnimator.SetBool("Idle", false);
                 LegsAnimator.SetBool("Idle", false);
+                
                 if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                 {
                     murderTransitioning = true;
@@ -689,8 +692,11 @@ public class Controls : MonoBehaviour
                     }
                     moveCamera = false;
                     canMove = true;
-                    murderTransitioning = false;
-                }
+                    if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+                    {
+                        murderTransitioning = false;
+                    }
+                    }
             }
 
             if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
@@ -704,7 +710,10 @@ public class Controls : MonoBehaviour
                     }
                     moveCamera = false;
                     canMove = true;
-                    murderTransitioning = false;
+                    if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+                    {
+                        murderTransitioning = false;
+                    }
                 }
             }
 
@@ -719,7 +728,10 @@ public class Controls : MonoBehaviour
                     }
                     moveCamera = false;
                     canMove = true;
-                    murderTransitioning = false;
+                    if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+                    {
+                        murderTransitioning = false;
+                    }
                 }
             }
 
@@ -734,7 +746,10 @@ public class Controls : MonoBehaviour
                     }
                     moveCamera = false;
                     canMove = true;
-                    murderTransitioning = false;
+                    if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+                    {
+                        murderTransitioning = false;
+                    }
                 }
             }
         }
@@ -749,6 +764,10 @@ public class Controls : MonoBehaviour
             ladder = other.gameObject;
             canGoDown = false;
             canGoUp = true;
+            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+            {
+                murderTransitioning = false;
+            }
         }
         // At the top of a ladder turn off the collision of a player and the platform above them
         if (other.tag == "TopLadder")
@@ -756,7 +775,10 @@ public class Controls : MonoBehaviour
             ladder = other.gameObject;
             canGoDown = true;
             canGoUp = false;
-            murderTransitioning = false;
+            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+            {
+                murderTransitioning = false;
+            }
         }
         //change highlight on play button and change level on button input
         if (other.gameObject.tag == "Gate")
@@ -860,7 +882,10 @@ public class Controls : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
-            murderTransitioning = false;
+            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+            {
+                murderTransitioning = false;
+            }
         }
         if (other.tag == "TopLadder")
         {
@@ -870,7 +895,10 @@ public class Controls : MonoBehaviour
             // gameObject.GetComponent<Collider2D>().enabled = true;
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
-            murderTransitioning = false;
+            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+            {
+                murderTransitioning = false;
+            }
         }
         if (other.tag == "Room" || other.tag == "MurdererStart")
         {

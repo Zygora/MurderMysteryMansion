@@ -66,7 +66,6 @@ public class MurdererScripts : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-      
         //play dead animtion and disable bloody shirt if possum used
         if (ShittyPossum.possumed == true) {
             TorsoAnimator.SetBool("Dead", true);
@@ -95,34 +94,37 @@ public class MurdererScripts : MonoBehaviour {
             }
         }
         //play blood animations for murderer when enabled;
-        if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f && Controls.murderTransitioning == false)
+        if (Controls.bloodStained == true)
         {
-            ShirtAnimator.SetBool("MurdererRunning", false);
-            ShirtAnimator.SetBool("MurdererIdle", true);
-        }
+            if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f && Controls.murderTransitioning == false)
+            {
+                ShirtAnimator.SetBool("MurdererRunning", false);
+                ShirtAnimator.SetBool("MurdererIdle", true);
+            }
 
-        if (Controls.killedWimpMovementDelay == true)
-        {
-            ShirtAnimator.SetBool("MurdererRunning", false);
-            ShirtAnimator.SetBool("MurdererIdle", true);
-        }
+            if (Controls.killedWimpMovementDelay == true)
+            {
+                ShirtAnimator.SetBool("MurdererRunning", false);
+                ShirtAnimator.SetBool("MurdererIdle", true);
+            }
 
-        if (Input.GetAxis(horizontal) < -0.1f && GameOverTextManager.gameOver==false && Controls.killedWimpMovementDelay == false && Controls.murderTransitioning == false)
-        {
-            ShirtAnimator.SetBool("MurdererRunning", true);
-            ShirtAnimator.SetBool("MurdererIdle", false);
-        }
+            if (Input.GetAxis(horizontal) < -0.1f && GameOverTextManager.gameOver == false && Controls.killedWimpMovementDelay == false && Controls.murderTransitioning == false)
+            {
+                ShirtAnimator.SetBool("MurdererRunning", true);
+                ShirtAnimator.SetBool("MurdererIdle", false);
+            }
 
-        if (Controls.murderTransitioning == true)
-        {
-            ShirtAnimator.SetBool("MurdererRunning", true);
-            ShirtAnimator.SetBool("MurdererIdle", false);
-        }
+            if (Controls.murderTransitioning == true)
+            {
+               ShirtAnimator.SetBool("MurdererRunning", true);
+               ShirtAnimator.SetBool("MurdererIdle", false);
+            }
 
-        if (Input.GetAxis(horizontal) > 0.1f && GameOverTextManager.gameOver == false && Controls.killedWimpMovementDelay == false && Controls.murderTransitioning == false)
-        {
-            ShirtAnimator.SetBool("MurdererRunning", true);
-            ShirtAnimator.SetBool("MurdererIdle", false);
+            if (Input.GetAxis(horizontal) > 0.1f && GameOverTextManager.gameOver == false && Controls.killedWimpMovementDelay == false && Controls.murderTransitioning == false)
+            {
+                ShirtAnimator.SetBool("MurdererRunning", true);
+                ShirtAnimator.SetBool("MurdererIdle", false);
+            }
         }
 
         if (Input.GetButtonDown(attack) && Controls.wimpKilled == false && GameOverTextManager.gameOver == false && Controls.killedWimpMovementDelay == false) {
