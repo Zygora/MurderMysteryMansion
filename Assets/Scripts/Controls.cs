@@ -168,8 +168,9 @@ public class Controls : MonoBehaviour
                 playerSpeed = 0;
                 //make player to prevent player from falling through floor
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-                //make player trigger so it doesnt collide with oither objects
-                gameObject.GetComponent<Collider2D>().isTrigger = true;
+                //disable player colliders
+                gameObject.GetComponent<Collider2D>().enabled = false;
+                groundCheck.GetComponent<Collider2D>().enabled = false;
                 exited = true;
 
             }
@@ -182,8 +183,9 @@ public class Controls : MonoBehaviour
                 playerSpeed = 0;
                 //make player to prevent player from falling through floor
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-                //make player trigger so it doesnt collide with oither objects
-                gameObject.GetComponent<Collider2D>().isTrigger = true;
+                //disable player colliders
+                gameObject.GetComponent<Collider2D>().enabled = false;
+                groundCheck.GetComponent<Collider2D>().enabled = false;
                 exited = true;
             }
 
@@ -195,8 +197,9 @@ public class Controls : MonoBehaviour
                 playerSpeed = 0;
                 //make player to prevent player from falling through floor
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-                //make player trigger so it doesnt collide with oither objects
-                gameObject.GetComponent<Collider2D>().isTrigger = true;
+                //disable player colliders
+                gameObject.GetComponent<Collider2D>().enabled = false;
+                groundCheck.GetComponent<Collider2D>().enabled = false;
                 exited = true;
             }
 
@@ -208,8 +211,9 @@ public class Controls : MonoBehaviour
                 playerSpeed = 0;
                 //make player to prevent player from falling through floor
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-                //make player trigger so it doesnt collide with oither objects
-                gameObject.GetComponent<Collider2D>().isTrigger = true;
+                //disable player colliders
+                gameObject.GetComponent<Collider2D>().enabled = false;
+                groundCheck.GetComponent<Collider2D>().enabled = false;
                 exited = true;
             }
             //enable sprite renderer if wimp has re entered
@@ -226,7 +230,9 @@ public class Controls : MonoBehaviour
                 LegsAnimator.SetBool("Idle", true);
                 //restore rigidbody parameters to normal
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-                gameObject.GetComponent<Collider2D>().isTrigger = false;
+                //enable player colliders
+                gameObject.GetComponent<Collider2D>().enabled = true;
+                groundCheck.GetComponent<Collider2D>().enabled = true;
                 //reset values to false so that player can exit again and re enter after exiting
                 OrbCount.player1Exited = false;
                 OrbCount.player1CanEnter = false;
@@ -248,7 +254,9 @@ public class Controls : MonoBehaviour
                 LegsAnimator.SetBool("Idle", true);
                 //restore rigidbody parameters to normal
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-                gameObject.GetComponent<Collider2D>().isTrigger = false;
+                //enable player colliders
+                gameObject.GetComponent<Collider2D>().enabled = true;
+                groundCheck.GetComponent<Collider2D>().enabled = true;
                 //reset values to false so that player can exit again and re enter after exiting
                 OrbCount.player1Exited = false;
                 OrbCount.player1CanEnter = false;
@@ -271,7 +279,9 @@ public class Controls : MonoBehaviour
                 LegsAnimator.SetBool("Idle", true);
                 //restore rigidbody parameters to normal
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-                gameObject.GetComponent<Collider2D>().isTrigger = false;
+                //enable player colliders
+                gameObject.GetComponent<Collider2D>().enabled = true;
+                groundCheck.GetComponent<Collider2D>().enabled = true;
                 //reset values to false so that player can exit again and re enter after exiting
                 OrbCount.player1Exited = false;
                 OrbCount.player1CanEnter = false;
@@ -294,7 +304,9 @@ public class Controls : MonoBehaviour
                 LegsAnimator.SetBool("Idle", true);
                 //restore rigidbody parameters to normal
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-                gameObject.GetComponent<Collider2D>().isTrigger = false;
+                //enable player colliders
+                gameObject.GetComponent<Collider2D>().enabled = true;
+                groundCheck.GetComponent<Collider2D>().enabled = true;
                 //reset values to false so that player can exit again and re enter after exiting
                 OrbCount.player1Exited = false;
                 OrbCount.player1CanEnter = false;
@@ -1054,7 +1066,8 @@ public class Controls : MonoBehaviour
         //kill player and turn on blood on murderer's shirt
         if (other.gameObject.tag == "Knife1" || other.gameObject.tag == "Knife2" || other.gameObject.tag == "Knife3" || other.gameObject.tag == "Knife4")
         {
-            if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
+            if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4" && 
+                gameObject.tag != "DownedWimp1" && gameObject.tag != "DownedWimp2" && gameObject.tag != "DownedWimp3" && gameObject.tag != "DownedWimp4")
             {
                 TorsoAnimator.SetBool("Dead", true);
                 LegsAnimator.SetBool("Dead", true);
