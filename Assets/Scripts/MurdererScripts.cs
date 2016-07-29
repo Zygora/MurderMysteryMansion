@@ -100,20 +100,26 @@ public class MurdererScripts : MonoBehaviour {
             ShirtAnimator.SetBool("MurdererRunning", false);
             ShirtAnimator.SetBool("MurdererIdle", true);
         }
-        
-        if (Input.GetAxis(horizontal) < -0.1f)
+
+        if (Controls.killedWimpMovementDelay == true)
+        {
+            ShirtAnimator.SetBool("MurdererRunning", false);
+            ShirtAnimator.SetBool("MurdererIdle", true);
+        }
+
+        if (Input.GetAxis(horizontal) < -0.1f && GameOverTextManager.gameOver==false && Controls.killedWimpMovementDelay == false)
         {
             ShirtAnimator.SetBool("MurdererRunning", true);
             ShirtAnimator.SetBool("MurdererIdle", false);
         }
 
-        if (Input.GetAxis(horizontal) > 0.1f)
+        if (Input.GetAxis(horizontal) > 0.1f && GameOverTextManager.gameOver == false && Controls.killedWimpMovementDelay == false)
         {
             ShirtAnimator.SetBool("MurdererRunning", true);
             ShirtAnimator.SetBool("MurdererIdle", false);
         }
 
-        if (Input.GetButtonDown(attack) && Controls.wimpKilled == false) {
+        if (Input.GetButtonDown(attack) && Controls.wimpKilled == false && GameOverTextManager.gameOver == false && Controls.killedWimpMovementDelay == false) {
             TorsoAnimator.Play("TorsoMurdererAttack");
             LegsAnimator.Play("LegsMurdererAttack");
             if (Controls.bloodStained == true)
@@ -126,7 +132,7 @@ public class MurdererScripts : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
         // Debug.DrawRay(transform.position, Vector2.down, Color.red);
         // If ray hit something player is on ground
-        if (hit.collider != null) 
+        if (hit.collider != null && GameOverTextManager.gameOver == false) 
         {
             if (hit.collider.tag == "Ground" && hit.distance < 1.3f)
             {

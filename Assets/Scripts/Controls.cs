@@ -91,6 +91,7 @@ public class Controls : MonoBehaviour
     float revivetimepassed = 0.0f;   
     public string revive;
     public int MurdererWeaponCooldown;
+    public static bool killedWimpMovementDelay = false;
 
 
     void Start()
@@ -143,307 +144,376 @@ public class Controls : MonoBehaviour
 
     void Update()
     {
-        if (gameObject.tag == "Player1" || gameObject.tag == "Player2" || gameObject.tag == "Player3" || gameObject.tag == "Player4")
-        {
-            dead = false;
-            TorsoAnimator.SetBool("Dead", false);
-            LegsAnimator.SetBool("Dead", false);
-        }
-        //disable sprite renderer if wimp has exited
-        if (gameObject.tag == "Player1" && OrbCount.player1Exited == true)
-        {
-            //make exited player not visible to the camera
-            this.transform.position =  new Vector3(this.transform.position.x, this.transform.position.y, -50);
-            //turn player speed to 0 preventing movement
+        if (GameOverTextManager.gameOver == true) {
             playerSpeed = 0;
-            //make player to prevent player from falling through floor
-            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-            //make player trigger so it doesnt collide with oither objects
-            gameObject.GetComponent<Collider2D>().isTrigger = true;
-            exited = true;
-
         }
 
-        if (gameObject.tag == "Player2" && OrbCount.player2Exited == true)
+        if (GameOverTextManager.gameOver == false)
         {
-            //make exited player not visible to the camera
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -50);
-            //turn player speed to 0 preventing movement
-            playerSpeed = 0;
-            //make player to prevent player from falling through floor
-            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-            //make player trigger so it doesnt collide with oither objects
-            gameObject.GetComponent<Collider2D>().isTrigger = true;
-            exited = true;
-        }
-
-        if (gameObject.tag == "Player3" && OrbCount.player3Exited == true)
-        {
-            //make exited player not visible to the camera
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -50);
-            //turn player speed to 0 preventing movement
-            playerSpeed = 0;
-            //make player to prevent player from falling through floor
-            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-            //make player trigger so it doesnt collide with oither objects
-            gameObject.GetComponent<Collider2D>().isTrigger = true;
-            exited = true;
-        }
-
-        if (gameObject.tag == "Player4" && OrbCount.player4Exited == true)
-        {
-            //make exited player not visible to the camera
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -50);
-            //turn player speed to 0 preventing movement
-            playerSpeed = 0;
-            //make player to prevent player from falling through floor
-            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-            //make player trigger so it doesnt collide with oither objects
-            gameObject.GetComponent<Collider2D>().isTrigger = true;
-            exited = true;
-        }
-        //enable sprite renderer if wimp has re entered
-        if (gameObject.tag == "Player1" && OrbCount.player1Exited == true && Input.GetButtonDown(interact) && OrbCount.player1CanEnter == true)
-        {
-            //make player visible to camera again
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
-            //restore player speed
-            playerSpeed = speedWhileNotCarryOrb;
-            //play idle animation on re entry
-            TorsoAnimator.SetBool("Running", false);
-            LegsAnimator.SetBool("Running", false);
-            TorsoAnimator.SetBool("Idle", true);
-            LegsAnimator.SetBool("Idle", true);
-            //restore rigidbody parameters to normal
-            gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-            gameObject.GetComponent<Collider2D>().isTrigger = false;
-            //reset values to false so that player can exit again and re enter after exiting
-            OrbCount.player1Exited = false;
-            OrbCount.player1CanEnter = false;
-            //decrease wimps exited by 1 when player re enters
-            OrbCount.wimpsExited -= 1;
-            exited = false;
-        }
-
-        if (gameObject.tag == "Player2" && OrbCount.player2Exited == true && Input.GetButtonDown(interact) && OrbCount.player2CanEnter == true)
-        {
-            //make player visible to camera again
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
-            //restore player speed
-            playerSpeed = speedWhileNotCarryOrb;
-            //play idle animation on re entry
-            TorsoAnimator.SetBool("Running", false);
-            LegsAnimator.SetBool("Running", false);
-            TorsoAnimator.SetBool("Idle", true);
-            LegsAnimator.SetBool("Idle", true);
-            //restore rigidbody parameters to normal
-            gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-            gameObject.GetComponent<Collider2D>().isTrigger = false;
-            //reset values to false so that player can exit again and re enter after exiting
-            OrbCount.player1Exited = false;
-            OrbCount.player1CanEnter = false;
-            //decrease wimps exited by 1 when player re enters
-            OrbCount.wimpsExited -= 1;
-            Debug.Log("wimp entered");
-            exited = false;
-        }
-
-        if (gameObject.tag == "Player3" && OrbCount.player3Exited == true && Input.GetButtonDown(interact) && OrbCount.player3CanEnter == true)
-        {
-            //make player visible to camera again
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
-            //restore player speed
-            playerSpeed = speedWhileNotCarryOrb;
-            //play idle animation on re entry
-            TorsoAnimator.SetBool("Running", false);
-            LegsAnimator.SetBool("Running", false);
-            TorsoAnimator.SetBool("Idle", true);
-            LegsAnimator.SetBool("Idle", true);
-            //restore rigidbody parameters to normal
-            gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-            gameObject.GetComponent<Collider2D>().isTrigger = false;
-            //reset values to false so that player can exit again and re enter after exiting
-            OrbCount.player1Exited = false;
-            OrbCount.player1CanEnter = false;
-            //decrease wimps exited by 1 when player re enters
-            OrbCount.wimpsExited -= 1;
-            Debug.Log("wimp entered");
-            exited = false;
-        }
-
-        if (gameObject.tag == "Player4" && OrbCount.player4Exited == true && Input.GetButtonDown(interact) && OrbCount.player4CanEnter == true)
-        {
-            //make player visible to camera again
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
-            //restore player speed
-            playerSpeed = speedWhileNotCarryOrb;
-            //play idle animation on re entry
-            TorsoAnimator.SetBool("Running", false);
-            LegsAnimator.SetBool("Running", false);
-            TorsoAnimator.SetBool("Idle", true);
-            LegsAnimator.SetBool("Idle", true);
-            //restore rigidbody parameters to normal
-            gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-            gameObject.GetComponent<Collider2D>().isTrigger = false;
-            //reset values to false so that player can exit again and re enter after exiting
-            OrbCount.player1Exited = false;
-            OrbCount.player1CanEnter = false;
-            OrbCount.wimpsExited -= 1;
-            //decrease wimps exited by 1 when player re enters
-            Debug.Log("wimp entered");
-            exited = false;
-        }
-
-        //decrease speed of player if carrying an orb
-        if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == true)
-        {
-            playerSpeed = speedWhileCarryOrb;
-        }
-
-        if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == true)
-        {
-            playerSpeed = speedWhileCarryOrb;
-        }
-
-        if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == true)
-        {
-            playerSpeed = speedWhileCarryOrb;
-        }
-
-        if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == true)
-        {
-            playerSpeed = speedWhileCarryOrb;
-        }
-
-        //restore speed of player if not carrying an orb
-        if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == false)
-        {
-            playerSpeed = speedWhileNotCarryOrb;
-        }
-
-        if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == false)
-        {
-            playerSpeed = speedWhileNotCarryOrb;
-        }
-
-        if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == false)
-        {
-            playerSpeed = speedWhileNotCarryOrb;
-        }
-
-        if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == false)
-        {
-            playerSpeed = speedWhileNotCarryOrb;
-        }
-
-        if (speedIncreased)
-        {
-            timeSpeedIncreased += Time.deltaTime;
-            if (timeSpeedIncreased > 3)
+            if (gameObject.tag == "Player1" || gameObject.tag == "Player2" || gameObject.tag == "Player3" || gameObject.tag == "Player4")
             {
-                playerSpeed /= 2;
-                timeSpeedIncreased = 0;
-                speedIncreased = false;
+                dead = false;
+                TorsoAnimator.SetBool("Dead", false);
+                LegsAnimator.SetBool("Dead", false);
             }
-        }
+            //disable sprite renderer if wimp has exited
+            if (gameObject.tag == "Player1" && OrbCount.player1Exited == true)
+            {
+                //make exited player not visible to the camera
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -50);
+                //turn player speed to 0 preventing movement
+                playerSpeed = 0;
+                //make player to prevent player from falling through floor
+                gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+                //make player trigger so it doesnt collide with oither objects
+                gameObject.GetComponent<Collider2D>().isTrigger = true;
+                exited = true;
 
-        if (canMove && dead == false && exited == false)
-        {
-            //turn off movement of murderer during certain times
-            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4") {
-                if(ShittyPossum.possumed == true || MurdererScripts.washingClothes == true)
-                {
-                    playerSpeed = 0;
-                }
-                //restore movement of movement after
-                if (ShittyPossum.possumed == false && MurdererScripts.washingClothes == false)
-                {
-                    playerSpeed = speedWhileNotCarryOrb;
-                }
-            }
-            // Create a ray down checking if there is anything underneath the player
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
-            // If ray hit something player is on ground
-            if (hit.collider != null)
-            {
-                if (hit.collider.tag == "Ground" && hit.distance < 1.3f)
-                {
-                    onGround = true;
-                    TorsoAnimator.SetBool("Jumping", false);
-                    LegsAnimator.SetBool("Jumping", false);
-                }
-                // otherwise the player is in the air
-                else if (hit.distance >= 1.3f)
-                {
-                    onGround = false;
-                    TorsoAnimator.SetBool("Jumping", true);
-                    LegsAnimator.SetBool("Jumping", true);
-                }
-            }
-            // Create move vector
-            move = new Vector3(Input.GetAxis(horizontal), 0, 0);
-            //set movement bounds on player
-            if (transform.position.x <= -580)
-            {
-                transform.position = new Vector3(-570, transform.position.y, transform.position.z);
             }
 
-            if (transform.position.x >= 580)
+            if (gameObject.tag == "Player2" && OrbCount.player2Exited == true)
             {
-                transform.position = new Vector3(570, transform.position.y, transform.position.z);
+                //make exited player not visible to the camera
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -50);
+                //turn player speed to 0 preventing movement
+                playerSpeed = 0;
+                //make player to prevent player from falling through floor
+                gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+                //make player trigger so it doesnt collide with oither objects
+                gameObject.GetComponent<Collider2D>().isTrigger = true;
+                exited = true;
             }
 
-            if (transform.position.y <= -337.5f)
+            if (gameObject.tag == "Player3" && OrbCount.player3Exited == true)
             {
-                transform.position = new Vector3(transform.position.x, -327.5f, transform.position.z);
+                //make exited player not visible to the camera
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -50);
+                //turn player speed to 0 preventing movement
+                playerSpeed = 0;
+                //make player to prevent player from falling through floor
+                gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+                //make player trigger so it doesnt collide with oither objects
+                gameObject.GetComponent<Collider2D>().isTrigger = true;
+                exited = true;
             }
 
-            if (transform.position.y >= 337.5f)
+            if (gameObject.tag == "Player4" && OrbCount.player4Exited == true)
             {
-                transform.position = new Vector3(transform.position.x, 327.5f, transform.position.z);
+                //make exited player not visible to the camera
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -50);
+                //turn player speed to 0 preventing movement
+                playerSpeed = 0;
+                //make player to prevent player from falling through floor
+                gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+                //make player trigger so it doesnt collide with oither objects
+                gameObject.GetComponent<Collider2D>().isTrigger = true;
+                exited = true;
             }
-
-            // Move the player
-            transform.position += move * playerSpeed * Time.deltaTime;
-
-            //play idle animation
-            if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
+            //enable sprite renderer if wimp has re entered
+            if (gameObject.tag == "Player1" && OrbCount.player1Exited == true && Input.GetButtonDown(interact) && OrbCount.player1CanEnter == true)
             {
+                //make player visible to camera again
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
+                //restore player speed
+                playerSpeed = speedWhileNotCarryOrb;
+                //play idle animation on re entry
                 TorsoAnimator.SetBool("Running", false);
                 LegsAnimator.SetBool("Running", false);
                 TorsoAnimator.SetBool("Idle", true);
                 LegsAnimator.SetBool("Idle", true);
+                //restore rigidbody parameters to normal
+                gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+                gameObject.GetComponent<Collider2D>().isTrigger = false;
+                //reset values to false so that player can exit again and re enter after exiting
+                OrbCount.player1Exited = false;
+                OrbCount.player1CanEnter = false;
+                //decrease wimps exited by 1 when player re enters
+                OrbCount.wimpsExited -= 1;
+                exited = false;
             }
-            // Change animation from idle to run and flip the players sprite
-            if (Input.GetAxis(horizontal) < -0.1f)
+
+            if (gameObject.tag == "Player2" && OrbCount.player2Exited == true && Input.GetButtonDown(interact) && OrbCount.player2CanEnter == true)
             {
-                TorsoAnimator.SetBool("Running", true);
-                LegsAnimator.SetBool("Running", true);
-                TorsoAnimator.SetBool("Idle", false);
-                LegsAnimator.SetBool("Idle", false);
-                transform.eulerAngles = new Vector3(0, 180, 0);
-                direction = -1;
+                //make player visible to camera again
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
+                //restore player speed
+                playerSpeed = speedWhileNotCarryOrb;
+                //play idle animation on re entry
+                TorsoAnimator.SetBool("Running", false);
+                LegsAnimator.SetBool("Running", false);
+                TorsoAnimator.SetBool("Idle", true);
+                LegsAnimator.SetBool("Idle", true);
+                //restore rigidbody parameters to normal
+                gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+                gameObject.GetComponent<Collider2D>().isTrigger = false;
+                //reset values to false so that player can exit again and re enter after exiting
+                OrbCount.player1Exited = false;
+                OrbCount.player1CanEnter = false;
+                //decrease wimps exited by 1 when player re enters
+                OrbCount.wimpsExited -= 1;
+                Debug.Log("wimp entered");
+                exited = false;
             }
-            // Change animation from idle to run and flip the sprite
-            if (Input.GetAxis(horizontal) > 0.1f)
+
+            if (gameObject.tag == "Player3" && OrbCount.player3Exited == true && Input.GetButtonDown(interact) && OrbCount.player3CanEnter == true)
             {
-                TorsoAnimator.SetBool("Running", true);
-                LegsAnimator.SetBool("Running", true);
-                TorsoAnimator.SetBool("Idle", false);
-                LegsAnimator.SetBool("Idle", false);
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                direction = 1;
+                //make player visible to camera again
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
+                //restore player speed
+                playerSpeed = speedWhileNotCarryOrb;
+                //play idle animation on re entry
+                TorsoAnimator.SetBool("Running", false);
+                LegsAnimator.SetBool("Running", false);
+                TorsoAnimator.SetBool("Idle", true);
+                LegsAnimator.SetBool("Idle", true);
+                //restore rigidbody parameters to normal
+                gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+                gameObject.GetComponent<Collider2D>().isTrigger = false;
+                //reset values to false so that player can exit again and re enter after exiting
+                OrbCount.player1Exited = false;
+                OrbCount.player1CanEnter = false;
+                //decrease wimps exited by 1 when player re enters
+                OrbCount.wimpsExited -= 1;
+                Debug.Log("wimp entered");
+                exited = false;
             }
-            // If player is on ground and space button hit -> jump
-            if (Input.GetButtonDown(jump) && (onGround))
+
+            if (gameObject.tag == "Player4" && OrbCount.player4Exited == true && Input.GetButtonDown(interact) && OrbCount.player4CanEnter == true)
             {
-                rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
+                //make player visible to camera again
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
+                //restore player speed
+                playerSpeed = speedWhileNotCarryOrb;
+                //play idle animation on re entry
+                TorsoAnimator.SetBool("Running", false);
+                LegsAnimator.SetBool("Running", false);
+                TorsoAnimator.SetBool("Idle", true);
+                LegsAnimator.SetBool("Idle", true);
+                //restore rigidbody parameters to normal
+                gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+                gameObject.GetComponent<Collider2D>().isTrigger = false;
+                //reset values to false so that player can exit again and re enter after exiting
+                OrbCount.player1Exited = false;
+                OrbCount.player1CanEnter = false;
+                OrbCount.wimpsExited -= 1;
+                //decrease wimps exited by 1 when player re enters
+                Debug.Log("wimp entered");
+                exited = false;
             }
-            if (Input.GetKeyUp(KeyCode.R))
+
+            //decrease speed of player if carrying an orb
+            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == true)
             {
-                SceneManager.LoadScene(4); // load level generator
+                playerSpeed = speedWhileCarryOrb;
+            }
+
+            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == true)
+            {
+                playerSpeed = speedWhileCarryOrb;
+            }
+
+            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == true)
+            {
+                playerSpeed = speedWhileCarryOrb;
+            }
+
+            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == true)
+            {
+                playerSpeed = speedWhileCarryOrb;
+            }
+
+            //restore speed of player if not carrying an orb
+            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == false)
+            {
+                playerSpeed = speedWhileNotCarryOrb;
+            }
+
+            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == false)
+            {
+                playerSpeed = speedWhileNotCarryOrb;
+            }
+
+            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == false)
+            {
+                playerSpeed = speedWhileNotCarryOrb;
+            }
+
+            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == false)
+            {
+                playerSpeed = speedWhileNotCarryOrb;
             }
         }
+
+            if (speedIncreased)
+            {
+                timeSpeedIncreased += Time.deltaTime;
+                if (timeSpeedIncreased > 3)
+                {
+                    playerSpeed /= 2;
+                    timeSpeedIncreased = 0;
+                    speedIncreased = false;
+                }
+            }
+
+            if (canMove && dead == false && exited == false)
+            {
+            if (GameOverTextManager.gameOver == false)
+            {
+                //turn off movement of murderer during certain times
+                if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+                {
+                    if (ShittyPossum.possumed == true || MurdererScripts.washingClothes == true || killedWimpMovementDelay == true)
+                    {
+                        playerSpeed = 0;
+                    }
+                    //restore movement of movement after
+                    if (ShittyPossum.possumed == false && MurdererScripts.washingClothes == false && killedWimpMovementDelay == false)
+                    {
+                        playerSpeed = speedWhileNotCarryOrb;
+                    }
+                }
+            }
+                // Create a ray down checking if there is anything underneath the player
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
+                // If ray hit something player is on ground
+                if (hit.collider != null)
+                {
+                    if (hit.collider.tag == "Ground" && hit.distance < 1.3f)
+                    {
+                        onGround = true;
+                        TorsoAnimator.SetBool("Jumping", false);
+                        LegsAnimator.SetBool("Jumping", false);
+                    }
+                    // otherwise the player is in the air
+                    else if (hit.distance >= 1.3f)
+                    {
+                        onGround = false;
+                        TorsoAnimator.SetBool("Jumping", true);
+                        LegsAnimator.SetBool("Jumping", true);
+                    }
+                }
+                // Create move vector
+                move = new Vector3(Input.GetAxis(horizontal), 0, 0);
+                //set movement bounds on player
+                if (transform.position.x <= -580)
+                {
+                    transform.position = new Vector3(-570, transform.position.y, transform.position.z);
+                }
+
+                if (transform.position.x >= 580)
+                {
+                    transform.position = new Vector3(570, transform.position.y, transform.position.z);
+                }
+
+                if (transform.position.y <= -337.5f)
+                {
+                    transform.position = new Vector3(transform.position.x, -327.5f, transform.position.z);
+                }
+
+                if (transform.position.y >= 337.5f)
+                {
+                    transform.position = new Vector3(transform.position.x, 327.5f, transform.position.z);
+                }
+
+                // Move the player
+                transform.position += move * playerSpeed * Time.deltaTime;
+
+            //murderer animations
+            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+            {
+                //play idle animation
+                if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
+                {
+                    TorsoAnimator.SetBool("Running", false);
+                    LegsAnimator.SetBool("Running", false);
+                    TorsoAnimator.SetBool("Idle", true);
+                    LegsAnimator.SetBool("Idle", true);
+                }
+
+                if (killedWimpMovementDelay == true)
+                {
+                    TorsoAnimator.SetBool("Running", false);
+                    LegsAnimator.SetBool("Running", false);
+                    TorsoAnimator.SetBool("Idle", true);
+                    LegsAnimator.SetBool("Idle", true);
+                }
+                // Change animation from idle to run and flip the players sprite
+                if (Input.GetAxis(horizontal) < -0.1f && killedWimpMovementDelay == false)
+                {
+                    if (playerSpeed != 0)
+                    {
+                        TorsoAnimator.SetBool("Running", true);
+                        LegsAnimator.SetBool("Running", true);
+                        TorsoAnimator.SetBool("Idle", false);
+                        LegsAnimator.SetBool("Idle", false);
+                        transform.eulerAngles = new Vector3(0, 180, 0);
+                    }
+                    direction = -1;
+                }
+                // Change animation from idle to run and flip the sprite
+                if (Input.GetAxis(horizontal) > 0.1f && killedWimpMovementDelay == false)
+                {
+                    if (playerSpeed != 0)
+                    {
+                        TorsoAnimator.SetBool("Running", true);
+                        LegsAnimator.SetBool("Running", true);
+                        TorsoAnimator.SetBool("Idle", false);
+                        LegsAnimator.SetBool("Idle", false);
+                        transform.eulerAngles = new Vector3(0, 0, 0);
+                    }
+                    direction = 1;
+                }
+            }
+
+            //player animations
+            if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
+            {
+                //play idle animation
+                if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
+                {
+                    TorsoAnimator.SetBool("Running", false);
+                    LegsAnimator.SetBool("Running", false);
+                    TorsoAnimator.SetBool("Idle", true);
+                    LegsAnimator.SetBool("Idle", true);
+                }
+                // Change animation from idle to run and flip the players sprite
+                if (Input.GetAxis(horizontal) < -0.1f)
+                {
+                    if (playerSpeed != 0)
+                    {
+                        TorsoAnimator.SetBool("Running", true);
+                        LegsAnimator.SetBool("Running", true);
+                        TorsoAnimator.SetBool("Idle", false);
+                        LegsAnimator.SetBool("Idle", false);
+                        transform.eulerAngles = new Vector3(0, 180, 0);
+                    }
+                    direction = -1;
+                }
+                // Change animation from idle to run and flip the sprite
+                if (Input.GetAxis(horizontal) > 0.1f)
+                {
+                    if (playerSpeed != 0)
+                    {
+                        TorsoAnimator.SetBool("Running", true);
+                        LegsAnimator.SetBool("Running", true);
+                        TorsoAnimator.SetBool("Idle", false);
+                        LegsAnimator.SetBool("Idle", false);
+                        transform.eulerAngles = new Vector3(0, 0, 0);
+                    }
+                    direction = 1;
+                }
+            }
+                // If player is on ground and space button hit -> jump
+                if (Input.GetButtonDown(jump) && (onGround))
+                {
+                    rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
+                }
+                if (Input.GetKeyUp(KeyCode.R))
+                {
+                    SceneManager.LoadScene(4); // load level generator
+                }
+            }
+        
         //go to main menu
         if (Input.GetKey(KeyCode.Escape))
         {
@@ -841,6 +911,7 @@ public class Controls : MonoBehaviour
                 gameObject.layer = 8;
                 dead = true;
                 wimpKilled = true;
+                killedWimpMovementDelay = true;
                 //increment wimps down needed for murderer win condition
                 if(Time.time>wimpDownedCooldown + wimpDownedDelay)
                 {
@@ -910,6 +981,8 @@ public class Controls : MonoBehaviour
                 }
                 //murderer weapon cooldown after killing wimp
                 Invoke("RechargeWeapon", MurdererWeaponCooldown);
+                //murderer movement delay after killing wimp
+                Invoke("MurdererMovementDelay", 1f);
                 bloodStained = true;
             }
         }
@@ -975,9 +1048,16 @@ public class Controls : MonoBehaviour
         GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = true;
     }
 
+    void MurdererMovementDelay()
+    {
+        killedWimpMovementDelay = false;
+    }
+
     //function used for murderer weapon cooldown
     void RechargeWeapon()
     {
         wimpKilled = false;
     }
+
+    
 }
