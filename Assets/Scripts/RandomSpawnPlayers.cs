@@ -66,9 +66,9 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //grab butcher room from scene
         buctherRoom = GameObject.FindGameObjectWithTag("MurdererStart");
         //random number for deciding the murderer
-        randomMurdererNumber = Random.Range(0, 4);
+        //randomMurdererNumber = Random.Range(0, 4);
         //used for changing who the murderer is(just for testing purposes)
-        //randomMurdererNumber = 0;
+        randomMurdererNumber = 0;
         //random number for deciding murderer ability
         randomMurdererAbility = Random.Range(0, numberOfMurdererAbilities);
         //set the number of the player that is the murderer
@@ -195,7 +195,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<ThirdEye>();
                 //make camera able to see arrows
-                player1Camera.GetComponent<Camera>().cullingMask = ~0;
+                player1Camera.GetComponent<Camera>().cullingMask |= (1<<15);
             }
         }
 
@@ -250,7 +250,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<ThirdEye>();
                 //make camera able to see arrows
-                player2Camera.GetComponent<Camera>().cullingMask = ~0;
+                player2Camera.GetComponent<Camera>().cullingMask |= (1 << 15);
             }
         }
 
@@ -307,7 +307,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<ThirdEye>();
                 //make camera able to see arrows
-                player3Camera.GetComponent<Camera>().cullingMask = ~0;
+                player3Camera.GetComponent<Camera>().cullingMask |= (1 << 15);
             }
         }
 
@@ -364,7 +364,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<ThirdEye>();
                 //make camera able to see arrows
-                player4Camera.GetComponent<Camera>().cullingMask = ~0;
+                player4Camera.GetComponent<Camera>().cullingMask |= (1 << 15);
             }
         }
 

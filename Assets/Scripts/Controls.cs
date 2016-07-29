@@ -988,25 +988,27 @@ public class Controls : MonoBehaviour
                         break;
                 }
                 //turn on blood shirt
-                if (other.gameObject.tag == "Knife1")
-                {
-                    Invoke("TurnOnBloodShirt1", .5f);
-                }
+                /* if (other.gameObject.tag == "Knife1")
+                 {
+                     Invoke("TurnOnBloodShirt1", .5f);
+                 }
 
-                if (other.gameObject.tag == "Knife2")
-                {
-                    Invoke("TurnOnBloodShirt2", .5f);
-                }
+                 if (other.gameObject.tag == "Knife2")
+                 {
+                     Invoke("TurnOnBloodShirt2", .5f);
+                 }
 
-                if (other.gameObject.tag == "Knife3")
-                {
-                    Invoke("TurnOnBloodShirt3", .5f);
-                }
+                 if (other.gameObject.tag == "Knife3")
+                 {
+                     Invoke("TurnOnBloodShirt3", .5f);
+                 }
 
-                if (other.gameObject.tag == "Knife4")
-                {
-                    Invoke("TurnOnBloodShirt4", .5f);
-                }
+                 if (other.gameObject.tag == "Knife4")
+                 {
+                     Invoke("TurnOnBloodShirt4", .5f);
+                 }
+                 */
+                Invoke("TurnOnBlood", .5f);
                 //murderer weapon cooldown after killing wimp
                 Invoke("RechargeWeapon", MurdererWeaponCooldown);
                 //murderer movement delay after killing wimp
@@ -1056,7 +1058,7 @@ public class Controls : MonoBehaviour
     }
 
     //functions used to turn on bloody shirt aniamtors
-    void TurnOnBloodShirt1()
+   /* void TurnOnBloodShirt1()
     {
         GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = true;
     }
@@ -1068,12 +1070,21 @@ public class Controls : MonoBehaviour
 
     void TurnOnBloodShirt3()
     {
-        GameObject.FindGameObjectWithTag("MurdererShirt3").GetComponent<Animator>().enabled = true;
+       GameObject.FindGameObjectWithTag("MurdererShirt3").GetComponent<Animator>().enabled = true;
     }
 
     void TurnOnBloodShirt4()
     {
         GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = true;
+    }
+    */
+
+    void TurnOnBlood()
+    {
+        GameObject.FindGameObjectWithTag("Player1Camera").GetComponent<Camera>().cullingMask |= (1 << 16);
+        GameObject.FindGameObjectWithTag("Player2Camera").GetComponent<Camera>().cullingMask |= (1 << 16);
+        GameObject.FindGameObjectWithTag("Player3Camera").GetComponent<Camera>().cullingMask |= (1 << 16);
+        GameObject.FindGameObjectWithTag("Player4Camera").GetComponent<Camera>().cullingMask |= (1 << 16);
     }
 
     void MurdererMovementDelay()
