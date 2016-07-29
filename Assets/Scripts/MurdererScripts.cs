@@ -107,13 +107,19 @@ public class MurdererScripts : MonoBehaviour {
             ShirtAnimator.SetBool("MurdererIdle", true);
         }
 
-        if (Input.GetAxis(horizontal) < -0.1f && GameOverTextManager.gameOver==false && Controls.killedWimpMovementDelay == false)
+        if (Input.GetAxis(horizontal) < -0.1f && GameOverTextManager.gameOver==false && Controls.killedWimpMovementDelay == false && Controls.murderTransitioning == false)
         {
             ShirtAnimator.SetBool("MurdererRunning", true);
             ShirtAnimator.SetBool("MurdererIdle", false);
         }
 
-        if (Input.GetAxis(horizontal) > 0.1f && GameOverTextManager.gameOver == false && Controls.killedWimpMovementDelay == false)
+        if (Controls.murderTransitioning == true)
+        {
+            ShirtAnimator.SetBool("MurdererRunning", true);
+            ShirtAnimator.SetBool("MurdererIdle", false);
+        }
+
+        if (Input.GetAxis(horizontal) > 0.1f && GameOverTextManager.gameOver == false && Controls.killedWimpMovementDelay == false && Controls.murderTransitioning == false)
         {
             ShirtAnimator.SetBool("MurdererRunning", true);
             ShirtAnimator.SetBool("MurdererIdle", false);

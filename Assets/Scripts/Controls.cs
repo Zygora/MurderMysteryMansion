@@ -645,8 +645,6 @@ public class Controls : MonoBehaviour
                 LegsAnimator.SetBool("Idle", false);
                 if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                 {
-                    ShirtAnimator.SetBool("MurdererRunning", true);
-                    ShirtAnimator.SetBool("MurdererIdle", false);
                     murderTransitioning = true;
                 }
                 transform.position += direction * playerSpeed / 4 * Time.deltaTime * speedMultiplier;
@@ -862,6 +860,7 @@ public class Controls : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
+            murderTransitioning = false;
         }
         if (other.tag == "TopLadder")
         {
@@ -871,6 +870,7 @@ public class Controls : MonoBehaviour
             // gameObject.GetComponent<Collider2D>().enabled = true;
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
+            murderTransitioning = false;
         }
         if (other.tag == "Room" || other.tag == "MurdererStart")
         {
