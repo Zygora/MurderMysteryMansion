@@ -421,34 +421,32 @@ public class Controls : MonoBehaviour
            //murderer animations
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
+
                 if (murderTransitioning != true)
                 {
                     //play idle animation
                     if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
                     {
-                        TorsoAnimator.SetBool("Running", false);
+                        TorsoAnimator.SetBool("MurdererRunning", false);
                         LegsAnimator.SetBool("Running", false);
                         TorsoAnimator.SetBool("Idle", true);
                         LegsAnimator.SetBool("Idle", true);
+                        ShirtAnimator.SetBool("MurdererRunning", false);
+                        ShirtAnimator.SetBool("MurdererIdle", true);
                     }
 
-                    if (killedWimpMovementDelay == true)
-                    {
-                        TorsoAnimator.SetBool("Running", false);
-                        LegsAnimator.SetBool("Running", false);
-                        TorsoAnimator.SetBool("Idle", true);
-                        LegsAnimator.SetBool("Idle", true);
-                    }
                     // Change animation from idle to run and flip the players sprite
                     if (Input.GetAxis(horizontal) < -0.1f && killedWimpMovementDelay == false)
                     {
                         if (playerSpeed != 0)
                         {
-                            TorsoAnimator.SetBool("Running", true);
+                            TorsoAnimator.SetBool("MurdererRunning", true);
                             LegsAnimator.SetBool("Running", true);
                             TorsoAnimator.SetBool("Idle", false);
                             LegsAnimator.SetBool("Idle", false);
                             transform.eulerAngles = new Vector3(0, 180, 0);
+                            ShirtAnimator.SetBool("MurdererRunning", true);
+                            ShirtAnimator.SetBool("MurdererIdle", false);
                         }
                         direction = -1;
                     }
@@ -457,14 +455,21 @@ public class Controls : MonoBehaviour
                     {
                         if (playerSpeed != 0)
                         {
-                            TorsoAnimator.SetBool("Running", true);
+                            TorsoAnimator.SetBool("MurdererRunning", true);
                             LegsAnimator.SetBool("Running", true);
                             TorsoAnimator.SetBool("Idle", false);
                             LegsAnimator.SetBool("Idle", false);
                             transform.eulerAngles = new Vector3(0, 0, 0);
+                            ShirtAnimator.SetBool("MurdererRunning", true);
+                            ShirtAnimator.SetBool("MurdererIdle", false);
                         }
                         direction = 1;
                     }
+                }
+
+                else {
+                    ShirtAnimator.SetBool("MurdererIdle", false);
+                    ShirtAnimator.SetBool("MurdererJumping", false);
                 }
             }
 
@@ -653,9 +658,8 @@ public class Controls : MonoBehaviour
                 if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                 {
                     murderTransitioning = true;
-                    //ShirtAnimator.SetBool("MurdererRunning",true);
-                   // TorsoAnimator.SetBool("Running", true);
-                    //LegsAnimator.SetBool("Running", true);
+                    TorsoAnimator.SetBool("MurdererRunning", true);
+                    LegsAnimator.SetBool("Running", true);
                 }
                 
                 transform.position += direction * playerSpeed / 4 * Time.deltaTime * speedMultiplier;
@@ -772,10 +776,6 @@ public class Controls : MonoBehaviour
             ladder = other.gameObject;
             canGoDown = false;
             canGoUp = true;
-            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
-            {
-                //murderTransitioning = false;
-            }
         }
         // At the top of a ladder turn off the collision of a player and the platform above them
         if (other.tag == "TopLadder")
@@ -783,10 +783,6 @@ public class Controls : MonoBehaviour
             ladder = other.gameObject;
             canGoDown = true;
             canGoUp = false;
-            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
-            {
-                //murderTransitioning = false;
-            }
         }
         //change highlight on play button and change level on button input
         if (other.gameObject.tag == "Gate")
@@ -955,7 +951,7 @@ public class Controls : MonoBehaviour
                     wimpDownedCooldown = Time.time;
                 }
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-                gameObject.GetComponent<Collider2D>().isTrigger = true;
+                groundCheck.GetComponent<Collider2D>().enabled = false;
                 // if murderer has thrill of the hunt script atached activate the bonus
                 if ((other.gameObject.GetComponent<ThrillOfTheHunt>() as ThrillOfTheHunt) != null)
                 {
@@ -995,32 +991,11 @@ public class Controls : MonoBehaviour
                         gameObject.tag = "DownedWimp4";
                         break;
                 }
-                //turn on blood shirt
-                /* if (other.gameObject.tag == "Knife1")
-                 {
-                     Invoke("TurnOnBloodShirt1", .5f);
-                 }
-
-                 if (other.gameObject.tag == "Knife2")
-                 {
-                     Invoke("TurnOnBloodShirt2", .5f);
-                 }
-
-                 if (other.gameObject.tag == "Knife3")
-                 {
-                     Invoke("TurnOnBloodShirt3", .5f);
-                 }
-
-                 if (other.gameObject.tag == "Knife4")
-                 {
-                     Invoke("TurnOnBloodShirt4", .5f);
-                 }
-                 */
+                
                 Invoke("TurnOnBlood", .5f);
                 //murderer weapon cooldown after killing wimp
                 Invoke("RechargeWeapon", MurdererWeaponCooldown);
-                //murderer movement delay after killing wimp
-               // Invoke("MurdererMovementDelay", 1f);
+                
                 bloodStained = true;
             }
         }
@@ -1065,28 +1040,7 @@ public class Controls : MonoBehaviour
         }
     }
 
-    //functions used to turn on bloody shirt aniamtors
-   /* void TurnOnBloodShirt1()
-    {
-        GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = true;
-    }
-
-    void TurnOnBloodShirt2()
-    {
-        GameObject.FindGameObjectWithTag("MurdererShirt2").GetComponent<Animator>().enabled = true;
-    }
-
-    void TurnOnBloodShirt3()
-    {
-       GameObject.FindGameObjectWithTag("MurdererShirt3").GetComponent<Animator>().enabled = true;
-    }
-
-    void TurnOnBloodShirt4()
-    {
-        GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = true;
-    }
-    */
-
+    //functions used to turn on bloody shirt visibility for all cameras
     void TurnOnBlood()
     {
         GameObject.FindGameObjectWithTag("Player1Camera").GetComponent<Camera>().cullingMask |= (1 << 16);

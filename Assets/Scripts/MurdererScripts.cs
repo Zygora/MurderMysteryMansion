@@ -7,8 +7,6 @@ public class MurdererScripts : MonoBehaviour {
     public Animator LegsAnimator;
    
     public static bool isMurderer;
-    public string horizontal;
-    public string vertical;
     public string attack;
     public string interact;
     private GameObject[] Shirts;
@@ -74,13 +72,6 @@ public class MurdererScripts : MonoBehaviour {
             GameObject.FindGameObjectWithTag("Player2Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
             GameObject.FindGameObjectWithTag("Player3Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
             GameObject.FindGameObjectWithTag("Player4Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
-            /* Shirts2 = GameObject.FindGameObjectsWithTag("Blood");
-             for (int i = 0; i < Shirts2.Length; i++)
-             {
-                 //disable the sprite renderer for each blood splatter in array
-                 Shirts2[i].GetComponent<SpriteRenderer>().enabled = false;
-             }
-             */
         }
 
         if (ShittyPossum.possumed == false)
@@ -105,42 +96,10 @@ public class MurdererScripts : MonoBehaviour {
                 diseased = false;
             }
         }
-        //play blood animations for murderer when enabled;
-            /* if (Controls.murderTransitioning == true)
-             {
-             ShirtAnimator.SetBool("MurdererRunning", true);
-             ShirtAnimator.SetBool("MurdererIdle", false);
-             }*/
 
+        //play attack animations for murderer
         if (Controls.murderTransitioning == false)
         {
-            if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
-            {
-                ShirtAnimator.SetBool("MurdererRunning", false);
-                ShirtAnimator.SetBool("MurdererIdle", true);
-            }
-
-            /* if (Controls.killedWimpMovementDelay == true)
-             {
-                 ShirtAnimator.SetBool("MurdererRunning", false);
-                 ShirtAnimator.SetBool("MurdererIdle", true);
-             }*/
-
-            if (Input.GetAxis(horizontal) < -0.1f && GameOverTextManager.gameOver == false)
-            {
-                ShirtAnimator.SetBool("MurdererRunning", true);
-                ShirtAnimator.SetBool("MurdererIdle", false);
-            }
-
-
-
-            if (Input.GetAxis(horizontal) > 0.1f && GameOverTextManager.gameOver == false)
-            {
-                ShirtAnimator.SetBool("MurdererRunning", true);
-                ShirtAnimator.SetBool("MurdererIdle", false);
-            }
-
-
             if (Input.GetButtonDown(attack) && Controls.wimpKilled == false && GameOverTextManager.gameOver == false && Controls.killedWimpMovementDelay == false)
             {
                 TorsoAnimator.Play("TorsoMurdererAttack");
@@ -151,7 +110,6 @@ public class MurdererScripts : MonoBehaviour {
 
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
-        // Debug.DrawRay(transform.position, Vector2.down, Color.red);
         // If ray hit something player is on ground
         if (hit.collider != null && GameOverTextManager.gameOver == false) 
         {
@@ -187,104 +145,7 @@ public class MurdererScripts : MonoBehaviour {
                 TorsoAnimator.Play("TorsoMurdererBloodyWash");
                 Controls.bloodStained = false;
             }
-
             LegsAnimator.Play("LegsMurdererWashing");
-            /* if (gameObject.tag == "Murderer1")
-             {
-                 //disable the bloody shirt animator
-                 GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = false;
-                 //find all blood splatter tagged blood and put them into an array
-                 Shirts = GameObject.FindGameObjectsWithTag("Blood");
-                 for (int i = 0; i < Shirts.Length; i++)
-                 {
-                     //disable the sprite renderer for each blood splatter in array
-                     Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
-                 }
-                 //play non bloody washing animation if murderer is not blood stained
-                 if (Controls.bloodStained == false)
-                 {
-                     TorsoAnimator.Play("TorsoMurdererWash");
-                 }
-
-                 //play  bloody washing animation if murderer is not blood stained
-                 if (Controls.bloodStained == true)
-                 {
-                     TorsoAnimator.Play("TorsoMurdererBloodyWash");
-                     Controls.bloodStained = false;
-                 }
-                 //disable the leg sprite of player during animation
-                 LegsAnimator.Play("LegsMurdererWashing");
-             }
-
-             if (gameObject.tag == "Murderer2")
-             {
-                 GameObject.FindGameObjectWithTag("MurdererShirt2").GetComponent<Animator>().enabled = false;
-                 Shirts = GameObject.FindGameObjectsWithTag("Blood");
-                 for (int i = 0; i < Shirts.Length; i++)
-                 {
-                     Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
-                 }
-
-                 if (Controls.bloodStained == false)
-                 {
-                     TorsoAnimator.Play("TorsoMurdererWash");
-                 }
-
-                 if (Controls.bloodStained == true)
-                 {
-                     TorsoAnimator.Play("TorsoMurdererBloodyWash");
-                     Controls.bloodStained = false;
-                 }
-
-                 LegsAnimator.Play("LegsMurdererWashing");
-             }
-
-             if (gameObject.tag == "Murderer3")
-             {
-                 GameObject.FindGameObjectWithTag("MurdererShirt3").GetComponent<Animator>().enabled = false;
-                 Shirts = GameObject.FindGameObjectsWithTag("Blood");
-                 for (int i = 0; i < Shirts.Length; i++)
-                 {
-                     Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
-                 }
-
-                 if (Controls.bloodStained == false)
-                 {
-                     TorsoAnimator.Play("TorsoMurdererWash");
-                 }
-
-                 if (Controls.bloodStained == true)
-                 {
-                     TorsoAnimator.Play("TorsoMurdererBloodyWash");
-                     Controls.bloodStained = false;
-                 }
-
-                 LegsAnimator.Play("LegsMurdererWashing");
-             }
-
-             if (gameObject.tag == "Murderer4")
-             {
-                 GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = false;
-                 Shirts = GameObject.FindGameObjectsWithTag("Blood");
-                 for (int i = 0; i < Shirts.Length; i++)
-                 {
-                     Shirts[i].GetComponent<SpriteRenderer>().enabled = false;
-                 }
-
-                 if (Controls.bloodStained == false)
-                 {
-                     TorsoAnimator.Play("TorsoMurdererWash");
-                 }
-
-                 if (Controls.bloodStained == true)
-                 {
-                     TorsoAnimator.Play("TorsoMurdererBloodyWash");
-                     Controls.bloodStained = false;
-                 }
-
-                 LegsAnimator.Play("LegsMurdererWashing");
-             }
-             */
             //makes washing clothes false after animations play
             Invoke("StopWashingClothes", 1.2f);
         }

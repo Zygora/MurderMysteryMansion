@@ -13,6 +13,8 @@ public class GameOverTextManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         GameLength = GameLength * 60;
+        Controls.wimpsDowned = 0;
+        OrbCount.wimpsExited = 0;
 	}
 	
 	// Update is called once per frame
