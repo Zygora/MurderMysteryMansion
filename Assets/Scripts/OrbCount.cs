@@ -61,28 +61,39 @@ public class OrbCount : MonoBehaviour {
 	void Update () {
         //drop orb if carrying orb
         if (carryingOrbs == 1 && Input.GetButtonDown(interact) && canDropOrb) {
-            Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 28, Quaternion.identity);
-            carryingOrbs = 0;
-            Debug.Log("orb dropped");
-            canDropOrb = false;
-            //keeps track of player carrying orb globally
-            if (gameObject.tag == "Player1")
+            if (gameObject.tag == "Player1" && Controls.player1NoDropOrbZone == false)
             {
+                Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 28, Quaternion.identity);
+                carryingOrbs = 0;
+                Debug.Log("orb dropped");
+                canDropOrb = false;
                 player1CarryOrb = false;
             }
 
-            if (gameObject.tag == "Player2")
+            if (gameObject.tag == "Player2" && Controls.player2NoDropOrbZone == false)
             {
+                Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 28, Quaternion.identity);
+                carryingOrbs = 0;
+                Debug.Log("orb dropped");
+                canDropOrb = false;
                 player2CarryOrb = false;
             }
 
-            if (gameObject.tag == "Player3")
+            if (gameObject.tag == "Player3" && Controls.player3NoDropOrbZone == false)
             {
+                Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 28, Quaternion.identity);
+                carryingOrbs = 0;
+                Debug.Log("orb dropped");
+                canDropOrb = false;
                 player3CarryOrb = false;
             }
 
-            if (gameObject.tag == "Player4")
+            if (gameObject.tag == "Player4" && Controls.player4NoDropOrbZone == false)
             {
+                Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 28, Quaternion.identity);
+                carryingOrbs = 0;
+                Debug.Log("orb dropped");
+                canDropOrb = false;
                 player4CarryOrb = false;
             }
         }

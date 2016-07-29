@@ -91,7 +91,10 @@ public class Controls : MonoBehaviour
     float revivetimepassed = 0.0f;   
     public string revive;
     public int MurdererWeaponCooldown;
-    public static bool killedWimpMovementDelay = false;
+    public static bool player1NoDropOrbZone = false;
+    public static bool player2NoDropOrbZone = false;
+    public static bool player3NoDropOrbZone = false;
+    public static bool player4NoDropOrbZone = false;
 
 
     void Start()
@@ -362,12 +365,12 @@ public class Controls : MonoBehaviour
                 //turn off movement of murderer during certain times
                 if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                 {
-                    if (ShittyPossum.possumed == true || MurdererScripts.washingClothes == true || killedWimpMovementDelay == true)
+                    if (ShittyPossum.possumed == true || MurdererScripts.washingClothes == true)
                     {
                         playerSpeed = 0;
                     }
                     //restore movement of movement after
-                    if (ShittyPossum.possumed == false && MurdererScripts.washingClothes == false && killedWimpMovementDelay == false)
+                    if (ShittyPossum.possumed == false && MurdererScripts.washingClothes == false)
                     {
                         playerSpeed = speedWhileNotCarryOrb;
                     }
@@ -383,14 +386,52 @@ public class Controls : MonoBehaviour
                         onGround = true;
                         TorsoAnimator.SetBool("Jumping", false);
                         LegsAnimator.SetBool("Jumping", false);
+                    if (gameObject.tag == "Player1")
+                    {
+                        player1NoDropOrbZone = false;
                     }
+
+                    if (gameObject.tag == "Player2")
+                    {
+                        player2NoDropOrbZone = false;
+                    }
+
+                    if (gameObject.tag == "Player3")
+                    {
+                        player3NoDropOrbZone = false;
+                    }
+
+                    if (gameObject.tag == "Player4")
+                    {
+                        player4NoDropOrbZone = false;
+                    }
+                }
                     // otherwise the player is in the air
                     else if (hit.distance >= 1.3f)
                     {
                         onGround = false;
                         TorsoAnimator.SetBool("Jumping", true);
                         LegsAnimator.SetBool("Jumping", true);
+                    if (gameObject.tag == "Player1")
+                    {
+                        player1NoDropOrbZone = true;
                     }
+
+                    if (gameObject.tag == "Player2")
+                    {
+                        player2NoDropOrbZone = true;
+                    }
+
+                    if (gameObject.tag == "Player3")
+                    {
+                        player3NoDropOrbZone = true;
+                    }
+
+                    if (gameObject.tag == "Player4")
+                    {
+                        player4NoDropOrbZone = true;
+                    }
+                }
                 }
                 // Create move vector
                 move = new Vector3(Input.GetAxis(horizontal), 0, 0);
@@ -436,7 +477,7 @@ public class Controls : MonoBehaviour
                     }
 
                     // Change animation from idle to run and flip the players sprite
-                    if (Input.GetAxis(horizontal) < -0.1f && killedWimpMovementDelay == false)
+                    if (Input.GetAxis(horizontal) < -0.1f)
                     {
                         if (playerSpeed != 0)
                         {
@@ -451,7 +492,7 @@ public class Controls : MonoBehaviour
                         direction = -1;
                     }
                     // Change animation from idle to run and flip the sprite
-                    if (Input.GetAxis(horizontal) > 0.1f && killedWimpMovementDelay == false)
+                    if (Input.GetAxis(horizontal) > 0.1f)
                     {
                         if (playerSpeed != 0)
                         {
@@ -609,6 +650,25 @@ public class Controls : MonoBehaviour
         {
             TorsoAnimator.SetBool("Jumping", true);
             LegsAnimator.SetBool("Jumping", true);
+            if (gameObject.tag == "Player1")
+            {
+                player1NoDropOrbZone = true;
+            }
+
+            if (gameObject.tag == "Player2")
+            {
+                player2NoDropOrbZone = true;
+            }
+
+            if (gameObject.tag == "Player3")
+            {
+                player3NoDropOrbZone = true;
+            }
+
+            if (gameObject.tag == "Player4")
+            {
+                player4NoDropOrbZone = true;
+            }
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
                 ShirtAnimator.SetBool("MurdererJumping", true);
@@ -653,6 +713,25 @@ public class Controls : MonoBehaviour
                     LegsAnimator.SetBool("Running", true);
                     TorsoAnimator.SetBool("Idle", false);
                     LegsAnimator.SetBool("Idle", false);
+                    if (gameObject.tag == "Player1")
+                    {
+                        player1NoDropOrbZone = true;
+                    }
+
+                    if (gameObject.tag == "Player2")
+                    {
+                        player2NoDropOrbZone = true;
+                    }
+
+                    if (gameObject.tag == "Player3")
+                    {
+                        player3NoDropOrbZone = true;
+                    }
+
+                    if (gameObject.tag == "Player4")
+                    {
+                        player4NoDropOrbZone = true;
+                    }
                 }
                 
                 if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
@@ -704,6 +783,7 @@ public class Controls : MonoBehaviour
                     }
                     moveCamera = false;
                     canMove = true;
+                    player1NoDropOrbZone = false;
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
                         murderTransitioning = false;
@@ -722,6 +802,7 @@ public class Controls : MonoBehaviour
                     }
                     moveCamera = false;
                     canMove = true;
+                    player2NoDropOrbZone = false;
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
                         murderTransitioning = false;
@@ -740,6 +821,7 @@ public class Controls : MonoBehaviour
                     }
                     moveCamera = false;
                     canMove = true;
+                    player3NoDropOrbZone = false;
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
                         murderTransitioning = false;
@@ -758,6 +840,7 @@ public class Controls : MonoBehaviour
                     }
                     moveCamera = false;
                     canMove = true;
+                    player4NoDropOrbZone = false;
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
                         murderTransitioning = false;
@@ -845,21 +928,25 @@ public class Controls : MonoBehaviour
                     {
                         TorsoAnimator.SetBool("Reviving", false);
                         LegsAnimator.SetBool("Reviving", false);
-                        gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+                        other.gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
                         Debug.Log("Reviving Done");
                         switch (other.gameObject.tag)
                         {
                             case "DownedWimp1":
                                 other.gameObject.tag = "Player1";
+                                GameObject.FindGameObjectWithTag("Player1").transform.GetChild(2).GetComponent<BoxCollider2D>().isTrigger = false;
                                 break;
                             case "DownedWimp2":
                                 other.gameObject.tag = "Player2";
+                                GameObject.FindGameObjectWithTag("Player2").transform.GetChild(2).GetComponent<BoxCollider2D>().isTrigger = false;
                                 break;
                             case "DownedWimp3":
                                 other.gameObject.tag = "Player3";
+                                GameObject.FindGameObjectWithTag("Player3").transform.GetChild(2).GetComponent<BoxCollider2D>().isTrigger = false;
                                 break;
                             case "DownedWimp4":
                                 other.gameObject.tag = "Player4";
+                                GameObject.FindGameObjectWithTag("Player4").transform.GetChild(2).GetComponent<BoxCollider2D>().isTrigger = false;
                                 break;
                         }
                         revivetimepassed = 0;
@@ -886,9 +973,24 @@ public class Controls : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
-            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+            if (gameObject.tag == "Player1")
             {
-                //murderTransitioning = false;
+                player1NoDropOrbZone = false;
+            }
+
+            if (gameObject.tag == "Player2")
+            {
+                player2NoDropOrbZone = false;
+            }
+
+            if (gameObject.tag == "Player3")
+            {
+                player3NoDropOrbZone = false;
+            }
+
+            if (gameObject.tag == "Player4")
+            {
+                player4NoDropOrbZone = false;
             }
         }
         if (other.tag == "TopLadder")
@@ -899,10 +1001,26 @@ public class Controls : MonoBehaviour
             // gameObject.GetComponent<Collider2D>().enabled = true;
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
-            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+            if (gameObject.tag == "Player1")
             {
-                //murderTransitioning = false;
+                player1NoDropOrbZone = false;
             }
+
+            if (gameObject.tag == "Player2")
+            {
+                player2NoDropOrbZone = false;
+            }
+
+            if (gameObject.tag == "Player3")
+            {
+                player3NoDropOrbZone = false;
+            }
+
+            if (gameObject.tag == "Player4")
+            {
+                player4NoDropOrbZone = false;
+            }
+
         }
         if (other.tag == "Room" || other.tag == "MurdererStart")
         {
@@ -943,7 +1061,6 @@ public class Controls : MonoBehaviour
                 gameObject.layer = 8;
                 dead = true;
                 wimpKilled = true;
-                //killedWimpMovementDelay = true;
                 //increment wimps down needed for murderer win condition
                 if(Time.time>wimpDownedCooldown + wimpDownedDelay)
                 {
@@ -951,7 +1068,7 @@ public class Controls : MonoBehaviour
                     wimpDownedCooldown = Time.time;
                 }
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-                groundCheck.GetComponent<Collider2D>().enabled = false;
+                groundCheck.GetComponent<Collider2D>().isTrigger = true;
                 // if murderer has thrill of the hunt script atached activate the bonus
                 if ((other.gameObject.GetComponent<ThrillOfTheHunt>() as ThrillOfTheHunt) != null)
                 {
@@ -1047,11 +1164,6 @@ public class Controls : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player2Camera").GetComponent<Camera>().cullingMask |= (1 << 16);
         GameObject.FindGameObjectWithTag("Player3Camera").GetComponent<Camera>().cullingMask |= (1 << 16);
         GameObject.FindGameObjectWithTag("Player4Camera").GetComponent<Camera>().cullingMask |= (1 << 16);
-    }
-
-    void MurdererMovementDelay()
-    {
-        killedWimpMovementDelay = false;
     }
 
     //function used for murderer weapon cooldown
