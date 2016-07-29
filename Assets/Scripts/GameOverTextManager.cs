@@ -7,15 +7,23 @@ public class GameOverTextManager : MonoBehaviour {
     public GameObject gameOverTextP2;
     public GameObject gameOverTextP3;
     public GameObject gameOverTextP4;
+    public float GameLength;
     public static bool gameOver = false;
+    private bool wimpsWin = false;
     // Use this for initialization
     void Start () {
-	
+        GameLength = GameLength * 60;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (OrbCount.wimpsExited == 3) {
+        GameLength -= Time.smoothDeltaTime;
+        if (GameLength <= 0)
+        {
+            gameOver = true;
+            wimpsWin = true;
+        }
+        if (OrbCount.wimpsExited == 3 || wimpsWin == true) {
             gameOverTextP1.GetComponent<Text>().enabled = true;
             gameOverTextP2.GetComponent<Text>().enabled = true;
             gameOverTextP3.GetComponent<Text>().enabled = true;

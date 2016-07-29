@@ -56,8 +56,8 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //set max range value for random.range equal to size of list;
         randomMax = 24;
         //set number of player and murderer abilities
-        numberOfPlayerAbilities = 5;
-        numberOfMurdererAbilities = 6;
+        numberOfPlayerAbilities = 4;
+        numberOfMurdererAbilities = 3;
         //grab cameras in scene
         player1Camera = GameObject.FindGameObjectWithTag("Player1Camera");
         player2Camera = GameObject.FindGameObjectWithTag("Player2Camera");
@@ -182,15 +182,16 @@ public class RandomSpawnPlayers : MonoBehaviour {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<Doppelganger>();
             }
            
-            if (randomPlayerAbility == 2)
+           /* if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<ScaredCat>();
             }
-            if (randomPlayerAbility == 3)
+            */
+            if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<Squeler>();
             }
-            if (randomPlayerAbility == 4)
+            if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<ThirdEye>();
                 //make camera able to see arrows
@@ -235,16 +236,17 @@ public class RandomSpawnPlayers : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<Doppelganger>();
             }
-            
-            if (randomPlayerAbility == 2)
+
+            /* if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<ScaredCat>();
             }
-            if (randomPlayerAbility == 3)
+            */
+            if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<Squeler>();
             }
-            if (randomPlayerAbility == 4)
+            if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<ThirdEye>();
                 //make camera able to see arrows
@@ -291,16 +293,17 @@ public class RandomSpawnPlayers : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<Doppelganger>();
             }
-            
-            if (randomPlayerAbility == 2)
+
+            /* if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<ScaredCat>();
             }
-            if (randomPlayerAbility == 3)
+            */
+            if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<Squeler>();
             }
-            if (randomPlayerAbility == 4)
+            if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<ThirdEye>();
                 //make camera able to see arrows
@@ -347,16 +350,17 @@ public class RandomSpawnPlayers : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<Doppelganger>();
             }
-            
+
+            /* if (randomPlayerAbility == 2)
+             {
+                 GameObject.FindGameObjectWithTag("Player4").AddComponent<ScaredCat>();
+             }
+             */
             if (randomPlayerAbility == 2)
-            {
-                GameObject.FindGameObjectWithTag("Player4").AddComponent<ScaredCat>();
-            }
-            if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<Squeler>();
             }
-            if (randomPlayerAbility == 5)
+            if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<ThirdEye>();
                 //make camera able to see arrows
@@ -416,7 +420,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
         {
             //give murderer player randomly generated ability
             
-            if (randomMurdererAbility == 0)
+          /*  if (randomMurdererAbility == 0)
             {
                 GameObject.FindGameObjectWithTag("Murderer" + murdererPlayerNumber).AddComponent<GoodNose>();
             }
@@ -430,18 +434,18 @@ public class RandomSpawnPlayers : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Murderer" + murdererPlayerNumber).AddComponent<Polterkamikaze>();
             }
-
-           else if (randomMurdererAbility == 3)
+            */
+           if (randomMurdererAbility == 0)
             {
                 GameObject.FindGameObjectWithTag("Murderer" + murdererPlayerNumber).AddComponent<ShittyPossum>();
             }
 
-           else if (randomMurdererAbility == 4)
+           else if (randomMurdererAbility == 1)
             {
                 GameObject.FindGameObjectWithTag("Murderer" + murdererPlayerNumber).AddComponent<ThrillOfTheHunt>();
             }
 
-           else if (randomMurdererAbility == 5)
+           else if (randomMurdererAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Murderer" + murdererPlayerNumber).AddComponent<Traps>();
             }
