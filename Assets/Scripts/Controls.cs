@@ -418,7 +418,7 @@ public class Controls : MonoBehaviour
                 // Move the player
                 transform.position += move * playerSpeed * Time.deltaTime;
 
-            //murderer animations
+           //murderer animations
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
                 if (murderTransitioning != true)
@@ -469,8 +469,8 @@ public class Controls : MonoBehaviour
             }
 
             //player animations
-            if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
-            {
+           if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
+           {
                 //play idle animation
                 if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
                 {
@@ -505,7 +505,7 @@ public class Controls : MonoBehaviour
                     }
                     direction = 1;
                 }
-            }
+           }
                 // If player is on ground and space button hit -> jump
                 if (Input.GetButtonDown(jump) && (onGround))
                 {
@@ -641,15 +641,23 @@ public class Controls : MonoBehaviour
             // Change player animation to run while transitioning left or right
             if ((!goUp) && (!goDown))
             {
-                TorsoAnimator.SetBool("Running", true);
-                LegsAnimator.SetBool("Running", true);
-                TorsoAnimator.SetBool("Idle", false);
-                LegsAnimator.SetBool("Idle", false);
+                if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
+                {
+
+                    TorsoAnimator.SetBool("Running", true);
+                    LegsAnimator.SetBool("Running", true);
+                    TorsoAnimator.SetBool("Idle", false);
+                    LegsAnimator.SetBool("Idle", false);
+                }
                 
                 if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                 {
                     murderTransitioning = true;
+                    //ShirtAnimator.SetBool("MurdererRunning",true);
+                   // TorsoAnimator.SetBool("Running", true);
+                    //LegsAnimator.SetBool("Running", true);
                 }
+                
                 transform.position += direction * playerSpeed / 4 * Time.deltaTime * speedMultiplier;
             }
             if (Input.GetAxis(horizontal) < 0 && (direction.x == 1) && (!goDown) && (!goUp))
@@ -766,7 +774,7 @@ public class Controls : MonoBehaviour
             canGoUp = true;
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
-                murderTransitioning = false;
+                //murderTransitioning = false;
             }
         }
         // At the top of a ladder turn off the collision of a player and the platform above them
@@ -777,7 +785,7 @@ public class Controls : MonoBehaviour
             canGoUp = false;
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
-                murderTransitioning = false;
+                //murderTransitioning = false;
             }
         }
         //change highlight on play button and change level on button input
@@ -884,7 +892,7 @@ public class Controls : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
-                murderTransitioning = false;
+                //murderTransitioning = false;
             }
         }
         if (other.tag == "TopLadder")
@@ -897,7 +905,7 @@ public class Controls : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
-                murderTransitioning = false;
+                //murderTransitioning = false;
             }
         }
         if (other.tag == "Room" || other.tag == "MurdererStart")
@@ -939,7 +947,7 @@ public class Controls : MonoBehaviour
                 gameObject.layer = 8;
                 dead = true;
                 wimpKilled = true;
-                killedWimpMovementDelay = true;
+                //killedWimpMovementDelay = true;
                 //increment wimps down needed for murderer win condition
                 if(Time.time>wimpDownedCooldown + wimpDownedDelay)
                 {
@@ -1012,7 +1020,7 @@ public class Controls : MonoBehaviour
                 //murderer weapon cooldown after killing wimp
                 Invoke("RechargeWeapon", MurdererWeaponCooldown);
                 //murderer movement delay after killing wimp
-                Invoke("MurdererMovementDelay", 1f);
+               // Invoke("MurdererMovementDelay", 1f);
                 bloodStained = true;
             }
         }
