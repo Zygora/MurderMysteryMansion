@@ -24,10 +24,50 @@ public class AddVectorToRoom : MonoBehaviour {
             GetComponent<SpriteRenderer>().sprite = exitRoomClosed;
         }
 
-        if (currentColumn == 4 && this.gameObject.name == "Exit Room(Clone)" && doorsSet == 0)
+        if (roomCoordinate == Controls.TopLeftRoomLocation)
         {
-            transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
-            doorsSet ++;
+            Controls.TopLeftRoom = this.gameObject;
         }
+
+        if (roomCoordinate == Controls.TopMiddleRoomLocation)
+        {
+            Controls.TopMiddleRoom = this.gameObject;
+        }
+
+        if (roomCoordinate == Controls.TopRightRoomLocation)
+        {
+            Controls.TopRightRoom = this.gameObject;
+        }
+
+        if (roomCoordinate == Controls.LeftRoomLocation)
+        {
+            Controls.LeftRoom = this.gameObject;
+        }
+
+        if (roomCoordinate == Controls.RightRoomLocation)
+        {
+            Controls.RightRoom = this.gameObject;
+        }
+
+        if (roomCoordinate == Controls.BottomLeftRoomLocation)
+        {
+            Controls.BottomLeftRoom = this.gameObject;
+        }
+
+        if (roomCoordinate == Controls.BottomMiddleRoomLocation)
+        {
+            Controls.BottomMiddleRoom = this.gameObject;
+        }
+
+        if (roomCoordinate == Controls.BottomRightRoomLocation)
+        {
+            Controls.BottomRightRoom = this.gameObject;
+        }
+        /* if (currentColumn == 4 && this.gameObject.name == "Exit Room(Clone)" && doorsSet == 0)
+         {
+             transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
+             doorsSet ++;
+         }
+         */
     }
 }

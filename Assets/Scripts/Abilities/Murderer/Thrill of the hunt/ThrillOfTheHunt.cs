@@ -8,33 +8,10 @@ public class ThrillOfTheHunt : MonoBehaviour
     float boostActiveTimeLeft;  // Time until bonus is up
     public bool bonusActive;           // Flag showing wether or not bonus is active
 
-    // Update is called once per frame
-    void Update()
-    {
-        // Time left before bonus
-        if (boostActiveTimeLeft > 0)
-        {
-            boostActiveTimeLeft -= Time.deltaTime;
-        }
-        // If bonus is active and time is up
-        if ((boostActiveTimeLeft <= 0) && (bonusActive))
-        {
-            gameObject.GetComponent<Controls>().playerSpeed -= speedBoost;
-            bonusActive = false;
-            boostActiveTimeLeft = 0;
-        }
+    void Start() {
+        MurdererScripts.thrillActive = true;
+        this.gameObject.GetComponent<Controls>().thrillSpeedBoost = speedBoost;
+        this.gameObject.GetComponent<MurdererScripts>().thrillTime = boostTime;
     }
-    public void ActivateBonus()
-    {
-        if (boostActiveTimeLeft <= 0)
-        {
-            gameObject.GetComponent<Controls>().playerSpeed += speedBoost;
-            bonusActive = true;
-            boostActiveTimeLeft = boostTime;
-        }
-        else
-        {
-            boostActiveTimeLeft = boostTime;
-        }
-    }
+
 }

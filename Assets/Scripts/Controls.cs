@@ -95,11 +95,34 @@ public class Controls : MonoBehaviour
     public static bool player2NoDropOrbZone = false;
     public static bool player3NoDropOrbZone = false;
     public static bool player4NoDropOrbZone = false;
+    public bool diseased;
+    public float thrillSpeedBoost;
+    public bool drNerd;
+    public bool crazedAlchemist;
+    public Vector2 currentPos;
+    private bool teleported = false;
+    //teleport locations
+    public static GameObject TopLeftRoom;
+    public static GameObject TopMiddleRoom;
+    public static GameObject TopRightRoom;
+    public static GameObject LeftRoom;
+    public static GameObject RightRoom;
+    public static GameObject BottomLeftRoom;
+    public static GameObject BottomMiddleRoom;
+    public static GameObject BottomRightRoom;
+    public static Vector2 TopLeftRoomLocation;
+    public static Vector2 TopMiddleRoomLocation;
+    public static Vector2 TopRightRoomLocation;
+    public static Vector2 LeftRoomLocation;
+    public static Vector2 RightRoomLocation;
+    public static Vector2 BottomLeftRoomLocation;
+    public static Vector2 BottomMiddleRoomLocation;
+    public static Vector2 BottomRightRoomLocation;
+
 
 
     void Start()
     {
-
         // Save players gravity scale
         gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale;
         // Get rigidbody of the player at start
@@ -141,12 +164,36 @@ public class Controls : MonoBehaviour
             interact = "Interact_P4";
             revive = "Attack/Revive_P4";
         }
-
-
+        
     }
 
     void Update()
     {
+        //track positions of player
+        if (crazedAlchemist == true)
+        {
+            if (gameObject.tag == "Player1")
+            {
+                currentPos = currentPlayer1Pos;
+                GetTeleportLocations();
+            }
+            if (gameObject.tag == "Player2")
+            {
+                currentPos = currentPlayer2Pos;
+                GetTeleportLocations();
+            }
+            if (gameObject.tag == "Player3")
+            {
+                currentPos = currentPlayer3Pos;
+                GetTeleportLocations();
+            }
+            if (gameObject.tag == "Player4")
+            {
+                currentPos = currentPlayer4Pos;
+                GetTeleportLocations();
+            }
+        }
+
         if (GameOverTextManager.gameOver == true) {
             playerSpeed = 0;
         }
@@ -421,12 +468,17 @@ public class Controls : MonoBehaviour
                 //turn off movement of murderer during certain times
                 if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                 {
-                    if (ShittyPossum.possumed == true || MurdererScripts.washingClothes == true)
+                    if (ShittyPossum.possumed == true || MurdererScripts.washingClothes == true || MurdererScripts.diseased == true)
                     {
                         playerSpeed = 0;
                     }
+
+                    if (MurdererScripts.thrill == true) {
+                        playerSpeed = thrillSpeedBoost + speedWhileNotCarryOrb;
+                    }
                     //restore movement of movement after
-                    if (ShittyPossum.possumed == false && MurdererScripts.washingClothes == false)
+                    if (ShittyPossum.possumed == false && MurdererScripts.washingClothes == false && MurdererScripts.diseased == false 
+                        && MurdererScripts.thrill == false && speedIncreased == false)
                     {
                         playerSpeed = speedWhileNotCarryOrb;
                     }
@@ -980,6 +1032,10 @@ public class Controls : MonoBehaviour
                     other.gameObject.layer = 11;
                     Debug.Log("Revive Time Passed:" + revivetimepassed);
                     revivetimepassed += Time.deltaTime;
+                    if (drNerd == true)
+                    {
+                        revivetime = 0;
+                    }
                     if (revivetimepassed > revivetime)
                     {
                         TorsoAnimator.SetBool("Reviving", false);
@@ -1093,6 +1149,74 @@ public class Controls : MonoBehaviour
         if (other.tag == "RedPotion")
         {
             // Teleport to another room
+            while(teleported ==false){
+                int x = Random.Range(1, 9);
+                if (x == 1 && TopLeftRoomLocation.x >= -2 && TopLeftRoomLocation.y <= 2)
+                {
+                    this.transform.position = TopLeftRoom.transform.position;
+                    teleported = true;
+                    Debug.Log("Topleft: "+TopLeftRoomLocation);
+                    MoveCameraOnTeleport();
+                }
+
+                if (x == 2 && TopMiddleRoomLocation.y <= 2)
+                {
+                    this.transform.position = TopMiddleRoom.transform.position;
+                    teleported = true;
+                    Debug.Log("Topmiddle: " + TopMiddleRoomLocation);
+                    MoveCameraOnTeleport();
+                }
+
+                if (x == 3 && TopRightRoomLocation.x <= 2 && TopRightRoomLocation.y <= 2)
+                {
+                    this.transform.position = TopRightRoom.transform.position;
+                    teleported = true;
+                    Debug.Log("Topright: " + TopRightRoomLocation);
+                    MoveCameraOnTeleport();
+                }
+
+                if (x == 4 && LeftRoomLocation.x >= -2)
+                {
+                    this.transform.position = LeftRoom.transform.position;
+                    teleported = true;
+                    Debug.Log("left: " + LeftRoomLocation);
+                    MoveCameraOnTeleport();
+                }
+
+                if (x == 5 && RightRoomLocation.x <= 2)
+                {
+                    this.transform.position = RightRoom.transform.position;
+                    teleported = true;
+                    Debug.Log("right: " + RightRoomLocation);
+                    MoveCameraOnTeleport();
+                }
+
+                if (x == 6 && BottomLeftRoomLocation.x >= -2 && BottomLeftRoomLocation.y >= -2)
+                {
+                    this.transform.position = BottomLeftRoom.transform.position;
+                    teleported = true;
+                    Debug.Log("bottomleft: " + BottomLeftRoomLocation);
+                    MoveCameraOnTeleport();
+                }
+
+                if (x == 7 && BottomMiddleRoomLocation.y >= -2)
+                {
+                    this.transform.position = BottomMiddleRoom.transform.position;
+                    teleported = true;
+                    Debug.Log("bottommiddle: " + BottomMiddleRoomLocation);
+                    MoveCameraOnTeleport();
+                }
+
+                if (x == 8 && BottomRightRoomLocation.x <= 2 && BottomRightRoomLocation.y >= -2)
+                {
+                    this.transform.position = BottomRightRoom.transform.position;
+                    teleported = true;
+                    Debug.Log("bottomRight: " + BottomRightRoomLocation);
+                    MoveCameraOnTeleport();
+                }
+            }
+        
+            teleported = false;
             Destroy(other.gameObject);
         }
         //set bools to start panning
@@ -1113,6 +1237,15 @@ public class Controls : MonoBehaviour
             if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4" && 
                 gameObject.tag != "DownedWimp1" && gameObject.tag != "DownedWimp2" && gameObject.tag != "DownedWimp3" && gameObject.tag != "DownedWimp4")
             {
+                if (diseased) {
+                    MurdererScripts.diseased = true;
+                }
+
+                if (MurdererScripts.thrillActive)
+                {
+                    MurdererScripts.thrill = true;
+                }
+
                 TorsoAnimator.SetBool("Dead", true);
                 LegsAnimator.SetBool("Dead", true);
                 gameObject.layer = 8;
@@ -1126,30 +1259,6 @@ public class Controls : MonoBehaviour
                 }
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
                 groundCheck.GetComponent<Collider2D>().isTrigger = true;
-                // if murderer has thrill of the hunt script atached activate the bonus
-                if ((other.gameObject.GetComponent<ThrillOfTheHunt>() as ThrillOfTheHunt) != null)
-                {
-                    other.gameObject.GetComponent<ThrillOfTheHunt>().ActivateBonus();
-                }
-                if (other.gameObject.GetComponent<Diseased>() as Diseased != null)
-                {
-                    if (GameObject.FindGameObjectWithTag("Murderer1") != null)
-                    {
-                        GameObject.FindGameObjectWithTag("Murderer1").GetComponent<MurdererScripts>().Diseased();
-                    }
-                    if (GameObject.FindGameObjectWithTag("Murderer2") != null)
-                    {
-                        GameObject.FindGameObjectWithTag("Murderer2").GetComponent<MurdererScripts>().Diseased();
-                    }
-                    if (GameObject.FindGameObjectWithTag("Murderer3") != null)
-                    {
-                        GameObject.FindGameObjectWithTag("Murderer3").GetComponent<MurdererScripts>().Diseased();
-                    }
-                    if (GameObject.FindGameObjectWithTag("Murderer4") != null)
-                    {
-                        GameObject.FindGameObjectWithTag("Murderer4").GetComponent<MurdererScripts>().Diseased();
-                    }
-                }
                 switch (gameObject.tag)
                 {
                     case "Player1":
@@ -1229,5 +1338,37 @@ public class Controls : MonoBehaviour
         wimpKilled = false;
     }
 
+    void GetTeleportLocations() {
+        TopLeftRoomLocation = currentPos + new Vector2(-1, 1);
+        TopMiddleRoomLocation = currentPos + new Vector2(0, 1);
+        TopRightRoomLocation = currentPos + new Vector2(1, 1);
+        LeftRoomLocation = currentPos + new Vector2(-1, 0);
+        RightRoomLocation = currentPos + new Vector2(1, 0);
+        BottomLeftRoomLocation = currentPos + new Vector2(-1, -1);
+        BottomMiddleRoomLocation = currentPos + new Vector2(0, -1);
+        BottomRightRoomLocation = currentPos + new Vector2(1, -1);
+    }
+
+    void MoveCameraOnTeleport() {
+        if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
+        {
+            player1Camera.transform.position = this.transform.position;
+        }
+
+        if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
+        {
+            player2Camera.transform.position = this.transform.position;
+        }
+
+        if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
+        {
+            player3Camera.transform.position = this.transform.position;
+        }
+
+        if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
+        {
+            player4Camera.transform.position = this.transform.position;
+        }
+    }
     
 }

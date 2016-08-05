@@ -16,7 +16,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
     private GameObject player2Camera;
     private GameObject player3Camera;
     private GameObject player4Camera;
-    private GameObject buctherRoom;
+    private GameObject butcherRoom;
     private int orbsSpawned = 0;
     private int laddersSpawned = 0;
     private int random;
@@ -56,7 +56,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //set max range value for random.range equal to size of list;
         randomMax = 24;
         //set number of player and murderer abilities
-        numberOfPlayerAbilities = 4;
+        numberOfPlayerAbilities = 6;
         numberOfMurdererAbilities = 3;
         //grab cameras in scene
         player1Camera = GameObject.FindGameObjectWithTag("Player1Camera");
@@ -64,11 +64,11 @@ public class RandomSpawnPlayers : MonoBehaviour {
         player3Camera = GameObject.FindGameObjectWithTag("Player3Camera");
         player4Camera = GameObject.FindGameObjectWithTag("Player4Camera");
         //grab butcher room from scene
-        buctherRoom = GameObject.FindGameObjectWithTag("MurdererStart");
+        butcherRoom = GameObject.FindGameObjectWithTag("MurdererStart");
         //random number for deciding the murderer
-        randomMurdererNumber = Random.Range(0, 4);
+        //randomMurdererNumber = Random.Range(0, 4);
         //used for changing who the murderer is(just for testing purposes)
-        //randomMurdererNumber = 1;
+        randomMurdererNumber = 1;
         //random number for deciding murderer ability
         randomMurdererAbility = Random.Range(0, numberOfMurdererAbilities);
         //set the number of the player that is the murderer
@@ -197,14 +197,24 @@ public class RandomSpawnPlayers : MonoBehaviour {
                 //make camera able to see arrows
                 player1Camera.GetComponent<Camera>().cullingMask |= (1<<15);
             }
+
+            if (randomPlayerAbility == 4)
+            {
+                GameObject.FindGameObjectWithTag("Player1").AddComponent<DrNerd>();
+            }
+
+            if (randomPlayerAbility == 5)
+            {
+                GameObject.FindGameObjectWithTag("Player1").AddComponent<Diseased>();
+            }
         }
 
         //spawn player 1 if murderer in butcher room
         else if (player1Spawned == false && randomMurdererNumber == 0) {
             //instantiate from resources folder
-            Instantiate(Resources.Load("MainPlayer_1"), buctherRoom.transform.position, Quaternion.identity);
+            Instantiate(Resources.Load("MainPlayer_1"), butcherRoom.transform.position, Quaternion.identity);
             //move player 1 camera to same position as player1
-            player1Camera.transform.position = new Vector3(buctherRoom.transform.position.x, buctherRoom.transform.position.y, -15);
+            player1Camera.transform.position = new Vector3(butcherRoom.transform.position.x, butcherRoom.transform.position.y, -15);
             player1Spawned = true;
         }
 
@@ -252,15 +262,25 @@ public class RandomSpawnPlayers : MonoBehaviour {
                 //make camera able to see arrows
                 player2Camera.GetComponent<Camera>().cullingMask |= (1 << 15);
             }
+
+            if (randomPlayerAbility == 4)
+            {
+                GameObject.FindGameObjectWithTag("Player2").AddComponent<DrNerd>();
+            }
+
+            if (randomPlayerAbility == 5)
+            {
+                GameObject.FindGameObjectWithTag("Player2").AddComponent<Diseased>();
+            }
         }
 
         //spawn player 2 if murderer in butcher room
         else if (player2Spawned == false && randomMurdererNumber == 1)
         {
             //instantiate from resources folder
-            Instantiate(Resources.Load("MainPlayer_2"), buctherRoom.transform.position, Quaternion.identity);
+            Instantiate(Resources.Load("MainPlayer_2"), butcherRoom.transform.position, Quaternion.identity);
             //move player 2 camera to same position as player2
-            player2Camera.transform.position = new Vector3(buctherRoom.transform.position.x, buctherRoom.transform.position.y, -15);
+            player2Camera.transform.position = new Vector3(butcherRoom.transform.position.x, butcherRoom.transform.position.y, -15);
             player2Spawned = true;
         }
 
@@ -309,15 +329,25 @@ public class RandomSpawnPlayers : MonoBehaviour {
                 //make camera able to see arrows
                 player3Camera.GetComponent<Camera>().cullingMask |= (1 << 15);
             }
+
+            if (randomPlayerAbility == 4)
+            {
+                GameObject.FindGameObjectWithTag("Player3").AddComponent<DrNerd>();
+            }
+
+            if (randomPlayerAbility == 5)
+            {
+                GameObject.FindGameObjectWithTag("Player3").AddComponent<Diseased>();
+            }
         }
 
         //spawn player 3 if murderer in butcher room
         else if (player3Spawned == false && randomMurdererNumber == 2)
         {
             //instantiate from resources folder
-            Instantiate(Resources.Load("MainPlayer_3"), buctherRoom.transform.position, Quaternion.identity);
+            Instantiate(Resources.Load("MainPlayer_3"), butcherRoom.transform.position, Quaternion.identity);
             //move player 3 camera to same position as player3
-            player3Camera.transform.position = new Vector3(buctherRoom.transform.position.x, buctherRoom.transform.position.y, -15);
+            player3Camera.transform.position = new Vector3(butcherRoom.transform.position.x, butcherRoom.transform.position.y, -15);
             player3Spawned = true;
         }
 
@@ -366,15 +396,25 @@ public class RandomSpawnPlayers : MonoBehaviour {
                 //make camera able to see arrows
                 player4Camera.GetComponent<Camera>().cullingMask |= (1 << 15);
             }
+
+            if (randomPlayerAbility == 4)
+            {
+                GameObject.FindGameObjectWithTag("Player4").AddComponent<DrNerd>();
+            }
+
+            if (randomPlayerAbility == 5)
+            {
+                GameObject.FindGameObjectWithTag("Player4").AddComponent<Diseased>();
+            }
         }
 
         //spawn player 4 if murderer in butcher room
         else if (player4Spawned == false && randomMurdererNumber == 3)
         {
             //instantiate from resources folder
-            Instantiate(Resources.Load("MainPlayer_4"), buctherRoom.transform.position, Quaternion.identity);
+            Instantiate(Resources.Load("MainPlayer_4"), butcherRoom.transform.position, Quaternion.identity);
             //move player 4 camera to same position as player4
-            player4Camera.transform.position = new Vector3(buctherRoom.transform.position.x, buctherRoom.transform.position.y, -15);
+            player4Camera.transform.position = new Vector3(butcherRoom.transform.position.x, butcherRoom.transform.position.y, -15);
             player4Spawned = true;
         }
 

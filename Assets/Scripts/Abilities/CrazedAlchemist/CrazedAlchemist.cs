@@ -8,6 +8,8 @@ public class CrazedAlchemist : MonoBehaviour
     float timeSincePotionUsed;           // Time that passed since a potion was last used
     bool potionUsed;                     // Flag that shows if the potion was used
     private string ability;
+    public float potionRefreshTime = 10;
+    private float potionRefreshStart;
 
     void Start() {
         //set input from input manager
@@ -30,10 +32,21 @@ public class CrazedAlchemist : MonoBehaviour
         {
             ability = "Ability_P4";
         }
+
+        this.gameObject.GetComponent<Controls>().crazedAlchemist = true;
     }
 
     void Update()
     {
+        if (numberOfPotionsAvailable < 3)
+        {
+            potionRefreshStart += Time.deltaTime;
+            if(potionRefreshStart > potionRefreshTime)
+            {
+                numberOfPotionsAvailable += 1;
+                potionRefreshStart = 0;
+            }
+        }
         // Counting time passed since potion was last used
         if (potionUsed)
         {
