@@ -17,6 +17,9 @@ public class MurdererScripts : MonoBehaviour {
     public static bool thrillActive = false;
     public float diseasedTime;
     public float thrillTime;
+    private bool arrowCreated;
+    public float originalDiseasedTime;
+    public float originalThrillTime;
     // Use this for initialization
     void Start () {
         isMurderer = true;
@@ -50,10 +53,26 @@ public class MurdererScripts : MonoBehaviour {
             interact = "Interact_P4";
         }
         gameObject.layer = 9;
+        originalDiseasedTime = diseasedTime;
 	}
 
 	// Update is called once per frame
 	void Update () {
+        
+        if (Controls.Trapped == true && arrowCreated == false)
+        {
+            GameObject arrow = Instantiate(Resources.Load("TrapArrow"), this.transform.position + (transform.up*60), Quaternion.identity) as GameObject;
+            Vector3 dir = GameObject.FindGameObjectWithTag("Trap").transform.position - transform.position;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            arrow.transform.rotation = Quaternion.AngleAxis(angle- 180, Vector3.forward);
+            arrowCreated = true;
+        }
+
+        if(Controls.Trapped == false)
+        {
+            arrowCreated = false;
+        }
+
         //play dead animtion and disable bloody shirt if possum used
         if (ShittyPossum.possumed == true) {
             TorsoAnimator.SetBool("Dead", true);
@@ -82,6 +101,7 @@ public class MurdererScripts : MonoBehaviour {
             if(diseasedTime<=0)
             {
                 diseased = false;
+                diseasedTime = originalDiseasedTime;
             }
         }
 
@@ -91,6 +111,7 @@ public class MurdererScripts : MonoBehaviour {
             if (thrillTime <= 0)
             {
                 thrill = false;
+                thrillTime = originalThrillTime;
             }
         }
 
@@ -126,25 +147,29 @@ public class MurdererScripts : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other) {
         //check collision with sink
-        if (other.gameObject.tag == "Sink" && Input.GetButtonDown(interact) && ShittyPossum.possumed == false) {
-            washingClothes = true;
-            GameObject.FindGameObjectWithTag("Player1Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
-            GameObject.FindGameObjectWithTag("Player2Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
-            GameObject.FindGameObjectWithTag("Player3Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
-            GameObject.FindGameObjectWithTag("Player4Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
-            if (Controls.bloodStained == false)
+        if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+        {
+            if (other.gameObject.tag == "Sink" && Input.GetButtonDown(interact) && ShittyPossum.possumed == false)
             {
-                TorsoAnimator.Play("TorsoMurdererWash");
-            }
+                washingClothes = true;
+                GameObject.FindGameObjectWithTag("Player1Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
+                GameObject.FindGameObjectWithTag("Player2Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
+                GameObject.FindGameObjectWithTag("Player3Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
+                GameObject.FindGameObjectWithTag("Player4Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
+                if (Controls.bloodStained == false)
+                {
+                    TorsoAnimator.Play("TorsoMurdererWash");
+                }
 
-            if (Controls.bloodStained == true)
-            {
-                TorsoAnimator.Play("TorsoMurdererBloodyWash");
-                Controls.bloodStained = false;
+                if (Controls.bloodStained == true)
+                {
+                    TorsoAnimator.Play("TorsoMurdererBloodyWash");
+                    Controls.bloodStained = false;
+                }
+                LegsAnimator.Play("LegsMurdererWashing");
+                //makes washing clothes false after animations play
+                Invoke("StopWashingClothes", 1.2f);
             }
-            LegsAnimator.Play("LegsMurdererWashing");
-            //makes washing clothes false after animations play
-            Invoke("StopWashingClothes", 1.2f);
         }
     }
 

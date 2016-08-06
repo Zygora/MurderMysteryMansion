@@ -101,6 +101,11 @@ public class Controls : MonoBehaviour
     public bool crazedAlchemist;
     public Vector2 currentPos;
     private bool teleported = false;
+    public AudioSource Audio;
+    public bool Trapper=false;
+    public static bool Trapped = false;
+    public static float trappedTime;
+    private float timeSinceTrapped;
     //teleport locations
     public static GameObject TopLeftRoom;
     public static GameObject TopMiddleRoom;
@@ -164,11 +169,37 @@ public class Controls : MonoBehaviour
             interact = "Interact_P4";
             revive = "Attack/Revive_P4";
         }
-        
+
     }
 
     void Update()
     {
+        
+        if (Trapped == false)
+        {
+            timeSinceTrapped = 0;
+        }
+
+        if (Trapped == true)
+        {
+            timeSinceTrapped += Time.deltaTime;
+            if (timeSinceTrapped >= trappedTime)
+            {
+                if (speedIncreased == false)
+                {
+                    playerSpeed = speedWhileNotCarryOrb;
+                }
+
+                if (speedIncreased == true)
+                {
+                    playerSpeed = playerSpeed * 2;
+                }
+
+                timeSinceTrapped = 0;
+                Trapped = false;
+            }
+        }
+
         //track positions of player
         if (crazedAlchemist == true)
         {
@@ -364,7 +395,7 @@ public class Controls : MonoBehaviour
             }
 
             //decrease speed of player if carrying an orb
-            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == true)
+            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == true && Trapped == false)
             {
                 if (speedIncreased == false)
                 {
@@ -377,7 +408,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == true)
+            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == true && Trapped == false)
             {
                 if (speedIncreased == false)
                 {
@@ -390,7 +421,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == true)
+            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == true && Trapped == false) 
             {
                 if (speedIncreased == false)
                 {
@@ -403,7 +434,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == true)
+            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == true && Trapped == false) 
             {
                 if (speedIncreased == false)
                 {
@@ -417,7 +448,7 @@ public class Controls : MonoBehaviour
             }
 
             //restore speed of player if not carrying an orb
-            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == false)
+            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == false && Trapped == false)
             {
                 if (speedIncreased == false)
                 {
@@ -425,7 +456,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == false)
+            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == false && Trapped == false)
             {
                 if (speedIncreased == false)
                 {
@@ -433,7 +464,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == false)
+            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == false && Trapped == false)
             {
                 if (speedIncreased == false)
                 {
@@ -441,7 +472,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == false)
+            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == false && Trapped == false)
             {
                 if (speedIncreased == false)
                 {
@@ -461,6 +492,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
+
             if (canMove && dead == false && exited == false)
             {
             if (GameOverTextManager.gameOver == false)
@@ -473,7 +505,7 @@ public class Controls : MonoBehaviour
                         playerSpeed = 0;
                     }
 
-                    if (MurdererScripts.thrill == true) {
+                    if (MurdererScripts.thrill == true && ShittyPossum.possumed == false && MurdererScripts.washingClothes == false && MurdererScripts.diseased == false) {
                         playerSpeed = thrillSpeedBoost + speedWhileNotCarryOrb;
                     }
                     //restore movement of movement after
@@ -494,22 +526,22 @@ public class Controls : MonoBehaviour
                         onGround = true;
                         TorsoAnimator.SetBool("Jumping", false);
                         LegsAnimator.SetBool("Jumping", false);
-                    if (gameObject.tag == "Player1")
+                    if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
                     {
                         player1NoDropOrbZone = false;
                     }
 
-                    if (gameObject.tag == "Player2")
+                    if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
                     {
                         player2NoDropOrbZone = false;
                     }
 
-                    if (gameObject.tag == "Player3")
+                    if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
                     {
                         player3NoDropOrbZone = false;
                     }
 
-                    if (gameObject.tag == "Player4")
+                    if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
                     {
                         player4NoDropOrbZone = false;
                     }
@@ -520,22 +552,22 @@ public class Controls : MonoBehaviour
                         onGround = false;
                         TorsoAnimator.SetBool("Jumping", true);
                         LegsAnimator.SetBool("Jumping", true);
-                    if (gameObject.tag == "Player1")
+                    if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
                     {
                         player1NoDropOrbZone = true;
                     }
 
-                    if (gameObject.tag == "Player2")
+                    if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
                     {
                         player2NoDropOrbZone = true;
                     }
 
-                    if (gameObject.tag == "Player3")
+                    if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
                     {
                         player3NoDropOrbZone = true;
                     }
 
-                    if (gameObject.tag == "Player4")
+                    if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
                     {
                         player4NoDropOrbZone = true;
                     }
@@ -585,7 +617,7 @@ public class Controls : MonoBehaviour
                     }
 
                     // Change animation from idle to run and flip the players sprite
-                    if (Input.GetAxis(horizontal) < -0.1f)
+                    if (Input.GetAxis(horizontal) < -0.1f && diseased == false)
                     {
                         if (playerSpeed != 0)
                         {
@@ -600,7 +632,7 @@ public class Controls : MonoBehaviour
                         direction = -1;
                     }
                     // Change animation from idle to run and flip the sprite
-                    if (Input.GetAxis(horizontal) > 0.1f)
+                    if (Input.GetAxis(horizontal) > 0.1f && diseased == false)
                     {
                         if (playerSpeed != 0)
                         {
@@ -623,7 +655,8 @@ public class Controls : MonoBehaviour
             }
 
             //player animations
-           if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
+           if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" 
+                && gameObject.tag != "Murderer4")
            {
                 //play idle animation
                 if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
@@ -634,7 +667,7 @@ public class Controls : MonoBehaviour
                     LegsAnimator.SetBool("Idle", true);
                 }
                 // Change animation from idle to run and flip the players sprite
-                if (Input.GetAxis(horizontal) < -0.1f)
+                if (Input.GetAxis(horizontal) < -0.1f && Trapped == false)
                 {
                     if (playerSpeed != 0)
                     {
@@ -647,7 +680,7 @@ public class Controls : MonoBehaviour
                     direction = -1;
                 }
                 // Change animation from idle to run and flip the sprite
-                if (Input.GetAxis(horizontal) > 0.1f)
+                if (Input.GetAxis(horizontal) > 0.1f && Trapped == false)
                 {
                     if (playerSpeed != 0)
                     {
@@ -758,22 +791,22 @@ public class Controls : MonoBehaviour
         {
             TorsoAnimator.SetBool("Jumping", true);
             LegsAnimator.SetBool("Jumping", true);
-            if (gameObject.tag == "Player1")
+            if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
             {
                 player1NoDropOrbZone = true;
             }
 
-            if (gameObject.tag == "Player2")
+            if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
             {
                 player2NoDropOrbZone = true;
             }
 
-            if (gameObject.tag == "Player3")
+            if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
             {
                 player3NoDropOrbZone = true;
             }
 
-            if (gameObject.tag == "Player4")
+            if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
             {
                 player4NoDropOrbZone = true;
             }
@@ -814,6 +847,26 @@ public class Controls : MonoBehaviour
             // Change player animation to run while transitioning left or right
             if ((!goUp) && (!goDown))
             {
+                if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
+                {
+                    player1NoDropOrbZone = true;
+                }
+
+                if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
+                {
+                    player2NoDropOrbZone = true;
+                }
+
+                if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
+                {
+                    player3NoDropOrbZone = true;
+                }
+
+                if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
+                {
+                    player4NoDropOrbZone = true;
+                }
+
                 if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
                 {
 
@@ -821,25 +874,6 @@ public class Controls : MonoBehaviour
                     LegsAnimator.SetBool("Running", true);
                     TorsoAnimator.SetBool("Idle", false);
                     LegsAnimator.SetBool("Idle", false);
-                    if (gameObject.tag == "Player1")
-                    {
-                        player1NoDropOrbZone = true;
-                    }
-
-                    if (gameObject.tag == "Player2")
-                    {
-                        player2NoDropOrbZone = true;
-                    }
-
-                    if (gameObject.tag == "Player3")
-                    {
-                        player3NoDropOrbZone = true;
-                    }
-
-                    if (gameObject.tag == "Player4")
-                    {
-                        player4NoDropOrbZone = true;
-                    }
                 }
                 
                 if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
@@ -1078,6 +1112,18 @@ public class Controls : MonoBehaviour
         {
             GameObject.Find("ColorManager").GetComponent<ColorManager>().playerCanSelect = true;
         }
+
+        if (other.gameObject.tag == "Trap")
+        {
+            if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" &&
+                gameObject.tag != "Murderer4")
+            {
+                Trapped = true;
+                Audio.Play();
+                playerSpeed = 0;
+                Destroy(other.gameObject,2);
+            }
+        }
         if (other.tag == "BotLadder")
         {
             canMove = true;
@@ -1087,22 +1133,22 @@ public class Controls : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
-            if (gameObject.tag == "Player1")
+            if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
             {
                 player1NoDropOrbZone = false;
             }
 
-            if (gameObject.tag == "Player2")
+            if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
             {
                 player2NoDropOrbZone = false;
             }
 
-            if (gameObject.tag == "Player3")
+            if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
             {
                 player3NoDropOrbZone = false;
             }
 
-            if (gameObject.tag == "Player4")
+            if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
             {
                 player4NoDropOrbZone = false;
             }
@@ -1117,22 +1163,22 @@ public class Controls : MonoBehaviour
             // gameObject.GetComponent<Collider2D>().enabled = true;
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
-            if (gameObject.tag == "Player1")
+            if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
             {
                 player1NoDropOrbZone = false;
             }
 
-            if (gameObject.tag == "Player2")
+            if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
             {
                 player2NoDropOrbZone = false;
             }
 
-            if (gameObject.tag == "Player3")
+            if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
             {
                 player3NoDropOrbZone = false;
             }
 
-            if (gameObject.tag == "Player4")
+            if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
             {
                 player4NoDropOrbZone = false;
             }
@@ -1158,7 +1204,6 @@ public class Controls : MonoBehaviour
                 if (x == 1 && TopLeftRoomLocation.x >= -2 && TopLeftRoomLocation.y <= 2)
                 {
                     this.transform.position = TopLeftRoom.transform.position;
-                    teleported = true;
                     Debug.Log("Topleft: "+TopLeftRoomLocation);
                     MoveCameraOnTeleport();
                 }
@@ -1166,7 +1211,6 @@ public class Controls : MonoBehaviour
                 if (x == 2 && TopMiddleRoomLocation.y <= 2)
                 {
                     this.transform.position = TopMiddleRoom.transform.position;
-                    teleported = true;
                     Debug.Log("Topmiddle: " + TopMiddleRoomLocation);
                     MoveCameraOnTeleport();
                 }
@@ -1174,7 +1218,6 @@ public class Controls : MonoBehaviour
                 if (x == 3 && TopRightRoomLocation.x <= 2 && TopRightRoomLocation.y <= 2)
                 {
                     this.transform.position = TopRightRoom.transform.position;
-                    teleported = true;
                     Debug.Log("Topright: " + TopRightRoomLocation);
                     MoveCameraOnTeleport();
                 }
@@ -1182,7 +1225,6 @@ public class Controls : MonoBehaviour
                 if (x == 4 && LeftRoomLocation.x >= -2)
                 {
                     this.transform.position = LeftRoom.transform.position;
-                    teleported = true;
                     Debug.Log("left: " + LeftRoomLocation);
                     MoveCameraOnTeleport();
                 }
@@ -1190,7 +1232,6 @@ public class Controls : MonoBehaviour
                 if (x == 5 && RightRoomLocation.x <= 2)
                 {
                     this.transform.position = RightRoom.transform.position;
-                    teleported = true;
                     Debug.Log("right: " + RightRoomLocation);
                     MoveCameraOnTeleport();
                 }
@@ -1198,7 +1239,6 @@ public class Controls : MonoBehaviour
                 if (x == 6 && BottomLeftRoomLocation.x >= -2 && BottomLeftRoomLocation.y >= -2)
                 {
                     this.transform.position = BottomLeftRoom.transform.position;
-                    teleported = true;
                     Debug.Log("bottomleft: " + BottomLeftRoomLocation);
                     MoveCameraOnTeleport();
                 }
@@ -1206,7 +1246,6 @@ public class Controls : MonoBehaviour
                 if (x == 7 && BottomMiddleRoomLocation.y >= -2)
                 {
                     this.transform.position = BottomMiddleRoom.transform.position;
-                    teleported = true;
                     Debug.Log("bottommiddle: " + BottomMiddleRoomLocation);
                     MoveCameraOnTeleport();
                 }
@@ -1214,7 +1253,6 @@ public class Controls : MonoBehaviour
                 if (x == 8 && BottomRightRoomLocation.x <= 2 && BottomRightRoomLocation.y >= -2)
                 {
                     this.transform.position = BottomRightRoom.transform.position;
-                    teleported = true;
                     Debug.Log("bottomRight: " + BottomRightRoomLocation);
                     MoveCameraOnTeleport();
                 }
@@ -1357,21 +1395,25 @@ public class Controls : MonoBehaviour
         if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
         {
             player1Camera.transform.position = this.transform.position;
+            teleported = true;
         }
 
         if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
         {
             player2Camera.transform.position = this.transform.position;
+            teleported = true;
         }
 
         if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
         {
             player3Camera.transform.position = this.transform.position;
+            teleported = true;
         }
 
         if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
         {
             player4Camera.transform.position = this.transform.position;
+            teleported = true;
         }
     }
     

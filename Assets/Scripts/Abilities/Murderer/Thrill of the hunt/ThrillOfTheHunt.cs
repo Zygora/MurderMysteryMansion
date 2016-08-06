@@ -12,6 +12,7 @@ public class ThrillOfTheHunt : MonoBehaviour
         MurdererScripts.thrillActive = true;
         this.gameObject.GetComponent<Controls>().thrillSpeedBoost = speedBoost;
         this.gameObject.GetComponent<MurdererScripts>().thrillTime = boostTime;
+        this.gameObject.GetComponent<MurdererScripts>().originalThrillTime = boostTime;
     }
 
 }

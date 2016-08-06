@@ -22,12 +22,5 @@ public class Trap : MonoBehaviour {
         }
 	}
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        // If a wimp touches the trap
-        if(other.tag=="Wimp")
-        {
-            // PLAY SOUND ON THE MURDERER INDICATING THAT ONE OF THEIR TRAPS WAS TRIGGERED
-        }
-    }
+  
 }
