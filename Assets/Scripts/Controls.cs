@@ -489,7 +489,7 @@ public class Controls : MonoBehaviour
                 // If ray hit something player is on ground
                 if (hit.collider != null)
                 {
-                    if (hit.collider.tag == "Ground" && hit.distance < 1.3f)
+                    if (hit.collider.tag == "Ground" && hit.distance < 12f)//1.3
                     {
                         onGround = true;
                         TorsoAnimator.SetBool("Jumping", false);
@@ -515,7 +515,7 @@ public class Controls : MonoBehaviour
                     }
                 }
                     // otherwise the player is in the air
-                    else if (hit.distance >= 1.3f)
+                    else if (hit.distance >= 12f)//1.3
                     {
                         onGround = false;
                         TorsoAnimator.SetBool("Jumping", true);
@@ -1082,6 +1082,8 @@ public class Controls : MonoBehaviour
         {
             canMove = true;
             goDown = false;
+            TorsoAnimator.SetBool("Jumping", false);
+            LegsAnimator.SetBool("Jumping", false);
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
@@ -1109,6 +1111,8 @@ public class Controls : MonoBehaviour
         {
             canMove = true;
             goUp = false;
+            TorsoAnimator.SetBool("Jumping", false);
+            LegsAnimator.SetBool("Jumping", false);
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
             // gameObject.GetComponent<Collider2D>().enabled = true;
             groundCheck.GetComponent<Collider2D>().enabled = true;

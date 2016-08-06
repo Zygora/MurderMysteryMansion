@@ -110,13 +110,13 @@ public class MurdererScripts : MonoBehaviour {
         // If ray hit something player is on ground
         if (hit.collider != null && GameOverTextManager.gameOver == false) 
         {
-            if (hit.collider.tag == "Ground" && hit.distance < 1.3f)
+            if (hit.collider.tag == "Ground" && hit.distance < 12f)
             {
                 // Debug.Log(hit.distance);
                 ShirtAnimator.SetBool("MurdererJumping", false);
             }
             // otherwise the player is in the air
-            else if (hit.distance >= 1.3f)
+            else if (hit.distance >= 12f)
             {
                 // Debug.Log(hit.distance);
                 ShirtAnimator.SetBool("MurdererJumping", true);
