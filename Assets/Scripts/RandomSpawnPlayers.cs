@@ -68,7 +68,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //random number for deciding the murderer
         randomMurdererNumber = Random.Range(0, 4);
         //used for changing who the murderer is(just for testing purposes)
-        //randomMurdererNumber = 0;
+        //randomMurdererNumber = 1;
         //random number for deciding murderer ability
         randomMurdererAbility = Random.Range(0, numberOfMurdererAbilities);
         //set the number of the player that is the murderer
@@ -190,6 +190,9 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<Squeler>();
+                player2Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
+                player3Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
+                player4Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
             }
             if (randomPlayerAbility == 3)
             {
@@ -255,6 +258,9 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<Squeler>();
+                player1Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
+                player3Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
+                player4Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
             }
             if (randomPlayerAbility == 3)
             {
@@ -322,6 +328,9 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<Squeler>();
+                player1Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
+                player2Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
+                player4Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
             }
             if (randomPlayerAbility == 3)
             {
@@ -389,6 +398,9 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<Squeler>();
+                player1Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
+                player2Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
+                player3Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
             }
             if (randomPlayerAbility == 3)
             {
@@ -439,42 +451,29 @@ public class RandomSpawnPlayers : MonoBehaviour {
         {
             GameObject.FindGameObjectWithTag("Player1").GetComponent<MurdererScripts>().enabled = true;
             murdererSpawned = true;
+            player1Camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
         }
         if (randomMurdererNumber == 1 && murdererSpawned == false)
         {
             GameObject.FindGameObjectWithTag("Player2").GetComponent<MurdererScripts>().enabled = true;
             murdererSpawned = true;
+            player2Camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
         }
         if (randomMurdererNumber == 2 && murdererSpawned == false)
         {
             GameObject.FindGameObjectWithTag("Player3").GetComponent<MurdererScripts>().enabled = true;
             murdererSpawned = true;
+            player3Camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
         }
         if (randomMurdererNumber == 3 && murdererSpawned == false)
         {
             GameObject.FindGameObjectWithTag("Player4").GetComponent<MurdererScripts>().enabled = true;
             murdererSpawned = true;
+            player4Camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
         }
 
         if (murdererHasAbility == false && murdererSpawned == true)
         {
-            //give murderer player randomly generated ability
-            
-          /*  if (randomMurdererAbility == 0)
-            {
-                GameObject.FindGameObjectWithTag("Murderer" + murdererPlayerNumber).AddComponent<GoodNose>();
-            }
-
-           else  if (randomMurdererAbility == 1)
-            {
-                GameObject.FindGameObjectWithTag("Murderer" + murdererPlayerNumber).AddComponent<Masterofdisguise>();
-            }
-
-           else if (randomMurdererAbility == 2)
-            {
-                GameObject.FindGameObjectWithTag("Murderer" + murdererPlayerNumber).AddComponent<Polterkamikaze>();
-            }
-            */
            if (randomMurdererAbility == 0)
             {
                 GameObject.FindGameObjectWithTag("Murderer" + murdererPlayerNumber).AddComponent<ShittyPossum>();

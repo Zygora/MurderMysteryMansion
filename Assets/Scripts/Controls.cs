@@ -102,10 +102,13 @@ public class Controls : MonoBehaviour
     public Vector2 currentPos;
     private bool teleported = false;
     public AudioSource Audio;
+    public AudioClip scream;
+    public AudioClip trap;
     public bool Trapper=false;
     public static bool Trapped = false;
     public static float trappedTime;
     private float timeSinceTrapped;
+    public static Vector2 murdererPosition;
     //teleport locations
     public static GameObject TopLeftRoom;
     public static GameObject TopMiddleRoom;
@@ -201,31 +204,49 @@ public class Controls : MonoBehaviour
         }
 
         //track positions of player
-        if (crazedAlchemist == true)
-        {
+        
             if (gameObject.tag == "Player1")
             {
                 currentPos = currentPlayer1Pos;
-                GetTeleportLocations();
+                if (crazedAlchemist == true)
+                {
+                    GetTeleportLocations();
+                }
             }
+
             if (gameObject.tag == "Player2")
             {
                 currentPos = currentPlayer2Pos;
-                GetTeleportLocations();
+                if (crazedAlchemist == true)
+                {
+                    GetTeleportLocations();
+                }
             }
+
             if (gameObject.tag == "Player3")
             {
                 currentPos = currentPlayer3Pos;
-                GetTeleportLocations();
+                if (crazedAlchemist == true)
+                {
+                    GetTeleportLocations();
+                }
             }
+
             if (gameObject.tag == "Player4")
             {
                 currentPos = currentPlayer4Pos;
-                GetTeleportLocations();
+                if (crazedAlchemist == true)
+                {
+                    GetTeleportLocations();
+                }
             }
-        }
 
-        if (GameOverTextManager.gameOver == true) {
+
+
+
+
+
+        if (GameOverTextManager.gameOver == true || dead == true) {
             playerSpeed = 0;
         }
 
@@ -395,7 +416,7 @@ public class Controls : MonoBehaviour
             }
 
             //decrease speed of player if carrying an orb
-            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == true && Trapped == false)
+            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == true && Trapped == false && dead == false)
             {
                 if (speedIncreased == false)
                 {
@@ -408,7 +429,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == true && Trapped == false)
+            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == true && Trapped == false && dead == false)
             {
                 if (speedIncreased == false)
                 {
@@ -421,7 +442,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == true && Trapped == false) 
+            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == true && Trapped == false && dead == false) 
             {
                 if (speedIncreased == false)
                 {
@@ -434,7 +455,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == true && Trapped == false) 
+            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == true && Trapped == false && dead == false) 
             {
                 if (speedIncreased == false)
                 {
@@ -448,7 +469,7 @@ public class Controls : MonoBehaviour
             }
 
             //restore speed of player if not carrying an orb
-            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == false && Trapped == false)
+            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == false && Trapped == false && dead == false)
             {
                 if (speedIncreased == false)
                 {
@@ -456,7 +477,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == false && Trapped == false)
+            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == false && Trapped == false && dead == false)
             {
                 if (speedIncreased == false)
                 {
@@ -464,7 +485,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == false && Trapped == false)
+            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == false && Trapped == false && dead == false)
             {
                 if (speedIncreased == false)
                 {
@@ -472,7 +493,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == false && Trapped == false)
+            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == false && Trapped == false && dead == false)
             {
                 if (speedIncreased == false)
                 {
@@ -1036,21 +1057,37 @@ public class Controls : MonoBehaviour
         {
             if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1") {
                 currentPlayer1Pos = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
+                if (gameObject.tag == "Murderer1")
+                {
+                    murdererPosition = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
+                }
             }
 
             if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
             {
                 currentPlayer2Pos = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
+                if (gameObject.tag == "Murderer2")
+                {
+                    murdererPosition = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
+                }
             }
 
             if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
             {
                 currentPlayer3Pos = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
+                if (gameObject.tag == "Murderer3")
+                {
+                    murdererPosition = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
+                }
             }
 
             if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
             {
                 currentPlayer4Pos = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
+                if (gameObject.tag == "Murderer4")
+                {
+                    murdererPosition = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
+                }
             }
         }
 
@@ -1113,15 +1150,19 @@ public class Controls : MonoBehaviour
             GameObject.Find("ColorManager").GetComponent<ColorManager>().playerCanSelect = true;
         }
 
-        if (other.gameObject.tag == "Trap")
+        if (other.gameObject.tag == "Trap" && dead == false)
         {
             if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" &&
                 gameObject.tag != "Murderer4")
             {
                 Trapped = true;
-                Audio.Play();
+                Audio.PlayOneShot(trap);
                 playerSpeed = 0;
                 Destroy(other.gameObject,2);
+                TorsoAnimator.SetBool("Running", false);
+                LegsAnimator.SetBool("Running", false);
+                TorsoAnimator.SetBool("Idle", true);
+                LegsAnimator.SetBool("Idle", true);
             }
         }
         if (other.tag == "BotLadder")
@@ -1190,13 +1231,13 @@ public class Controls : MonoBehaviour
             currentRoom = other.gameObject;
             moveCamera = true;
         }
-        if (other.tag == "BluePotion")
+        if (other.tag == "BluePotion" && dead == false)
         {
             playerSpeed *= 2;
             speedIncreased = true;
             Destroy(other.gameObject);
         }
-        if (other.tag == "RedPotion")
+        if (other.tag == "RedPotion" && dead == false)
         {
             // Teleport to another room
             while(teleported ==false){

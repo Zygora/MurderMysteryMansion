@@ -66,6 +66,7 @@ public class MurdererScripts : MonoBehaviour {
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             arrow.transform.rotation = Quaternion.AngleAxis(angle- 180, Vector3.forward);
             arrowCreated = true;
+            Destroy(arrow.gameObject, 2f);
         }
 
         if(Controls.Trapped == false)
@@ -98,7 +99,13 @@ public class MurdererScripts : MonoBehaviour {
         if (diseased)
         {
             diseasedTime -= Time.deltaTime;
-            if(diseasedTime<=0)
+            TorsoAnimator.SetBool("MurdererRunning", false);
+            LegsAnimator.SetBool("Running", false);
+            TorsoAnimator.SetBool("Idle", true);
+            LegsAnimator.SetBool("Idle", true);
+            ShirtAnimator.SetBool("MurdererRunning", false);
+            ShirtAnimator.SetBool("MurdererIdle", true);
+            if (diseasedTime<=0)
             {
                 diseased = false;
                 diseasedTime = originalDiseasedTime;
