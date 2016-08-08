@@ -450,24 +450,28 @@ public class RandomSpawnPlayers : MonoBehaviour {
         if (randomMurdererNumber == 0 && murdererSpawned == false)
         {
             GameObject.FindGameObjectWithTag("Player1").GetComponent<MurdererScripts>().enabled = true;
+            GameObject.FindGameObjectWithTag("Player1").gameObject.tag = "Murderer1";
             murdererSpawned = true;
             player1Camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
         }
         if (randomMurdererNumber == 1 && murdererSpawned == false)
         {
             GameObject.FindGameObjectWithTag("Player2").GetComponent<MurdererScripts>().enabled = true;
+            GameObject.FindGameObjectWithTag("Player2").gameObject.tag = "Murderer2";
             murdererSpawned = true;
             player2Camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
         }
         if (randomMurdererNumber == 2 && murdererSpawned == false)
         {
             GameObject.FindGameObjectWithTag("Player3").GetComponent<MurdererScripts>().enabled = true;
+            GameObject.FindGameObjectWithTag("Player3").gameObject.tag = "Murderer3";
             murdererSpawned = true;
             player3Camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
         }
         if (randomMurdererNumber == 3 && murdererSpawned == false)
         {
             GameObject.FindGameObjectWithTag("Player4").GetComponent<MurdererScripts>().enabled = true;
+            GameObject.FindGameObjectWithTag("Player4").gameObject.tag = "Murderer4";
             murdererSpawned = true;
             player4Camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
         }

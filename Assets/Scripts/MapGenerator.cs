@@ -111,7 +111,7 @@ public class MapGenerator : MonoBehaviour {
         //Vector3 currentLocation = new Vector3 (0.0f, -296.0f, 0.0f);
         Vector3 currentLocation = new Vector3(-480.0f, -270.0f, 0.0f);
 
-        MapGenerator MasterObj = new MapGenerator();
+        //MapGenerator MasterObj = new MapGenerator();
 
         //do while rows is still less than meax rows
         while (currentrow < YTiles && currentObjectCount!=25) {
@@ -143,7 +143,7 @@ public class MapGenerator : MonoBehaviour {
                     Rooms.RemoveAt(x - 1);
                     //change the name of the game object from gridObject
                     //gridObject.name = RootObjectName + "_" + currentObjectCount;
-                    MasterObj.seed += gridObject1.name;
+                    //MasterObj.seed += gridObject1.name;
                     //Debug.Log("Seed:"+seed);
                     //set location to the right of last gameobject
                     currentLocation.x = currentLocation.x + spriteX;
@@ -164,7 +164,7 @@ public class MapGenerator : MonoBehaviour {
                     Rooms.RemoveAt(0);
                     //change the name of the game object from gridObject
                     //gridObject.name = RootObjectName + "_" + currentObjectCount;
-                    MasterObj.seed += gridObject2.name;
+                    //MasterObj.seed += gridObject2.name;
                     //Debug.Log("Seed:"+seed);
                     //set location to the right of last gameobject
                     currentLocation.x = currentLocation.x + spriteX;
@@ -192,7 +192,7 @@ public class MapGenerator : MonoBehaviour {
                 Rooms.RemoveAt(x - 1);
                 //change the name of the game object from gridObject
                 //gridObject.name = RootObjectName + "_" + currentObjectCount;
-                MasterObj.seed += gridObject.name;
+                //MasterObj.seed += gridObject.name;
                 //Debug.Log("Seed:"+seed);
                 //set location to the right of last gameobject
                 currentLocation.x = currentLocation.x + spriteX;
@@ -226,8 +226,8 @@ public class MapGenerator : MonoBehaviour {
 
         if (PhotonNetwork.player.isMasterClient)
         {
-            MasterObj.isMaster = true;
-            Debug.Log("Is Master:"+MasterObj.isMaster);
+            //MasterObj.isMaster = true;
+            //Debug.Log("Is Master:"+MasterObj.isMaster);
         }
     }
 

@@ -25,30 +25,26 @@ public class MurdererScripts : MonoBehaviour {
         isMurderer = true;
         //change inputs in input manager
         //change tag of player
-        if (gameObject.tag == "Player1")
+        if (gameObject.tag == "Murderer1")
         {
-            gameObject.tag = "Murderer1";
             attack = "Attack/Revive_P1";
             interact = "Interact_P1";
         }
 
-        if (gameObject.tag == "Player2")
+        if (gameObject.tag == "Murderer2")
         {
-            gameObject.tag = "Murderer2";
             attack = "Attack/Revive_P2";
             interact = "Interact_P2";
         }
 
-        if (gameObject.tag == "Player3")
+        if (gameObject.tag == "Murderer3")
         {
-            gameObject.tag = "Murderer3";
             attack = "Attack/Revive_P3";
             interact = "Interact_P3";
         }
 
-        if (gameObject.tag == "Player4")
+        if (gameObject.tag == "Murderer4")
         {
-            gameObject.tag = "Murderer4";
             attack = "Attack/Revive_P4";
             interact = "Interact_P4";
         }
