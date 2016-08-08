@@ -56,7 +56,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //set max range value for random.range equal to size of list;
         randomMax = 24;
         //set number of player and murderer abilities
-        numberOfPlayerAbilities = 6;
+        numberOfPlayerAbilities = 7;
         numberOfMurdererAbilities = 3;
         //grab cameras in scene
         player1Camera = GameObject.FindGameObjectWithTag("Player1Camera");
@@ -181,12 +181,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<Doppelganger>();
             }
-           
-           /* if (randomPlayerAbility == 2)
-            {
-                GameObject.FindGameObjectWithTag("Player1").AddComponent<ScaredCat>();
-            }
-            */
+            
             if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<Squeler>();
@@ -209,6 +204,11 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 5)
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<Diseased>();
+            }
+
+            if (randomPlayerAbility == 6)
+            {
+                GameObject.FindGameObjectWithTag("Player1").AddComponent<ScaredCat>();
             }
         }
 
@@ -250,11 +250,6 @@ public class RandomSpawnPlayers : MonoBehaviour {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<Doppelganger>();
             }
 
-            /* if (randomPlayerAbility == 2)
-            {
-                GameObject.FindGameObjectWithTag("Player2").AddComponent<ScaredCat>();
-            }
-            */
             if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<Squeler>();
@@ -277,6 +272,11 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 5)
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<Diseased>();
+            }
+
+            if (randomPlayerAbility == 6)
+            {
+                GameObject.FindGameObjectWithTag("Player2").AddComponent<ScaredCat>();
             }
         }
 
@@ -320,11 +320,6 @@ public class RandomSpawnPlayers : MonoBehaviour {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<Doppelganger>();
             }
 
-            /* if (randomPlayerAbility == 2)
-            {
-                GameObject.FindGameObjectWithTag("Player3").AddComponent<ScaredCat>();
-            }
-            */
             if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<Squeler>();
@@ -347,6 +342,11 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 5)
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<Diseased>();
+            }
+
+            if (randomPlayerAbility == 6)
+            {
+                GameObject.FindGameObjectWithTag("Player3").AddComponent<ScaredCat>();
             }
         }
 
@@ -390,11 +390,6 @@ public class RandomSpawnPlayers : MonoBehaviour {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<Doppelganger>();
             }
 
-            /* if (randomPlayerAbility == 2)
-             {
-                 GameObject.FindGameObjectWithTag("Player4").AddComponent<ScaredCat>();
-             }
-             */
             if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<Squeler>();
@@ -417,6 +412,11 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 5)
             {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<Diseased>();
+            }
+
+            if (randomPlayerAbility == 6)
+            {
+                GameObject.FindGameObjectWithTag("Player4").AddComponent<ScaredCat>();
             }
         }
 

@@ -60,8 +60,8 @@ public class Squeler : MonoBehaviour
         {
             timeSinceEnteringRoom += Time.deltaTime;
             if(timeSinceEnteringRoom > transitionWaitTime) {
-                GameObject Arrow1 = Instantiate(Resources.Load("SquelerArrow"), player1.transform.position + (transform.up * 60), Quaternion.identity) as GameObject;
-                GameObject Arrow2 = Instantiate(Resources.Load("SquelerArrow"), player2.transform.position + (transform.up * 60), Quaternion.identity) as GameObject;
+                Instantiate(Resources.Load("SquelerArrow"), player1.transform.position + (transform.up * 60), Quaternion.identity);
+                Instantiate(Resources.Load("SquelerArrow"), player2.transform.position + (transform.up * 60), Quaternion.identity);
                 Audio.PlayOneShot(scream);
                 screaming = true;
                 timeSinceEnteringRoom = 0;

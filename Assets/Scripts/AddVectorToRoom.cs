@@ -24,6 +24,11 @@ public class AddVectorToRoom : MonoBehaviour {
             GetComponent<SpriteRenderer>().sprite = exitRoomClosed;
         }
 
+        if(roomCoordinate == ScaredCat.scaredCatTargetRoomLocation)
+        {
+            ScaredCat.scaredCatTargetRoom = this.gameObject;
+        }
+
         if (roomCoordinate == Controls.TopLeftRoomLocation)
         {
             Controls.TopLeftRoom = this.gameObject;

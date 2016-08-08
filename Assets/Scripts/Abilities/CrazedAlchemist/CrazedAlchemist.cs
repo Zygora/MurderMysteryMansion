@@ -74,13 +74,13 @@ public class CrazedAlchemist : MonoBehaviour
                     if (gameObject.GetComponent<Controls>().direction < 0)
                     {
                         // Load potion prefab from Resources folder
-                        GameObject potion = Instantiate(Resources.Load("RedPotionLeft"),this.transform.position + (transform.right * 20) + (transform.up * 20 ), Quaternion.identity) as GameObject;
+                       Instantiate(Resources.Load("RedPotionLeft"),this.transform.position + (transform.right * 20) + (transform.up * 20 ), Quaternion.identity);
                     }
                     else
                     // If player moves right throw potion to right
                     {
                         // Load potion prefab from Resources folder
-                        GameObject potion = Instantiate(Resources.Load("RedPotion"), this.transform.position + (transform.right * 20) + (transform.up * 20), Quaternion.identity) as GameObject;
+                       Instantiate(Resources.Load("RedPotion"), this.transform.position + (transform.right * 20) + (transform.up * 20), Quaternion.identity);
                     }
                 }
                 // Throw blue potion
@@ -90,13 +90,13 @@ public class CrazedAlchemist : MonoBehaviour
                     if (gameObject.GetComponent<Controls>().direction < 0)
                     {
                         // Load potion prefab from Resources folder
-                        GameObject potionBlue = Instantiate(Resources.Load("BluePotionLeft"), this.transform.position + (transform.right * 20) + (transform.up * 20), Quaternion.identity) as GameObject;
+                       Instantiate(Resources.Load("BluePotionLeft"), this.transform.position + (transform.right * 20) + (transform.up * 20), Quaternion.identity);
                     }
                     // If player moves right throw potion to right
                     else
                     {
                         // Load potion prefab from Resources folder
-                        GameObject potionBlue = Instantiate(Resources.Load("BluePotion"), this.transform.position + (transform.right * 20) + (transform.up * 20), Quaternion.identity) as GameObject;
+                       Instantiate(Resources.Load("BluePotion"), this.transform.position + (transform.right * 20) + (transform.up * 20), Quaternion.identity);
                     }
                 }
                 // Decrease the amount of potions available by one

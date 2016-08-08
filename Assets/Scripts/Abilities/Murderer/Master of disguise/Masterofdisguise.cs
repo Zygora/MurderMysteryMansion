@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Masterofdisguise : MonoBehaviour {
-    bool nearDownedWimp;
+    //bool nearDownedWimp;
     GameObject downedWimp;
     private string ability;
 	// Use this for initialization
@@ -44,7 +44,7 @@ public class Masterofdisguise : MonoBehaviour {
     {
         if (other.tag == "DownedWimp")
         {
-            nearDownedWimp = true;
+            //nearDownedWimp = true;
             downedWimp = other.gameObject;
         }
     }
@@ -53,7 +53,7 @@ public class Masterofdisguise : MonoBehaviour {
     {
         if (other.tag == "DownedWimp")
         {
-            nearDownedWimp = false;
+           // nearDownedWimp = false;
             downedWimp = null;
         }
     }

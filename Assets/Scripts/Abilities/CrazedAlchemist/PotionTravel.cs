@@ -23,4 +23,12 @@ public class PotionTravel : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void OnTriggerExit2D(Collider2D other) {
+        if(other.gameObject.tag == "Room" || other.gameObject.tag == "MurdererStart")
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
 }

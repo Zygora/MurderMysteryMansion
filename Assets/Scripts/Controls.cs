@@ -42,7 +42,7 @@ public class Controls : MonoBehaviour
     public Animator TorsoAnimator;
     public Animator LegsAnimator;
     public Animator ShirtAnimator;
-    private Collider2D col;
+    //private Collider2D col;
 
     public bool moveCameraLeft;
     public bool moveCameraRight;
@@ -99,6 +99,7 @@ public class Controls : MonoBehaviour
     public float thrillSpeedBoost;
     public bool drNerd;
     public bool crazedAlchemist;
+    public bool scaredCat;
     public Vector2 currentPos;
     private bool teleported = false;
     public AudioSource Audio;
@@ -135,7 +136,7 @@ public class Controls : MonoBehaviour
         gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale;
         // Get rigidbody of the player at start
         rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<Collider2D>();
+        //col = GetComponent<Collider2D>();
         //Animator = GetComponent<Animator>();
         // Time that player should hold down button near the gates in order to exit the game
         MenuDownHoldTime = 0;
@@ -185,6 +186,8 @@ public class Controls : MonoBehaviour
 
         if (Trapped == true)
         {
+            TorsoAnimator.Play("TorsoDizzy");
+            LegsAnimator.Play("LegsDeath");
             timeSinceTrapped += Time.deltaTime;
             if (timeSinceTrapped >= trappedTime)
             {

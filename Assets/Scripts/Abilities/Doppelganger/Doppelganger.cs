@@ -5,7 +5,7 @@ public class Doppelganger : MonoBehaviour
 {
     public int clonesAvailable = 2;      // The amount of clones available to player
     public float cooldown = 10;           // Cooldown time player has to wait before he is able to summon another clone
-    public float cloneSpeed = 20;
+    public float cloneSpeed = 55;
     Vector2 direction;               // Direction in which clone and arrow will be moving
     float timeSinceUsed;             // Time passed since the ability was last used
     public bool cloneUsed = false;                  // Flag that shows that the ability was used
@@ -69,26 +69,24 @@ public class Doppelganger : MonoBehaviour
             // If there's another clone charge available
             if (clonesAvailable > 0)
             {
-                // Player faces right
-                if (Input.GetButtonDown(ability) && (gameObject.GetComponent<Controls>().direction > 0))
+                if(gameObject.tag == "Player1" && Controls.player1NoDropOrbZone == false)
                 {
-                    SetBoolsAndDirection();
-                    GameObject clone = Instantiate(Resources.Load("Clone"), this.transform.position, Quaternion.identity) as GameObject;
-                    clone.gameObject.GetComponent<CloneScript>().startPosition = this.transform.position;
-                    clone.gameObject.GetComponent<CloneScript>().direction = direction;
-                    clone.gameObject.GetComponent<CloneScript>().cloneSpeed = cloneSpeed;
-                    clone.transform.eulerAngles = new Vector3(0, 0, 0);
+                    MakeClone();
                 }
 
-                // Player faces left
-                else if (Input.GetButtonDown(ability) && (gameObject.GetComponent<Controls>().direction < 0))
+                if (gameObject.tag == "Player2" && Controls.player2NoDropOrbZone == false)
                 {
-                    SetBoolsAndDirection();
-                    GameObject clone = Instantiate(Resources.Load("Clone"), this.transform.position, Quaternion.identity) as GameObject;
-                    clone.gameObject.GetComponent<CloneScript>().startPosition = this.transform.position;
-                    clone.gameObject.GetComponent<CloneScript>().direction = direction;
-                    clone.gameObject.GetComponent<CloneScript>().cloneSpeed = cloneSpeed;
-                    clone.transform.eulerAngles = new Vector3(0, 180, 0);
+                    MakeClone();
+                }
+
+                if (gameObject.tag == "Player3" && Controls.player3NoDropOrbZone == false)
+                {
+                    MakeClone();
+                }
+
+                if (gameObject.tag == "Player4" && Controls.player4NoDropOrbZone == false)
+                {
+                    MakeClone();
                 }
             }
         }
@@ -100,5 +98,30 @@ public class Doppelganger : MonoBehaviour
         cloneAlive = true;
         cloneUsed = true;
         clonesAvailable--;
+    }
+
+    void MakeClone()
+    {
+        // Player faces right
+        if (Input.GetButtonDown(ability) && (gameObject.GetComponent<Controls>().direction > 0))
+        {
+            SetBoolsAndDirection();
+            GameObject clone = Instantiate(Resources.Load("Clone"), this.transform.position, Quaternion.identity) as GameObject;
+            clone.gameObject.GetComponent<CloneScript>().startPosition = this.transform.position;
+            clone.gameObject.GetComponent<CloneScript>().direction = direction;
+            clone.gameObject.GetComponent<CloneScript>().cloneSpeed = cloneSpeed;
+            clone.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+
+        // Player faces left
+        else if (Input.GetButtonDown(ability) && (gameObject.GetComponent<Controls>().direction < 0))
+        {
+            SetBoolsAndDirection();
+            GameObject clone = Instantiate(Resources.Load("Clone"), this.transform.position, Quaternion.identity) as GameObject;
+            clone.gameObject.GetComponent<CloneScript>().startPosition = this.transform.position;
+            clone.gameObject.GetComponent<CloneScript>().direction = direction;
+            clone.gameObject.GetComponent<CloneScript>().cloneSpeed = cloneSpeed;
+            clone.transform.eulerAngles = new Vector3(0, 180, 0);
+        }
     }
 }
