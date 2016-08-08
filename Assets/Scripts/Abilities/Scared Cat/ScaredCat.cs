@@ -8,7 +8,7 @@ public class ScaredCat : MonoBehaviour {
     private string ability;
     public float scaredCatSpeed = 5;
     public static bool scaredCatRunning = false;
-
+    public Vector3 facing;
     // Use this for initialization
     void Start ()
     { 
@@ -99,6 +99,7 @@ public class ScaredCat : MonoBehaviour {
            this.gameObject.GetComponent<Controls>().LegsAnimator.SetBool("Idle", false);
            this.gameObject.GetComponent<Controls>().TorsoAnimator.SetBool("Jumping", false);
            this.gameObject.GetComponent<Controls>().LegsAnimator.SetBool("Jumping", false);
+            this.transform.eulerAngles = facing;
         }
 
         if(this.transform.position == scaredCatTargetRoom.transform.position)
@@ -117,12 +118,14 @@ public class ScaredCat : MonoBehaviour {
             {
                 scaredCatTargetRoomLocation.x = currentPos.x + 3;
                 this.transform.eulerAngles = new Vector3(0, 0, 0);
+                facing = new Vector3(0, 0, 0);
             }
 
             else if (currentPos.x - 3 >= -2)
             {
                 scaredCatTargetRoomLocation.x = currentPos.x - 3;
                 this.transform.eulerAngles = new Vector3(0, 180, 0);
+                facing = new Vector3(0, 180, 0);
             }
 
             else
@@ -132,24 +135,28 @@ public class ScaredCat : MonoBehaviour {
                 {
                     scaredCatTargetRoomLocation.x = 2;
                     this.transform.eulerAngles = new Vector3(0, 0, 0);
+                    facing = new Vector3(0, 0, 0);
                 }
 
                 if (currentPos.x > 0)
                 {
                     scaredCatTargetRoomLocation.x = -2;
                     this.transform.eulerAngles = new Vector3(0, 180, 0);
+                    facing = new Vector3(0, 180, 0);
                 }
 
                 if (x == 1 && currentPos.x == 0)
                 {
                     scaredCatTargetRoomLocation.x = 2;
                     this.transform.eulerAngles = new Vector3(0, 0, 0);
+                    facing = new Vector3(0, 0, 0);
                 }
 
                 if (x == 2 && currentPos.x == 0)
                 {
                     scaredCatTargetRoomLocation.x = -2;
                     this.transform.eulerAngles = new Vector3(0, 180, 0);
+                    facing = new Vector3(0, 180, 0);
                 }
             }
             scaredCatRunning = true;
