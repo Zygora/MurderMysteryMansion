@@ -107,6 +107,7 @@ public class Controls : MonoBehaviour
     public AudioClip trap;
     public bool Trapper=false;
     public static bool Trapped = false;
+    private bool currentPlayerTrapped;
     public static float trappedTime;
     private float timeSinceTrapped;
     public static Vector2 murdererPosition;
@@ -179,15 +180,16 @@ public class Controls : MonoBehaviour
     void Update()
     {
         
-        if (Trapped == false)
+        if (Trapped == false && currentPlayerTrapped == false)
         {
             timeSinceTrapped = 0;
         }
 
-        if (Trapped == true)
+        if (Trapped == true && currentPlayerTrapped == true)
         {
             TorsoAnimator.Play("TorsoDizzy");
             LegsAnimator.Play("LegsDeath");
+            TorsoAnimator.SetBool("Dizzy",true);
             timeSinceTrapped += Time.deltaTime;
             if (timeSinceTrapped >= trappedTime)
             {
@@ -203,6 +205,8 @@ public class Controls : MonoBehaviour
 
                 timeSinceTrapped = 0;
                 Trapped = false;
+                TorsoAnimator.SetBool("Dizzy", false);
+                currentPlayerTrapped = false;
             }
         }
 
@@ -419,7 +423,7 @@ public class Controls : MonoBehaviour
             }
 
             //decrease speed of player if carrying an orb
-            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == true && Trapped == false && dead == false)
+            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == true && currentPlayerTrapped == false && dead == false)
             {
                 if (speedIncreased == false)
                 {
@@ -432,7 +436,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == true && Trapped == false && dead == false)
+            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == true && currentPlayerTrapped == false && dead == false)
             {
                 if (speedIncreased == false)
                 {
@@ -445,7 +449,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == true && Trapped == false && dead == false) 
+            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == true && currentPlayerTrapped == false && dead == false) 
             {
                 if (speedIncreased == false)
                 {
@@ -458,7 +462,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == true && Trapped == false && dead == false) 
+            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == true && currentPlayerTrapped == false && dead == false) 
             {
                 if (speedIncreased == false)
                 {
@@ -472,7 +476,7 @@ public class Controls : MonoBehaviour
             }
 
             //restore speed of player if not carrying an orb
-            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == false && Trapped == false && dead == false)
+            if (gameObject.tag == "Player1" && OrbCount.player1CarryOrb == false && currentPlayerTrapped == false && dead == false)
             {
                 if (speedIncreased == false)
                 {
@@ -480,7 +484,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == false && Trapped == false && dead == false)
+            if (gameObject.tag == "Player2" && OrbCount.player2CarryOrb == false && currentPlayerTrapped == false && dead == false)
             {
                 if (speedIncreased == false)
                 {
@@ -488,7 +492,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == false && Trapped == false && dead == false)
+            if (gameObject.tag == "Player3" && OrbCount.player3CarryOrb == false && currentPlayerTrapped == false && dead == false)
             {
                 if (speedIncreased == false)
                 {
@@ -496,7 +500,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
-            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == false && Trapped == false && dead == false)
+            if (gameObject.tag == "Player4" && OrbCount.player4CarryOrb == false && currentPlayerTrapped == false && dead == false)
             {
                 if (speedIncreased == false)
                 {
@@ -627,7 +631,7 @@ public class Controls : MonoBehaviour
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
 
-                if (murderTransitioning != true)
+                if (murderTransitioning != true && MurdererScripts.diseased == false)
                 {
                     //play idle animation
                     if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
@@ -680,7 +684,7 @@ public class Controls : MonoBehaviour
 
             //player animations
            if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" 
-                && gameObject.tag != "Murderer4")
+                && gameObject.tag != "Murderer4" && currentPlayerTrapped == false)
            {
                 //play idle animation
                 if (Input.GetAxis(horizontal) > -0.5f && Input.GetAxis(horizontal) < 0.5f)
@@ -691,7 +695,7 @@ public class Controls : MonoBehaviour
                     LegsAnimator.SetBool("Idle", true);
                 }
                 // Change animation from idle to run and flip the players sprite
-                if (Input.GetAxis(horizontal) < -0.1f && Trapped == false)
+                if (Input.GetAxis(horizontal) < -0.1f)
                 {
                     if (playerSpeed != 0)
                     {
@@ -704,7 +708,7 @@ public class Controls : MonoBehaviour
                     direction = -1;
                 }
                 // Change animation from idle to run and flip the sprite
-                if (Input.GetAxis(horizontal) > 0.1f && Trapped == false)
+                if (Input.GetAxis(horizontal) > 0.1f)
                 {
                     if (playerSpeed != 0)
                     {
@@ -717,12 +721,27 @@ public class Controls : MonoBehaviour
                     direction = 1;
                 }
            }
-                // If player is on ground and space button hit -> jump
-                if (Input.GetButtonDown(jump) && (onGround))
+            // If player is on ground and space button hit -> jump
+            if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" &&
+            gameObject.tag != "Murderer4")
+            {
+                if (Input.GetButtonDown(jump) && (onGround) && currentPlayerTrapped == false && dead == false)
                 {
                     rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
                 }
-                if (Input.GetKeyUp(KeyCode.R))
+            }
+
+            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" ||
+            gameObject.tag == "Murderer4")
+            {
+                if (Input.GetButtonDown(jump) && (onGround) && MurdererScripts.diseased == false 
+                    && MurdererScripts.washingClothes == false)
+                {
+                    rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
+                }
+            }
+
+            if (Input.GetKeyUp(KeyCode.R))
                 {
                     SceneManager.LoadScene(4); // load level generator
                 }
@@ -1159,6 +1178,7 @@ public class Controls : MonoBehaviour
                 gameObject.tag != "Murderer4")
             {
                 Trapped = true;
+                currentPlayerTrapped = true;
                 Audio.PlayOneShot(trap);
                 playerSpeed = 0;
                 Destroy(other.gameObject,2);

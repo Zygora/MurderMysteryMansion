@@ -99,16 +99,16 @@ public class MurdererScripts : MonoBehaviour {
         if (diseased)
         {
             diseasedTime -= Time.deltaTime;
-            TorsoAnimator.SetBool("MurdererRunning", false);
-            LegsAnimator.SetBool("Running", false);
-            TorsoAnimator.SetBool("Idle", true);
-            LegsAnimator.SetBool("Idle", true);
-            ShirtAnimator.SetBool("MurdererRunning", false);
-            ShirtAnimator.SetBool("MurdererIdle", true);
+            TorsoAnimator.Play("TorsoDizzy");
+            LegsAnimator.Play("LegsDeath");
+            TorsoAnimator.SetBool("Dizzy", true);
+            ShirtAnimator.SetBool("Dizzy", true);
             if (diseasedTime<=0)
             {
                 diseased = false;
                 diseasedTime = originalDiseasedTime;
+                TorsoAnimator.SetBool("Dizzy", false);
+                ShirtAnimator.SetBool("Dizzy", false);
             }
         }
 
