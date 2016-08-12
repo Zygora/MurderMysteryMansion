@@ -3,20 +3,22 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class OrbCount : MonoBehaviour {
-    private int carryingOrbs;
     public Text orbCount;
-    public static bool wimpsWin = false;
-    public static int wimpsExited = 0;
+    
     public GameObject Orb;
+
     public static int orbsAtAltar1;
     public static int orbsAtAltar2;
     public static int orbsAtAltar3;
+    public static int wimpsExited = 0;
+    private int carryingOrbs;
+
     public string interact;
+
     public static bool player1CarryOrb = false;
     public static bool player2CarryOrb = false;
     public static bool player3CarryOrb = false;
     public static bool player4CarryOrb = false;
-    private bool canDropOrb = false;
     public static bool player1Exited = false;
     public static bool player2Exited = false;
     public static bool player3Exited = false;
@@ -26,7 +28,9 @@ public class OrbCount : MonoBehaviour {
     public static bool player3CanEnter = false;
     public static bool player4CanEnter = false;
     public static bool doorOpen;
-    
+    public static bool wimpsWin = false;
+    private bool canDropOrb = false;
+
     // Use this for initialization
     void Start () {
         //set amount of orbs carried to 0
@@ -63,41 +67,30 @@ public class OrbCount : MonoBehaviour {
         if (carryingOrbs == 1 && Input.GetButtonDown(interact) && canDropOrb) {
             if (gameObject.tag == "Player1" && Controls.player1NoDropOrbZone == false)
             {
-                Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 28, Quaternion.identity);
-                carryingOrbs = 0;
-                Debug.Log("orb dropped");
-                canDropOrb = false;
+                DropOrb();
                 player1CarryOrb = false;
             }
 
             if (gameObject.tag == "Player2" && Controls.player2NoDropOrbZone == false)
             {
-                Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 28, Quaternion.identity);
-                carryingOrbs = 0;
-                Debug.Log("orb dropped");
-                canDropOrb = false;
+                DropOrb();
                 player2CarryOrb = false;
             }
 
             if (gameObject.tag == "Player3" && Controls.player3NoDropOrbZone == false)
             {
-                Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 28, Quaternion.identity);
-                carryingOrbs = 0;
-                Debug.Log("orb dropped");
-                canDropOrb = false;
+                DropOrb();
                 player3CarryOrb = false;
             }
 
             if (gameObject.tag == "Player4" && Controls.player4NoDropOrbZone == false)
             {
-                Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 28, Quaternion.identity);
-                carryingOrbs = 0;
-                Debug.Log("orb dropped");
-                canDropOrb = false;
+                DropOrb();
                 player4CarryOrb = false;
             }
         }
 
+        //open door if orbs placed at altar
         if (orbsAtAltar1 == 1 && orbsAtAltar2 == 1 && orbsAtAltar3 == 1)
         {
             doorOpen = true;
@@ -114,29 +107,10 @@ public class OrbCount : MonoBehaviour {
         {
             if (carryingOrbs == 0 && other.gameObject.tag == "Orb" && Input.GetButtonDown(interact))
             {
-                Debug.Log("orb picked up");
                 carryingOrbs += 1;
                 Destroy(other.gameObject);
                 //keeps track of player carrying orb globally
-                if (gameObject.tag == "Player1")
-                {
-                    player1CarryOrb = true;
-                }
-
-                if (gameObject.tag == "Player2")
-                {
-                    player2CarryOrb = true;
-                }
-
-                if (gameObject.tag == "Player3")
-                {
-                    player3CarryOrb = true;
-                }
-
-                if (gameObject.tag == "Player4")
-                {
-                    player4CarryOrb = true;
-                }
+                CarryingOrb(true);
                 //allowing dropping of orb after delay
                 Invoke("CanDropOrb", 2f);
             }
@@ -150,25 +124,7 @@ public class OrbCount : MonoBehaviour {
                 Instantiate(Orb, other.gameObject.transform.position + transform.up * 20f, Quaternion.identity);
                 carryingOrbs -= 1;
                 //keeps track of player carrying orb globally
-                if (gameObject.tag == "Player1")
-                {
-                    player1CarryOrb = false;
-                }
-
-                if (gameObject.tag == "Player2")
-                {
-                    player2CarryOrb = false;
-                }
-
-                if (gameObject.tag == "Player3")
-                {
-                    player3CarryOrb = false;
-                }
-
-                if (gameObject.tag == "Player4")
-                {
-                    player4CarryOrb = false;
-                }
+                CarryingOrb(false);
                 orbsAtAltar1 += 1;
                 canDropOrb = false;
             }
@@ -182,25 +138,7 @@ public class OrbCount : MonoBehaviour {
                 Instantiate(Orb, other.gameObject.transform.position + transform.up * 20f, Quaternion.identity);
                 carryingOrbs -= 1;
                 //keeps track of player carrying orb globally
-                if (gameObject.tag == "Player1")
-                {
-                    player1CarryOrb = false;
-                }
-
-                if (gameObject.tag == "Player2")
-                {
-                    player2CarryOrb = false;
-                }
-
-                if (gameObject.tag == "Player3")
-                {
-                    player3CarryOrb = false;
-                }
-
-                if (gameObject.tag == "Player4")
-                {
-                    player4CarryOrb = false;
-                }
+                CarryingOrb(false);
                 orbsAtAltar2 += 1;
                 canDropOrb = false;
             }
@@ -214,25 +152,7 @@ public class OrbCount : MonoBehaviour {
                 Instantiate(Orb, other.gameObject.transform.position + transform.up * 20f, Quaternion.identity);
                 carryingOrbs -= 1;
                 //keeps track of player carrying orb globally
-                if (gameObject.tag == "Player1")
-                {
-                    player1CarryOrb = false;
-                }
-
-                if (gameObject.tag == "Player2")
-                {
-                    player2CarryOrb = false;
-                }
-
-                if (gameObject.tag == "Player3")
-                {
-                    player3CarryOrb = false;
-                }
-
-                if (gameObject.tag == "Player4")
-                {
-                    player4CarryOrb = false;
-                }
+                CarryingOrb(false);
                 orbsAtAltar3 += 1;
                 canDropOrb = false;
             }
@@ -278,6 +198,8 @@ public class OrbCount : MonoBehaviour {
         }
     }
 
+    //FUNCTIONS
+
     void CanDropOrb() {
         canDropOrb = true;
     }
@@ -297,4 +219,32 @@ public class OrbCount : MonoBehaviour {
 	void P4CanReenter(){
 		player4CanEnter = true;
 	}
+
+    void DropOrb() {
+        Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 28, Quaternion.identity);
+        carryingOrbs = 0;
+        canDropOrb = false;
+    }
+
+    void CarryingOrb(bool carryingOrb) {
+        if (gameObject.tag == "Player1")
+        {
+            player1CarryOrb = carryingOrb;
+        }
+
+        if (gameObject.tag == "Player2")
+        {
+            player2CarryOrb = carryingOrb;
+        }
+
+        if (gameObject.tag == "Player3")
+        {
+            player3CarryOrb = carryingOrb;
+        }
+
+        if (gameObject.tag == "Player4")
+        {
+            player4CarryOrb = carryingOrb;
+        }
+    }
 }

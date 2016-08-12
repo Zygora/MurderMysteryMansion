@@ -31,7 +31,9 @@ public class Controls : MonoBehaviour
     public bool canGoDown;
     //
     public SpriteRenderer GateHighlight;
+
     public Camera Camera;
+
     public GameObject player1Camera;
     public GameObject player2Camera;
     public GameObject player3Camera;
@@ -39,79 +41,8 @@ public class Controls : MonoBehaviour
     public GameObject OptionsRoom;
     public GameObject PlayerCustomizationRoom;
     public GameObject MenuRoom;
-    public Animator TorsoAnimator;
-    public Animator LegsAnimator;
-    public Animator ShirtAnimator;
-    //private Collider2D col;
-
-    public bool moveCameraLeft;
-    public bool moveCameraRight;
-    public bool moveCameraToCenter;
-
-    public float MenuDownHoldTime;
-    public float playerTransitionSpeed;
-
-    public string horizontal;
-    public string vertical;
-    public string revive1;
-    public string revive2;
-    public string revive3;
-    public string revive4;
-
-    public string jump;
-    public bool canMove = true;
-    public float cameraSpeed = 30;
-    public float direction = 1;
-    bool speedIncreased;
-    float timeSpeedIncreased;
-    private bool dead;
-    public bool moveCamera;
     public GameObject currentRoom;
     public GameObject lastRoom;
-    float speedMultiplier;
-    public bool goUp;
-    public bool goDown;
-    private float gravityScale;
-    private GameObject ladder;
-    private GameObject[] Shirts;
-    public static bool murderTransitioning = false;
-    public static bool bloodStained = false;
-
-    public static bool wimpKilled = false;
-    public static int wimpsDowned = 0;
-    private string interact;
-    public bool exited;
-    private float wimpDownedCooldown;
-    private float wimpDownedDelay = 1;
-    public static Vector2 currentPlayer1Pos;
-    public static Vector2 currentPlayer2Pos;
-    public static Vector2 currentPlayer3Pos;
-    public static Vector2 currentPlayer4Pos;
-    float revivetime = 2.0f;
-    float revivetimepassed = 0.0f;   
-    public string revive;
-    public int MurdererWeaponCooldown;
-    public static bool player1NoDropOrbZone = false;
-    public static bool player2NoDropOrbZone = false;
-    public static bool player3NoDropOrbZone = false;
-    public static bool player4NoDropOrbZone = false;
-    public bool diseased;
-    public float thrillSpeedBoost;
-    public bool drNerd;
-    public bool crazedAlchemist;
-    public bool scaredCat;
-    public Vector2 currentPos;
-    private bool teleported = false;
-    public AudioSource Audio;
-    public AudioClip scream;
-    public AudioClip trap;
-    public bool Trapper=false;
-    public static bool Trapped = false;
-    private bool currentPlayerTrapped;
-    public static float trappedTime;
-    private float timeSinceTrapped;
-    public static Vector2 murdererPosition;
-    //teleport locations
     public static GameObject TopLeftRoom;
     public static GameObject TopMiddleRoom;
     public static GameObject TopRightRoom;
@@ -120,6 +51,71 @@ public class Controls : MonoBehaviour
     public static GameObject BottomLeftRoom;
     public static GameObject BottomMiddleRoom;
     public static GameObject BottomRightRoom;
+    private GameObject ladder;
+    private GameObject[] Shirts;
+
+    public Animator TorsoAnimator;
+    public Animator LegsAnimator;
+    public Animator ShirtAnimator;
+
+    public AudioSource Audio;
+    public AudioClip scream;
+    public AudioClip trap;
+
+    public bool moveCameraLeft;
+    public bool moveCameraRight;
+    public bool moveCameraToCenter;
+    public static bool player1NoDropOrbZone = false;
+    public static bool player2NoDropOrbZone = false;
+    public static bool player3NoDropOrbZone = false;
+    public static bool player4NoDropOrbZone = false;
+    public static bool Trapped = false;
+    public static bool murderTransitioning = false;
+    public static bool bloodStained = false;
+    public static bool wimpKilled = false;
+    public bool canMove = true;
+    public bool diseased;
+    public bool drNerd;
+    public bool crazedAlchemist;
+    public bool scaredCat;
+    public bool Trapper = false;
+    public bool goUp;
+    public bool goDown;
+    public bool exited;
+    public bool moveCamera;
+    bool speedIncreased;
+    private bool currentPlayerTrapped;
+    private bool teleported = false;
+    private bool dead;
+
+    float revivetime = 2.0f;
+    float revivetimepassed = 0.0f;
+    float speedMultiplier;
+    float timeSpeedIncreased;
+    public float thrillSpeedBoost;
+    public float cameraSpeed = 30;
+    public float direction = 1;
+    public float MenuDownHoldTime;
+    public float playerTransitionSpeed;
+    public static float trappedTime;
+    private float timeSinceTrapped;
+    private float gravityScale;
+    private float wimpDownedCooldown;
+    private float wimpDownedDelay = 1;
+
+    public string horizontal;
+    public string vertical;
+    public string revive1;
+    public string revive2;
+    public string revive3;
+    public string revive4;
+    public string jump;
+    public string revive;
+    private string interact;
+
+    public static int wimpsDowned = 0;
+    public int MurdererWeaponCooldown;
+
     public static Vector2 TopLeftRoomLocation;
     public static Vector2 TopMiddleRoomLocation;
     public static Vector2 TopRightRoomLocation;
@@ -128,8 +124,12 @@ public class Controls : MonoBehaviour
     public static Vector2 BottomLeftRoomLocation;
     public static Vector2 BottomMiddleRoomLocation;
     public static Vector2 BottomRightRoomLocation;
-
-
+    public static Vector2 currentPlayer1Pos;
+    public static Vector2 currentPlayer2Pos;
+    public static Vector2 currentPlayer3Pos;
+    public static Vector2 currentPlayer4Pos;
+    public static Vector2 murdererPosition;
+    public Vector2 currentPos;
 
     void Start()
     {

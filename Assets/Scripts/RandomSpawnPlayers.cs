@@ -6,17 +6,20 @@ public class RandomSpawnPlayers : MonoBehaviour {
     public List<Transform> RoomPositions2;
     public List<int> PlayerAbilities;
     public List<int> ladderSpawnPositions;
+
     public bool player1Spawned = false;
     public bool player2Spawned = false;
     public bool player3Spawned = false;
     public bool player4Spawned = false;
     public bool murdererSpawned = false;
     private bool murdererHasAbility = false;
+
     private GameObject player1Camera;
     private GameObject player2Camera;
     private GameObject player3Camera;
     private GameObject player4Camera;
     private GameObject butcherRoom;
+
     private int orbsSpawned = 0;
     private int laddersSpawned = 0;
     private int random;
@@ -30,6 +33,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
     private int randomLadderNumber;
     private int ladderXOffset = 90;
     private int ladderYoffset = 50;
+
     // Use this for initialization
     void Start () {
         RoomPositions = new List<Transform>();
