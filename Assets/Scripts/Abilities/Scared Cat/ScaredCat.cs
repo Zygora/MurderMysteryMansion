@@ -3,15 +3,21 @@ using System.Collections;
 
 public class ScaredCat : MonoBehaviour {
     public Vector2 currentPos;
-    public static Vector2 scaredCatTargetRoomLocation;
-    public static GameObject scaredCatTargetRoom;
-    private string ability;
-    public float scaredCatSpeed = 5;
-    public static bool scaredCatRunning = false;
     public Vector3 facing;
+    public static Vector2 scaredCatTargetRoomLocation;
+
+    public static GameObject scaredCatTargetRoom;
+
+    private string ability;
+
+    public float scaredCatSpeed = 5;
+
+    public static bool scaredCatRunning = false;
+    
     // Use this for initialization
     void Start ()
     { 
+        //set inputs for player
         if (gameObject.tag == "Player1")
         {
             ability = "Ability_P1";
@@ -37,6 +43,7 @@ public class ScaredCat : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        //allow use of ability if player is in a room with any other player
         if (gameObject.tag == "Player1")
         {
             currentPos = Controls.currentPlayer1Pos;
@@ -89,6 +96,7 @@ public class ScaredCat : MonoBehaviour {
             }
         }
 
+        //while ability is active player runs to target destination at increased player speed and camera speed
         if(scaredCatRunning == true)
         {
            this.transform.position = Vector3.MoveTowards(this.transform.position, scaredCatTargetRoom.transform.position, scaredCatSpeed);
@@ -102,6 +110,7 @@ public class ScaredCat : MonoBehaviour {
             this.transform.eulerAngles = facing;
         }
 
+        //reset camera speed and stop running on arrival of destination
         if(this.transform.position == scaredCatTargetRoom.transform.position)
         {
             scaredCatRunning = false;
@@ -109,6 +118,8 @@ public class ScaredCat : MonoBehaviour {
         }
     }
 
+    //FUNCTIONS
+    //find the target destination when running according to rules of ability and set facing direction
     void FindTargetRoom()
     {
         if (Input.GetButtonDown(ability) && scaredCatRunning == false)

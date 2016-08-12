@@ -3,9 +3,11 @@ using System.Collections;
 
 public class ShittyPossum : MonoBehaviour {
     private string ability;
+
     public static bool possumed = false;
     public bool unPossum = false;
     public bool canPossum = true; 
+
     void Start()
     {
         //set input from input manager
@@ -87,6 +89,7 @@ public class ShittyPossum : MonoBehaviour {
         }
 	}
 
+    //FUCNTIONS
     void CanUnPossum() {
         unPossum = true;
     }

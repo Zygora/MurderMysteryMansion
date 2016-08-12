@@ -5,6 +5,7 @@ public class ArrowDestruction : MonoBehaviour {
 
     float timePassed;               // Time since this arrow was spawned
     float timeBeforeDestroyed = 2;  // Time after which this arrow will be destroyed
+
     public GameObject murderer;
 
     void Start() {
@@ -18,7 +19,7 @@ public class ArrowDestruction : MonoBehaviour {
             //Destroy arrow
             Destroy(gameObject);
         }  
-        
+        //rotate arrow towards target
         Vector3 Arrow1Dir = murderer.transform.position - transform.position;
         float Arrow1Angle = Mathf.Atan2(Arrow1Dir.y, Arrow1Dir.x) * Mathf.Rad2Deg;
         this.transform.rotation = Quaternion.AngleAxis(Arrow1Angle + 180, Vector3.forward);

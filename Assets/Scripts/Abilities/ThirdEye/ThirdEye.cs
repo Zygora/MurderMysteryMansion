@@ -8,15 +8,19 @@ public class ThirdEye : MonoBehaviour
     public Vector2 RightRoomPos;
     public Vector2 UpRoomPos;
     public Vector2 BottomRoomPos;
-    public GameObject arrow;
-    public float thirdEyeCooldown = 1;
-    private float timepassed;
+
     public Vector3 arrowSpawn;
+
+    public  float thirdEyeCooldown = 1;
+    private float timepassed;
+
     private int leftArrow = 0;
     private int rightArrow = 0;
     private int upArrow = 0;
     private int downArrow = 0;
+
     private GameObject canvas;
+    public  GameObject arrow;
     private GameObject[] leftArrows;
     private GameObject[] rightArrows;
     private GameObject[] upArrows;
@@ -24,6 +28,7 @@ public class ThirdEye : MonoBehaviour
 
     void Start() {
         arrow = Resources.Load("ThirdEyeArrow", typeof(GameObject)) as GameObject;
+        //set canvas according to player
         if (gameObject.tag == "Player1") {
             canvas = GameObject.Find("Canvas P1");
         }
@@ -39,6 +44,7 @@ public class ThirdEye : MonoBehaviour
         {
             canvas = GameObject.Find("Canvas P4");
         }
+
         leftArrows = GameObject.FindGameObjectsWithTag("LeftArrow");
         rightArrows = GameObject.FindGameObjectsWithTag("RightArrow");
         upArrows = GameObject.FindGameObjectsWithTag("UpArrow");
@@ -47,7 +53,7 @@ public class ThirdEye : MonoBehaviour
 
     void Update()
     {
-
+        //enable and disable third eye arrows if another player is in adjacent room
         if (LeftRoomPos == Controls.currentPlayer1Pos || LeftRoomPos == Controls.currentPlayer2Pos || LeftRoomPos == Controls.currentPlayer3Pos ||
         LeftRoomPos == Controls.currentPlayer4Pos)
         {
@@ -122,6 +128,7 @@ public class ThirdEye : MonoBehaviour
     }
 
     void OnTriggerStay2D(Collider2D other) {
+        //get positions of adjacent rooms
         if (other.gameObject.tag == "Room" || other.gameObject.tag == "MurdererStart") {
             currentRoomPos = other.gameObject.GetComponent<AddVectorToRoom>().roomCoordinate;
             LeftRoomPos = currentRoomPos - new Vector2(1, 0);
@@ -130,6 +137,8 @@ public class ThirdEye : MonoBehaviour
             BottomRoomPos = currentRoomPos - new Vector2(0, 1);
         }
     }
+
+    //FUNCTIONS
 
     void CreateArrowLeft() {
         canvas.gameObject.transform.FindChild("LeftArrow").GetComponent<SpriteRenderer>().enabled = true;

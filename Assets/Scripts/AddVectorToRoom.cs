@@ -3,18 +3,20 @@ using System.Collections;
 
 public class AddVectorToRoom : MonoBehaviour {
     public Vector2 roomCoordinate;
+
     public Sprite exitRoomOpen;
     public Sprite exitRoomClosed;
+
     public int currentColumn;
+
     private bool doorsSet = false;
+
     private GameObject leftDoor;
-    // Use this for initialization
-    void Start () {
-  
-    }
+
 
     // Update is called once per frame
     void Update() {
+        //change sprite of exit room depending on whether the door is opened or not
         if (OrbCount.doorOpen == true && this.gameObject.name == "Exit Room(Clone)") {
             GetComponent<SpriteRenderer>().sprite = exitRoomOpen;
         }
@@ -24,11 +26,13 @@ public class AddVectorToRoom : MonoBehaviour {
             GetComponent<SpriteRenderer>().sprite = exitRoomClosed;
         }
 
+        //grab this room position and send it to scaredy cat script if it is the target location
         if(roomCoordinate == ScaredCat.scaredCatTargetRoomLocation)
         {
             ScaredCat.scaredCatTargetRoom = this.gameObject;
         }
 
+        //get adjacent room positions and send them to controls sript for use with crazed alchemist
         if (roomCoordinate == Controls.TopLeftRoomLocation)
         {
             Controls.TopLeftRoom = this.gameObject;
@@ -69,6 +73,7 @@ public class AddVectorToRoom : MonoBehaviour {
             Controls.BottomRightRoom = this.gameObject;
         }
 
+        //enable left door sprite of room 
         if (currentColumn == 4 && doorsSet == false)
          {
             if (this.gameObject.name == "Altar Room(Clone)" || this.gameObject.name == "ButcherRoom(Clone)" ||
@@ -79,6 +84,7 @@ public class AddVectorToRoom : MonoBehaviour {
             }
          }
 
+        //enable sprite right door of room
         if (currentColumn == 0 && doorsSet == false)
         {
             if (this.gameObject.name == "Exit Room(Clone)" || this.gameObject.name == "Window Hallway(Clone)")

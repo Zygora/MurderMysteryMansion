@@ -108,14 +108,14 @@ public class MapGenerator : MonoBehaviour {
 
 
         //starting position of first room
-        //Vector3 currentLocation = new Vector3 (0.0f, -296.0f, 0.0f);
+ 
         Vector3 currentLocation = new Vector3(-480.0f, -270.0f, 0.0f);
 
         //MapGenerator MasterObj = new MapGenerator();
 
         //do while rows is still less than meax rows
         while (currentrow < YTiles && currentObjectCount!=25) {
-            //Debug.Log("object#="+currentObjectCount);
+            
             //change max random number range to length of list +1;
             int maxRandomRange = Rooms.Count + 1;
 			int x = Random.Range (2, maxRandomRange);
@@ -123,9 +123,8 @@ public class MapGenerator : MonoBehaviour {
             {
                 x = Random.Range(1, maxRandomRange);
             }
-           // Debug.Log("x="+x);
-           // Debug.Log("max="+maxRandomRange);
-
+           
+            // spawn the double room "hall of portraits together" and only if possible. 
             if (Rooms[x - 1].name == "Hall of Portraits")
             {
                 if (currentColumn!=4)
@@ -173,10 +172,8 @@ public class MapGenerator : MonoBehaviour {
                     roomCoordinateX += 1;
                 }
             }
-            /*Debug.Log ("size of list = " + Rooms.Count);
-			Debug.Log ("max Random range = "+ maxRandomRange);
-			Debug.Log ("Random # = "+ x);
-			*/
+           
+            //spawn room
             else if (Rooms[x - 1].name != "Hall of Portraits")
             {
                 //instantiate room based on random number

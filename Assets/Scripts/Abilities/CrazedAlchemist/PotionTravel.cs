@@ -4,10 +4,11 @@ using System.Collections;
 public class PotionTravel : MonoBehaviour
 {
     public float potionSpeed;         // Speed with which potion moves  
-    public Vector2 direction;         // Vector 2 that shows the direction potion will be moving
     public float rotationSpeed;       // Speed with with which potion will rotate
     float timePassed;                 // Time since the potion was trown
     public float timeBeforeDestroyed; // Time after which potion will be destroyed if it didn't hit anyone
+
+    public Vector2 direction;         // Vector 2 that shows the direction potion will be moving
 
     void Update()
     {
@@ -24,6 +25,7 @@ public class PotionTravel : MonoBehaviour
         }
     }
 
+    //destroy potion when it exits its current  room
     void OnTriggerExit2D(Collider2D other) {
         if(other.gameObject.tag == "Room" || other.gameObject.tag == "MurdererStart")
         {

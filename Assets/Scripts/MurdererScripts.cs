@@ -7,24 +7,27 @@ public class MurdererScripts : MonoBehaviour {
     public Animator LegsAnimator;
    
     public static bool isMurderer;
-    public string attack;
-    public string interact;
-    private GameObject[] Shirts;
-    private GameObject[] Shirts2;
     public static bool washingClothes = false;
     public static bool diseased = false;
     public static bool thrill = false;
     public static bool thrillActive = false;
+    private bool arrowCreated;
+
+    public string attack;
+    public string interact;
+
+    private GameObject[] Shirts;
+    private GameObject[] Shirts2;
+   
     public float diseasedTime;
     public float thrillTime;
-    private bool arrowCreated;
     public float originalDiseasedTime;
     public float originalThrillTime;
+
     // Use this for initialization
     void Start () {
         isMurderer = true;
         //change inputs in input manager
-        //change tag of player
         if (gameObject.tag == "Murderer1")
         {
             attack = "Attack/Revive_P1";
@@ -54,7 +57,7 @@ public class MurdererScripts : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        
+        //create arrow above murderer's head pointing to where wimp was trapped
         if (Controls.Trapped == true && arrowCreated == false)
         {
             GameObject arrow = Instantiate(Resources.Load("TrapArrow"), this.transform.position + (transform.up*60), Quaternion.identity) as GameObject;
@@ -65,6 +68,7 @@ public class MurdererScripts : MonoBehaviour {
             Destroy(arrow.gameObject, 2f);
         }
 
+        //bool used to control creation of trapped arrow
         if(Controls.Trapped == false)
         {
             arrowCreated = false;
@@ -80,6 +84,7 @@ public class MurdererScripts : MonoBehaviour {
             GameObject.FindGameObjectWithTag("Player4Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
         }
 
+        //make player stand up and make blood visible if murderer was bloodstained
         if (ShittyPossum.possumed == false)
         {
             TorsoAnimator.SetBool("Dead", false);
@@ -92,6 +97,7 @@ public class MurdererScripts : MonoBehaviour {
                 GameObject.FindGameObjectWithTag("Player4Camera").GetComponent<Camera>().cullingMask |= (1 << 16);
             }
         }
+        //control diseased time and animations
         if (diseased)
         {
             diseasedTime -= Time.deltaTime;
@@ -108,6 +114,7 @@ public class MurdererScripts : MonoBehaviour {
             }
         }
 
+        //control thrill time
         if (thrill)
         {
             thrillTime -= Time.deltaTime;
@@ -154,11 +161,13 @@ public class MurdererScripts : MonoBehaviour {
         {
             if (other.gameObject.tag == "Sink" && Input.GetButtonDown(interact) && ShittyPossum.possumed == false)
             {
+                //wash clothes and remove blood stain from shirt
                 washingClothes = true;
                 GameObject.FindGameObjectWithTag("Player1Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
                 GameObject.FindGameObjectWithTag("Player2Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
                 GameObject.FindGameObjectWithTag("Player3Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
                 GameObject.FindGameObjectWithTag("Player4Camera").GetComponent<Camera>().cullingMask &= ~(1 << 16);
+                //play correct animation according to whether player was bloodstained or not
                 if (Controls.bloodStained == false)
                 {
                     TorsoAnimator.Play("TorsoMurdererWash");

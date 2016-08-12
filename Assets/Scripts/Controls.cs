@@ -137,14 +137,12 @@ public class Controls : MonoBehaviour
         gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale;
         // Get rigidbody of the player at start
         rb = GetComponent<Rigidbody2D>();
-        //col = GetComponent<Collider2D>();
-        //Animator = GetComponent<Animator>();
         // Time that player should hold down button near the gates in order to exit the game
         MenuDownHoldTime = 0;
         // Spped of the player when he runs from screen to screen while transitioning
         playerTransitionSpeed = playerSpeed / 4;
         dead = false;
-        //grab cameras in scene
+        //grab cameras in scene to use for split screen transitions
         player1Camera = GameObject.FindGameObjectWithTag("Player1Camera");
         player2Camera = GameObject.FindGameObjectWithTag("Player2Camera");
         player3Camera = GameObject.FindGameObjectWithTag("Player3Camera");
@@ -179,7 +177,7 @@ public class Controls : MonoBehaviour
 
     void Update()
     {
-        
+        //track the player being trapped
         if (Trapped == false && currentPlayerTrapped == false)
         {
             timeSinceTrapped = 0;
@@ -210,7 +208,7 @@ public class Controls : MonoBehaviour
             }
         }
 
-        //track positions of player
+        //track positions of player and get teleport locations if player is the crazed alchemist
         
             if (gameObject.tag == "Player1")
             {
@@ -248,18 +246,21 @@ public class Controls : MonoBehaviour
                 }
             }
 
+            //turn off movement if the game is over
         if (GameOverTextManager.gameOver == true || dead == true) {
             playerSpeed = 0;
         }
 
         if (GameOverTextManager.gameOver == false)
         {
+            //reset dead bool and animator bools when player is revived/alive
             if (gameObject.tag == "Player1" || gameObject.tag == "Player2" || gameObject.tag == "Player3" || gameObject.tag == "Player4")
             {
                 dead = false;
                 TorsoAnimator.SetBool("Dead", false);
                 LegsAnimator.SetBool("Dead", false);
             }
+
             //disable sprite renderer if wimp has exited
             if (gameObject.tag == "Player1" && OrbCount.player1Exited == true)
             {
@@ -359,6 +360,7 @@ public class Controls : MonoBehaviour
             }
         }
 
+        //keep track of speed increase from getting hit by a blue potion
             if (speedIncreased)
             {
                 timeSpeedIncreased += Time.deltaTime;
@@ -386,7 +388,8 @@ public class Controls : MonoBehaviour
                     if (MurdererScripts.thrill == true && ShittyPossum.possumed == false && MurdererScripts.washingClothes == false && MurdererScripts.diseased == false) {
                         playerSpeed = thrillSpeedBoost + speedWhileNotCarryOrb;
                     }
-                    //restore movement of movement after
+
+                    //restore movement of murder if above conditions dont apply after
                     if (ShittyPossum.possumed == false && MurdererScripts.washingClothes == false && MurdererScripts.diseased == false 
                         && MurdererScripts.thrill == false && speedIncreased == false)
                     {
@@ -404,6 +407,7 @@ public class Controls : MonoBehaviour
                         onGround = true;
                         TorsoAnimator.SetBool("Jumping", false);
                         LegsAnimator.SetBool("Jumping", false);
+                        //allow use of abilities while on ground
                         SetNoAbilityOrOrbUseZoneFalse();
                     }
                     // otherwise the player is in the air
@@ -412,6 +416,7 @@ public class Controls : MonoBehaviour
                         onGround = false;
                         TorsoAnimator.SetBool("Jumping", true);
                         LegsAnimator.SetBool("Jumping", true);
+                        //disable use of abilities while on ground
                         SetNoAbilityOrOrbUseZoneTrue();
                 }
                 }
@@ -500,6 +505,7 @@ public class Controls : MonoBehaviour
            if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" 
                 && gameObject.tag != "Murderer4" && currentPlayerTrapped == false)
            {
+                //prevent sprite flipping and other animations from  playing while scaredy cat is active
                 if(scaredCat == true)
                 {
                     if(ScaredCat.scaredCatRunning == true)
@@ -529,6 +535,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
+            //if murderer is on the ground and not diseased or washing clothes murderer can jump
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" ||
             gameObject.tag == "Murderer4")
             {
@@ -539,6 +546,7 @@ public class Controls : MonoBehaviour
                 }
             }
 
+            //reset current level
             if (Input.GetKeyUp(KeyCode.R))
                 {
                     SceneManager.LoadScene(4); // load level generator
@@ -691,6 +699,7 @@ public class Controls : MonoBehaviour
             }
             if (Input.GetAxis(horizontal) < 0 && (direction.x == 1) && (!goDown) && (!goUp))
             {
+                //disable transitioning while scaredy cat is active
                 if (scaredCat == true && ScaredCat.scaredCatRunning == true)
                 {
 
@@ -713,6 +722,7 @@ public class Controls : MonoBehaviour
             }
             if (Input.GetAxis(horizontal) > 0 && (direction.x == -1) && (!goDown) && (!goUp))
             {
+                //disable transitioning while scaredy cat is active
                 if (scaredCat == true && ScaredCat.scaredCatRunning == true)
                 {
 
@@ -746,6 +756,7 @@ public class Controls : MonoBehaviour
                     moveCamera = false;
                     canMove = true;
                     player1NoDropOrbZone = false;
+                    //keep track of when the murderer is transitioning
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
                         murderTransitioning = false;
@@ -765,6 +776,7 @@ public class Controls : MonoBehaviour
                     moveCamera = false;
                     canMove = true;
                     player2NoDropOrbZone = false;
+                    //keep track of when the murderer is transitioning
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
                         murderTransitioning = false;
@@ -784,6 +796,7 @@ public class Controls : MonoBehaviour
                     moveCamera = false;
                     canMove = true;
                     player3NoDropOrbZone = false;
+                    //keep track of when the murderer is transitioning
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
                         murderTransitioning = false;
@@ -803,6 +816,7 @@ public class Controls : MonoBehaviour
                     moveCamera = false;
                     canMove = true;
                     player4NoDropOrbZone = false;
+                    //keep track of when the murderer is transitioning
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
                         murderTransitioning = false;
@@ -949,6 +963,7 @@ public class Controls : MonoBehaviour
             GameObject.Find("ColorManager").GetComponent<ColorManager>().playerCanSelect = true;
         }
 
+        //collision interaction with trap
         if (other.gameObject.tag == "Trap" && dead == false)
         {
             if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" &&
@@ -1004,25 +1019,7 @@ public class Controls : MonoBehaviour
             // gameObject.GetComponent<Collider2D>().enabled = true;
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
-            if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
-            {
-                player1NoDropOrbZone = false;
-            }
-
-            if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
-            {
-                player2NoDropOrbZone = false;
-            }
-
-            if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
-            {
-                player3NoDropOrbZone = false;
-            }
-
-            if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
-            {
-                player4NoDropOrbZone = false;
-            }
+            SetNoAbilityOrOrbUseZoneFalse();
 
         }
         if (other.tag == "Room" || other.tag == "MurdererStart")
@@ -1031,17 +1028,20 @@ public class Controls : MonoBehaviour
             currentRoom = other.gameObject;
             moveCamera = true;
         }
+        //interaction with blue potion of crazed alchemist
         if (other.tag == "BluePotion" && dead == false)
         {
             playerSpeed *= 2;
             speedIncreased = true;
             Destroy(other.gameObject);
         }
+        //interaction with red potion of crazed alchemist
         if (other.tag == "RedPotion" && dead == false)
         {
             // Teleport to another room
             while(teleported ==false){
                 int x = Random.Range(1, 9);
+                //teleport to random adjacent room of the crazed alchemist
                 if (x == 1 && TopLeftRoomLocation.x >= -2 && TopLeftRoomLocation.y <= 2)
                 {
                     this.transform.position = TopLeftRoom.transform.position;
@@ -1120,10 +1120,12 @@ public class Controls : MonoBehaviour
             if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4" && 
                 gameObject.tag != "DownedWimp1" && gameObject.tag != "DownedWimp2" && gameObject.tag != "DownedWimp3" && gameObject.tag != "DownedWimp4")
             {
+                //activate diseased if killed player was diseased
                 if (diseased) {
                     MurdererScripts.diseased = true;
                 }
 
+                //activate thrill of the hunt if the murderer has the ability
                 if (MurdererScripts.thrillActive)
                 {
                     MurdererScripts.thrill = true;
@@ -1134,6 +1136,7 @@ public class Controls : MonoBehaviour
                 gameObject.layer = 8;
                 dead = true;
                 wimpKilled = true;
+
                 //increment wimps down needed for murderer win condition
                 if(Time.time>wimpDownedCooldown + wimpDownedDelay)
                 {
@@ -1142,6 +1145,7 @@ public class Controls : MonoBehaviour
                 }
                 gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
                 groundCheck.GetComponent<Collider2D>().isTrigger = true;
+                //change player tags for use with the revive mechanic
                 switch (gameObject.tag)
                 {
                     case "Player1":
@@ -1206,7 +1210,8 @@ public class Controls : MonoBehaviour
         }
     }
 
-    //functions used to turn on bloody shirt visibility for all cameras
+    //FUNCTIONS
+    //turn on bloody shirt visibility for all cameras
     void TurnOnBlood()
     {
         GameObject.FindGameObjectWithTag("Player1Camera").GetComponent<Camera>().cullingMask |= (1 << 16);
@@ -1215,12 +1220,14 @@ public class Controls : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player4Camera").GetComponent<Camera>().cullingMask |= (1 << 16);
     }
 
-    //function used for murderer weapon cooldown
+    //murderer weapon cooldown
     void RechargeWeapon()
     {
         wimpKilled = false;
     }
 
+    //grap teleport vector locations for crazed alchemist red potion
+    //values then passed to room gameobjects in order to get position of room
     void GetTeleportLocations() {
         TopLeftRoomLocation = currentPos + new Vector2(-1, 1);
         TopMiddleRoomLocation = currentPos + new Vector2(0, 1);
@@ -1232,6 +1239,7 @@ public class Controls : MonoBehaviour
         BottomRightRoomLocation = currentPos + new Vector2(1, -1);
     }
 
+    //move camera instantaneously when the player is teleported by the red potion
     void MoveCameraOnTeleport() {
         if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
         {
@@ -1258,6 +1266,8 @@ public class Controls : MonoBehaviour
         }
     }
     
+    //decrease speed of player while carrying an orb
+    //additional conditions to make the speed decrease interact with other speed increases/decrease in the game
     void DecreaseSpeedCarryingOrb()
     {
         if (speedIncreased == false)
@@ -1276,6 +1286,8 @@ public class Controls : MonoBehaviour
         }
     }
 
+    //restore speed of player while carrying an orb
+    //additional conditions to make the speed restoraion interact with other speed increases/decrease in the game
     void RestoreSpeedNotCarryingOrb()
     {
         if (speedIncreased == false)
@@ -1326,6 +1338,7 @@ public class Controls : MonoBehaviour
         }
     }
 
+    //simulate wimp leaving the level
     void OnWimpExit() {
         //make exited player not visible to the camera
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -50);
@@ -1339,6 +1352,7 @@ public class Controls : MonoBehaviour
         exited = true;
     }
 
+    //simulate wimp re entering the level
     void OnWimpReEnter() {
         //make player visible to camera again
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
@@ -1359,6 +1373,7 @@ public class Controls : MonoBehaviour
         exited = false;
     }
 
+    //set zones where abilities cant be used and orb cant be dropped to false
     void SetNoAbilityOrOrbUseZoneFalse() {
         if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
         {
@@ -1381,6 +1396,7 @@ public class Controls : MonoBehaviour
         }
     }
 
+    //set zones where abilities cant be used and orb cant be dropped to true
     void SetNoAbilityOrOrbUseZoneTrue(){
          if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
                     {

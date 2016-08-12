@@ -4,7 +4,9 @@ using System.Collections;
 public class CloneScript : MonoBehaviour
 {
     public Vector2 direction;           // Direction in which this clone will be running to
+
     public float cloneSpeed;            // Speed of the clone
+
     public Vector3 startPosition;
 
     void Start()
@@ -14,6 +16,7 @@ public class CloneScript : MonoBehaviour
 
     void Update()
     {
+        //move clone and set animations of clone
         if (Doppelganger.cloneMoving==true)
         {
             gameObject.GetComponent<Controls>().TorsoAnimator.SetBool("Running", true);
@@ -23,6 +26,7 @@ public class CloneScript : MonoBehaviour
             transform.Translate(direction * Time.deltaTime * cloneSpeed);
         }
 
+        //stop clone from moving, change animations and destroy clone after 2 seconds
         if (Doppelganger.cloneMoving == false)
         {
             // After clone reaches the destination change nimation to idle
@@ -33,6 +37,7 @@ public class CloneScript : MonoBehaviour
             Invoke("DestroyClone", 2f);
         }
 
+        //stop clone from moving after it reaches x distance from the player
         if (this.transform.position.x >= startPosition.x + 100 || this.transform.position.x <= startPosition.x - 100 ||
             transform.position.x >= 570 || transform.position.x <= -570)
         {
@@ -40,6 +45,7 @@ public class CloneScript : MonoBehaviour
         }
     }
 
+    //FUNCTIONS
     void DestroyClone() {
         Destroy(this.gameObject);
         Doppelganger.cloneAlive = false;

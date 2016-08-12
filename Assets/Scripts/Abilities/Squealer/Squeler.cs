@@ -7,15 +7,20 @@ public class Squeler : MonoBehaviour
     public GameObject player2 = null;          // Reference to the second player
     public static GameObject murderer = null;
     private GameObject[] gameObjects;
+
     float timePassed;                   // Time passed since the ability was last used
-    public Vector2 currentPos;
-    public Vector2 murdererPos;
-    public bool screaming = false;
-    public static bool destroyArrow = false;
-    public AudioClip scream;
-    public AudioSource Audio;
     private float timeSinceEnteringRoom;
     private float transitionWaitTime = 1f;
+
+    public Vector2 currentPos;
+    public Vector2 murdererPos;
+
+    public bool screaming = false;
+    public static bool destroyArrow = false;
+
+    public AudioClip scream;
+    public AudioSource Audio;
+    
     void Start() {
         scream = gameObject.GetComponent<Controls>().scream;
         Audio = gameObject.GetComponent<AudioSource>();
@@ -28,6 +33,7 @@ public class Squeler : MonoBehaviour
             timePassed += Time.deltaTime;
         }
 
+        //find gameobjects by player tag
         if (murderer == null || player1 == null || player2 == null)
         {
             gameObjects = FindObjectsOfType(typeof(GameObject)) as GameObject[];
@@ -56,6 +62,7 @@ public class Squeler : MonoBehaviour
         murdererPos = Controls.murdererPosition;
         currentPos = gameObject.GetComponent<Controls>().currentPos;
 
+        //when squeler is in the same room as the murderer create arrows on the other 2 wimps pointing to the murderer
         if (currentPos == murdererPos && screaming == false && timePassed > 2) 
         {
             timeSinceEnteringRoom += Time.deltaTime;
@@ -68,6 +75,7 @@ public class Squeler : MonoBehaviour
             }
         }
 
+        //turn off the screaming
         if(currentPos != murdererPos)
         {
             screaming = false;

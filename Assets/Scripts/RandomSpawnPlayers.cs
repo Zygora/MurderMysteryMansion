@@ -185,6 +185,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<Squeler>();
+                //allow other players to see arrows associated with ability
                 player2Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
                 player3Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
                 player4Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
@@ -192,7 +193,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player1").AddComponent<ThirdEye>();
-                //make camera able to see arrows
+                //make player able to see arrows associated with ability
                 player1Camera.GetComponent<Camera>().cullingMask |= (1<<15);
             }
 
@@ -253,6 +254,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<Squeler>();
+                //allow other players to see arrows associated with ability
                 player1Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
                 player3Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
                 player4Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
@@ -260,7 +262,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player2").AddComponent<ThirdEye>();
-                //make camera able to see arrows
+                //make player able to see arrows associated with ability
                 player2Camera.GetComponent<Camera>().cullingMask |= (1 << 15);
             }
 
@@ -323,6 +325,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<Squeler>();
+                //allow other players to see arrows associated with ability
                 player1Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
                 player2Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
                 player4Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
@@ -330,7 +333,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player3").AddComponent<ThirdEye>();
-                //make camera able to see arrows
+                //make player able to see arrows associated with ability
                 player3Camera.GetComponent<Camera>().cullingMask |= (1 << 15);
             }
 
@@ -393,6 +396,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<Squeler>();
+                //allow other players to see arrows associated with ability
                 player1Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
                 player2Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
                 player3Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
@@ -400,7 +404,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             if (randomPlayerAbility == 3)
             {
                 GameObject.FindGameObjectWithTag("Player4").AddComponent<ThirdEye>();
-                //make camera able to see arrows
+                //make player able to see arrows associated with ability
                 player4Camera.GetComponent<Camera>().cullingMask |= (1 << 15);
             }
 
@@ -446,7 +450,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             }
         }
 
-        //enable murderer script if player is the murderer
+        //enable murderer script if player is the murderer also change player tag and disable visibility of squeler arrows
         if (randomMurdererNumber == 0 && murdererSpawned == false)
         {
             GameObject.FindGameObjectWithTag("Player1").GetComponent<MurdererScripts>().enabled = true;
@@ -476,6 +480,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             player4Camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
         }
 
+        //give the murderer a random ability
         if (murdererHasAbility == false && murdererSpawned == true)
         {
            if (randomMurdererAbility == 0)
@@ -491,6 +496,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
            else if (randomMurdererAbility == 2)
             {
                 GameObject.FindGameObjectWithTag("Murderer" + murdererPlayerNumber).AddComponent<Traps>();
+                //allow player to see arrows associated with ability
                 GameObject.FindGameObjectWithTag("Player" + murdererPlayerNumber+"Camera").GetComponent<Camera>().cullingMask |= (1 << 17);
             }
             murdererHasAbility = true;

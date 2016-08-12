@@ -3,17 +3,18 @@ using System.Collections;
 
 public class Doppelganger : MonoBehaviour
 {
-    public int clonesAvailable = 2;      // The amount of clones available to player
     public float cooldown = 10;           // Cooldown time player has to wait before he is able to summon another clone
     public float cloneSpeed = 55;
-    Vector2 direction;               // Direction in which clone and arrow will be moving
+   
     float timeSinceUsed;             // Time passed since the ability was last used
-    public bool cloneUsed = false;                  // Flag that shows that the ability was used
-    private string ability;
+
+    Vector2 direction;               // Direction in which clone and arrow will be moving
+
     public static bool cloneMoving = false;
     public static bool cloneAlive = false;
-    private float cloneRefreshStart;
-    public float cloneRefreshTime = 15;
+    public bool cloneUsed = false;                  // Flag that shows that the ability was used
+
+    private string ability;
 
     void Start() {
         
@@ -40,20 +41,13 @@ public class Doppelganger : MonoBehaviour
     }
     void Update()
     {
+        //stop clone from moving on button press
         if (Input.GetButtonDown(ability) && cloneMoving == true)
         {
             cloneMoving = false;
         }
 
-        if (clonesAvailable < 2) {
-            cloneRefreshStart += Time.deltaTime;
-            if (cloneRefreshStart > cloneRefreshTime)
-            {
-                clonesAvailable++;
-                cloneRefreshStart = 0;
-            }
-        }
-
+        //track doppelganger cooldown
         if (cloneUsed == true) {
             timeSinceUsed += Time.deltaTime;
             if(timeSinceUsed> cooldown)
@@ -66,9 +60,6 @@ public class Doppelganger : MonoBehaviour
         // If ability can be used
         if (cloneAlive == false && cloneUsed == false)
         {
-            // If there's another clone charge available
-            if (clonesAvailable > 0)
-            {
                 if(gameObject.tag == "Player1" && Controls.player1NoDropOrbZone == false)
                 {
                     MakeClone();
@@ -88,16 +79,16 @@ public class Doppelganger : MonoBehaviour
                 {
                     MakeClone();
                 }
-            }
         }
     }
+
+    //FUCNTIONS
 
     void SetBoolsAndDirection() {
         direction = new Vector2(1, 0);
         cloneMoving = true;
         cloneAlive = true;
         cloneUsed = true;
-        clonesAvailable--;
     }
 
     void MakeClone()
