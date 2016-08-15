@@ -25,15 +25,7 @@ public class MapGenerator : MonoBehaviour {
 	public GameObject Room14;
 	public GameObject Room15;
 	public GameObject Room16;
-	public GameObject Room17;
-	public GameObject Room18;
-	public GameObject Room19;
-	public GameObject Room20;
-	public GameObject Room21;
-	public GameObject Room22;
-	public GameObject Room23;
-	public GameObject Room24;
-	public GameObject Room25;
+	
 
     bool isMaster = false;
 
@@ -46,9 +38,7 @@ public class MapGenerator : MonoBehaviour {
 			Room1, Room2,Room3,Room4,Room5, 
 			Room6, Room7,Room8,Room9,Room10,
 			Room11, Room12,Room13,Room14,Room15,
-			Room16, Room17,Room18,Room19,Room20,
-			Room21, Room22,Room23,Room24,Room25,
-			TileSpriteRootGameObjectName);
+			Room16, TileSpriteRootGameObjectName);
 		
 	}
 
@@ -57,9 +47,7 @@ public class MapGenerator : MonoBehaviour {
 		GameObject SpriteLevelFile1, GameObject SpriteLevelFile2, GameObject SpriteLevelFile3, GameObject SpriteLevelFile4, GameObject SpriteLevelFile5,
 		GameObject SpriteLevelFile6, GameObject SpriteLevelFile7, GameObject SpriteLevelFile8, GameObject SpriteLevelFile9, GameObject SpriteLevelFile10,
 		GameObject SpriteLevelFile11, GameObject SpriteLevelFile12, GameObject SpriteLevelFile13, GameObject SpriteLevelFile14, GameObject SpriteLevelFile15,
-		GameObject SpriteLevelFile16, GameObject SpriteLevelFile17, GameObject SpriteLevelFile18, GameObject SpriteLevelFile19, GameObject SpriteLevelFile20,
-		GameObject SpriteLevelFile21, GameObject SpriteLevelFile22, GameObject SpriteLevelFile23, GameObject SpriteLevelFile24, GameObject SpriteLevelFile25,
-		string RootObjectName) {
+		GameObject SpriteLevelFile16, string RootObjectName) {
 
 		// store the size of the gameobject
 		float spriteX = SpriteLevelFile1.GetComponent<Renderer>().bounds.size.x;
@@ -89,37 +77,28 @@ public class MapGenerator : MonoBehaviour {
 		Rooms.Add (SpriteLevelFile14);
 		Rooms.Add (SpriteLevelFile15);
 		Rooms.Add (SpriteLevelFile16);
-		Rooms.Add (SpriteLevelFile17);
-		Rooms.Add (SpriteLevelFile18);
-		Rooms.Add (SpriteLevelFile19);
-		Rooms.Add (SpriteLevelFile20);
-		Rooms.Add (SpriteLevelFile21);
-		Rooms.Add (SpriteLevelFile22);
-		Rooms.Add (SpriteLevelFile23);
-		Rooms.Add (SpriteLevelFile24);
-		Rooms.Add (SpriteLevelFile25);
 
 		int currentObjectCount = 0;
 		int currentColumn = 0;
 		int currentrow = 0;
-        int roomCoordinateX = -2;
-        int roomCoordinateY = -2;
+        int roomCoordinateX = 0;
+        int roomCoordinateY = 0;
 
 
 
         //starting position of first room
  
-        Vector3 currentLocation = new Vector3(-480.0f, -270.0f, 0.0f);
+        Vector3 currentLocation = new Vector3(0.0f, 0.0f, 0.0f);
 
         //MapGenerator MasterObj = new MapGenerator();
 
         //do while rows is still less than meax rows
-        while (currentrow < YTiles && currentObjectCount!=25) {
+        while (currentrow < YTiles && currentObjectCount!=16) {
             
             //change max random number range to length of list +1;
             int maxRandomRange = Rooms.Count + 1;
 			int x = Random.Range (2, maxRandomRange);
-            if (currentObjectCount == 24)
+            if (currentObjectCount == 15)
             {
                 x = Random.Range(1, maxRandomRange);
             }
@@ -127,7 +106,7 @@ public class MapGenerator : MonoBehaviour {
             // spawn the double room "hall of portraits together" and only if possible. 
             if (Rooms[x - 1].name == "Hall of Portraits")
             {
-                if (currentColumn!=4)
+                if (currentColumn!=3)
                 {
                     //instantiate room based on random number
                     GameObject gridObject1 = Instantiate(Rooms[x - 1], currentLocation, Quaternion.identity) as GameObject;
@@ -201,20 +180,20 @@ public class MapGenerator : MonoBehaviour {
             if (currentColumn >= XTiles) {
 				//reset column to 0 when it reaches max columns
 				currentColumn = 0;
-                roomCoordinateX = -2;
+                roomCoordinateX = 0;
 				//increment rows when it reaches max columns
 				currentrow++;
                 roomCoordinateY += 1;
                 //reset starting location when it reaches max columns
                 //currentLocation.x = 0;
-                currentLocation.x = -480;
+                currentLocation.x = 0;
                 //move rooms down by height of rooms when it reaches max columns to start a new row
                 currentLocation.y = currentLocation.y + spriteY;
 
 			}
 			//increase object count used for naming rooms
 			//currentObjectCount++;
-            if (currentObjectCount == 25) {
+            if (currentObjectCount == 16) {
                rootObject.AddComponent<RandomSpawnPlayers>();
             }
 		}

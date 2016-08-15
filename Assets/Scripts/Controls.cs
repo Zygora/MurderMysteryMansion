@@ -508,24 +508,24 @@ public class Controls : MonoBehaviour
                 // Create move vector
                 move = new Vector3(Input.GetAxis(horizontal), 0, 0);
                 //set movement bounds on player
-                if (transform.position.x <= -580)
+                if (transform.position.x <= -95)
                 {
-                    transform.position = new Vector3(-570, transform.position.y, transform.position.z);
+                    transform.position = new Vector3(-95, transform.position.y, transform.position.z);
                 }
 
-                if (transform.position.x >= 580)
+                if (transform.position.x >= 815)
                 {
-                    transform.position = new Vector3(570, transform.position.y, transform.position.z);
+                    transform.position = new Vector3(815, transform.position.y, transform.position.z);
                 }
 
-                if (transform.position.y <= -337.5f)
+                if (transform.position.y <= -447.5f)
                 {
-                    transform.position = new Vector3(transform.position.x, -327.5f, transform.position.z);
+                    transform.position = new Vector3(transform.position.x, -447.5f, transform.position.z);
                 }
 
-                if (transform.position.y >= 337.5f)
+                if (transform.position.y >= 447.5f)
                 {
-                    transform.position = new Vector3(transform.position.x, 327.5f, transform.position.z);
+                    transform.position = new Vector3(transform.position.x, 447.5f, transform.position.z);
                 }
 
                 // Move the player
@@ -1143,56 +1143,56 @@ public class Controls : MonoBehaviour
             while(teleported ==false){
                 int x = Random.Range(1, 9);
                 //teleport to random adjacent room of the crazed alchemist
-                if (x == 1 && TopLeftRoomLocation.x >= -2 && TopLeftRoomLocation.y <= 2)
+                if (x == 1 && TopLeftRoomLocation.x >= 0 && TopLeftRoomLocation.y <= 3)
                 {
                     this.transform.position = TopLeftRoom.transform.position;
                     Debug.Log("Topleft: "+TopLeftRoomLocation);
                     MoveCameraOnTeleport();
                 }
 
-                if (x == 2 && TopMiddleRoomLocation.y <= 2)
+                if (x == 2 && TopMiddleRoomLocation.y <= 3)
                 {
                     this.transform.position = TopMiddleRoom.transform.position;
                     Debug.Log("Topmiddle: " + TopMiddleRoomLocation);
                     MoveCameraOnTeleport();
                 }
 
-                if (x == 3 && TopRightRoomLocation.x <= 2 && TopRightRoomLocation.y <= 2)
+                if (x == 3 && TopRightRoomLocation.x <= 3 && TopRightRoomLocation.y <= 3)
                 {
                     this.transform.position = TopRightRoom.transform.position;
                     Debug.Log("Topright: " + TopRightRoomLocation);
                     MoveCameraOnTeleport();
                 }
 
-                if (x == 4 && LeftRoomLocation.x >= -2)
+                if (x == 4 && LeftRoomLocation.x >= 0)
                 {
                     this.transform.position = LeftRoom.transform.position;
                     Debug.Log("left: " + LeftRoomLocation);
                     MoveCameraOnTeleport();
                 }
 
-                if (x == 5 && RightRoomLocation.x <= 2)
+                if (x == 5 && RightRoomLocation.x <= 3)
                 {
                     this.transform.position = RightRoom.transform.position;
                     Debug.Log("right: " + RightRoomLocation);
                     MoveCameraOnTeleport();
                 }
 
-                if (x == 6 && BottomLeftRoomLocation.x >= -2 && BottomLeftRoomLocation.y >= -2)
+                if (x == 6 && BottomLeftRoomLocation.x >= 0 && BottomLeftRoomLocation.y >= 0)
                 {
                     this.transform.position = BottomLeftRoom.transform.position;
                     Debug.Log("bottomleft: " + BottomLeftRoomLocation);
                     MoveCameraOnTeleport();
                 }
 
-                if (x == 7 && BottomMiddleRoomLocation.y >= -2)
+                if (x == 7 && BottomMiddleRoomLocation.y >= 0)
                 {
                     this.transform.position = BottomMiddleRoom.transform.position;
                     Debug.Log("bottommiddle: " + BottomMiddleRoomLocation);
                     MoveCameraOnTeleport();
                 }
 
-                if (x == 8 && BottomRightRoomLocation.x <= 2 && BottomRightRoomLocation.y >= -2)
+                if (x == 8 && BottomRightRoomLocation.x <= 3 && BottomRightRoomLocation.y >= 0)
                 {
                     this.transform.position = BottomRightRoom.transform.position;
                     Debug.Log("bottomRight: " + BottomRightRoomLocation);
