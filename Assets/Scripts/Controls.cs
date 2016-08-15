@@ -131,7 +131,6 @@ public class Controls : MonoBehaviour
     public static Vector2 currentPlayer4Pos;
     public static Vector2 murdererPosition;
     public Vector2 currentPos;
-    public bool invulnerable;
 
     void Start()
     {
@@ -1138,7 +1137,8 @@ public class Controls : MonoBehaviour
             if (canMove)
             {
                 if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4" &&
-                    gameObject.tag != "DownedWimp1" && gameObject.tag != "DownedWimp2" && gameObject.tag != "DownedWimp3" && gameObject.tag != "DownedWimp4")
+                    gameObject.tag != "DownedWimp1" && gameObject.tag != "DownedWimp2" && gameObject.tag != "DownedWimp3" && gameObject.tag != "DownedWimp4"
+                    && canDie == false)
                 {
                     //activate diseased if killed player was diseased
                     if (diseased)

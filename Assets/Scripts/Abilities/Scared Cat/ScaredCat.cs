@@ -11,7 +11,12 @@ public class ScaredCat : MonoBehaviour {
     private string ability;
 
     public float scaredCatSpeed = 5;
+    public float coolDown = 15;
+    public float timeSinceAbilityUse;
+    public float movingHorizontal;
 
+
+    public bool canUseAbility;
     public static bool scaredCatRunning = false;
     
     // Use this for initialization
@@ -43,6 +48,15 @@ public class ScaredCat : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        //cooldown manager
+        if (canUseAbility == false) {
+            timeSinceAbilityUse += Time.deltaTime;
+            if (timeSinceAbilityUse > coolDown) {
+                canUseAbility = true;
+                timeSinceAbilityUse = 0;
+            }
+        }
+
         //allow use of ability if player is in a room with any other player
         if (gameObject.tag == "Player1")
         {
@@ -99,7 +113,8 @@ public class ScaredCat : MonoBehaviour {
         //while ability is active player runs to target destination at increased player speed and camera speed
         if(scaredCatRunning == true)
         {
-           this.transform.position = Vector3.MoveTowards(this.transform.position, scaredCatTargetRoom.transform.position, scaredCatSpeed);
+            //this.transform.position = Vector3.MoveTowards(this.transform.position, scaredCatTargetRoom.transform.position, scaredCatSpeed);
+           this.transform.Translate(Vector3.forward * 165 * Time.deltaTime);
            this.gameObject.GetComponent<Controls>().cameraSpeed = 450;
            this.gameObject.GetComponent<Controls>().TorsoAnimator.SetBool("Running", true);
            this.gameObject.GetComponent<Controls>().LegsAnimator.SetBool("Running", true);
@@ -122,7 +137,7 @@ public class ScaredCat : MonoBehaviour {
     //find the target destination when running according to rules of ability and set facing direction
     void FindTargetRoom()
     {
-        if (Input.GetButtonDown(ability) && scaredCatRunning == false)
+        if (Input.GetButtonDown(ability) && scaredCatRunning == false && canUseAbility == true)
         { 
             scaredCatTargetRoomLocation.y = currentPos.y;
             if (currentPos.x + 3 <= 2)
@@ -171,6 +186,7 @@ public class ScaredCat : MonoBehaviour {
                 }
             }
             scaredCatRunning = true;
+            canUseAbility = false;
             Debug.Log("scared cat");
             Debug.Log(scaredCatTargetRoomLocation);
             Debug.Log(scaredCatRunning);
