@@ -113,8 +113,7 @@ public class ScaredCat : MonoBehaviour {
         //while ability is active player runs to target destination at increased player speed and camera speed
         if(scaredCatRunning == true)
         {
-            //this.transform.position = Vector3.MoveTowards(this.transform.position, scaredCatTargetRoom.transform.position, scaredCatSpeed);
-           this.transform.Translate(Vector3.forward * 165 * Time.deltaTime);
+           this.transform.position = Vector3.MoveTowards(this.transform.position, scaredCatTargetRoom.transform.position, scaredCatSpeed);
            this.gameObject.GetComponent<Controls>().cameraSpeed = 450;
            this.gameObject.GetComponent<Controls>().TorsoAnimator.SetBool("Running", true);
            this.gameObject.GetComponent<Controls>().LegsAnimator.SetBool("Running", true);
@@ -140,21 +139,22 @@ public class ScaredCat : MonoBehaviour {
         if (Input.GetButtonDown(ability) && scaredCatRunning == false && canUseAbility == true)
         { 
             scaredCatTargetRoomLocation.y = currentPos.y;
-            if (currentPos.x + 3 <= 2)
+            if (currentPos.x + 2 <= 3)
             {
-                scaredCatTargetRoomLocation.x = currentPos.x + 3;
+                scaredCatTargetRoomLocation.x = currentPos.x + 2;
                 this.transform.eulerAngles = new Vector3(0, 0, 0);
                 facing = new Vector3(0, 0, 0);
             }
 
-            else if (currentPos.x - 3 >= -2)
+            else if (currentPos.x - 2 >= 0)
             {
-                scaredCatTargetRoomLocation.x = currentPos.x - 3;
+                scaredCatTargetRoomLocation.x = currentPos.x - 2;
                 this.transform.eulerAngles = new Vector3(0, 180, 0);
                 facing = new Vector3(0, 180, 0);
             }
 
-            else
+           //used for  old 5x5 grid size
+           /* else
             {
                 int x = Random.Range(1, 3);
                 if (currentPos.x < 0)
@@ -184,7 +184,7 @@ public class ScaredCat : MonoBehaviour {
                     this.transform.eulerAngles = new Vector3(0, 180, 0);
                     facing = new Vector3(0, 180, 0);
                 }
-            }
+            }*/
             scaredCatRunning = true;
             canUseAbility = false;
             Debug.Log("scared cat");

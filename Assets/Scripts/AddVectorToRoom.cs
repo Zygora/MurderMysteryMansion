@@ -74,7 +74,7 @@ public class AddVectorToRoom : MonoBehaviour {
         }
 
         //enable left door sprite of room 
-        if (currentColumn == 4 && doorsSet == false)
+        if (currentColumn == 3 && doorsSet == false)
          {
             if (this.gameObject.name == "Altar Room(Clone)" || this.gameObject.name == "ButcherRoom(Clone)" ||
                 this.gameObject.name == "FireplaceRoom(Clone)")
