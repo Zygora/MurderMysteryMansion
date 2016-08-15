@@ -87,6 +87,7 @@ public class Controls : MonoBehaviour
     private bool currentPlayerTrapped;
     private bool teleported = false;
     private bool dead;
+    private bool canDie;
 
     float revivetime = 2.0f;
     float revivetimepassed = 0.0f;
@@ -643,6 +644,7 @@ public class Controls : MonoBehaviour
             TorsoAnimator.SetBool("Jumping", true);
             LegsAnimator.SetBool("Jumping", true);
             SetNoAbilityOrOrbUseZoneTrue();
+            SetKillZone(true);
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
                 ShirtAnimator.SetBool("MurdererJumping", true);
@@ -682,6 +684,7 @@ public class Controls : MonoBehaviour
                 if ((!goUp) && (!goDown))
             {
                 SetNoAbilityOrOrbUseZoneTrue();
+                SetKillZone(true);
                 if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
                 {
 
@@ -782,6 +785,7 @@ public class Controls : MonoBehaviour
                     moveCamera = false;
                     canMove = true;
                     player1NoDropOrbZone = false;
+                    SetKillZone(false);
                     //keep track of when the murderer is transitioning
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
@@ -802,6 +806,7 @@ public class Controls : MonoBehaviour
                     moveCamera = false;
                     canMove = true;
                     player2NoDropOrbZone = false;
+                    SetKillZone(false);
                     //keep track of when the murderer is transitioning
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
@@ -822,6 +827,7 @@ public class Controls : MonoBehaviour
                     moveCamera = false;
                     canMove = true;
                     player3NoDropOrbZone = false;
+                    SetKillZone(false);
                     //keep track of when the murderer is transitioning
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
@@ -842,6 +848,7 @@ public class Controls : MonoBehaviour
                     moveCamera = false;
                     canMove = true;
                     player4NoDropOrbZone = false;
+                    SetKillZone(false);
                     //keep track of when the murderer is transitioning
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
@@ -1016,25 +1023,8 @@ public class Controls : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
-            if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
-            {
-                player1NoDropOrbZone = false;
-            }
-
-            if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
-            {
-                player2NoDropOrbZone = false;
-            }
-
-            if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
-            {
-                player3NoDropOrbZone = false;
-            }
-
-            if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
-            {
-                player4NoDropOrbZone = false;
-            }
+            SetNoAbilityOrOrbUseZoneFalse();
+            SetKillZone(false);
         }
         if (other.tag == "TopLadder")
         {
@@ -1047,6 +1037,7 @@ public class Controls : MonoBehaviour
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
             SetNoAbilityOrOrbUseZoneFalse();
+            SetKillZone(false);
 
         }
         if (other.tag == "Room" || other.tag == "MurdererStart")
@@ -1449,4 +1440,11 @@ public class Controls : MonoBehaviour
                         player4NoDropOrbZone = true;
                     }
         }
+
+    //set areas where player can and can't be killed
+    void SetKillZone(bool canBeKilled) {
+        canDie = canBeKilled;
+    }
 }
+
+
