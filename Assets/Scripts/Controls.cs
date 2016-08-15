@@ -130,7 +130,7 @@ public class Controls : MonoBehaviour
     public static Vector2 currentPlayer4Pos;
     public static Vector2 murdererPosition;
     public Vector2 currentPos;
-    private bool invulnerable = true;
+    public bool invulnerable;
 
     void Start()
     {
@@ -640,7 +640,6 @@ public class Controls : MonoBehaviour
         // Change player animation to jump while transitioning up or down
         if (goDown || goUp)
         {
-            
             TorsoAnimator.SetBool("Jumping", true);
             LegsAnimator.SetBool("Jumping", true);
             SetNoAbilityOrOrbUseZoneTrue();
@@ -652,7 +651,7 @@ public class Controls : MonoBehaviour
         // If camera transitioning between rooms
         if (moveCamera)
         {
-            invulnerable = true;
+            
             Vector3 nextRoomCamPos = currentRoom.transform.position;
             Vector3 direction;
             direction = new Vector3(currentRoom.transform.position.x - gameObject.transform.position.x, 0, 0);
@@ -679,8 +678,8 @@ public class Controls : MonoBehaviour
                 player4Camera.transform.position = Vector3.MoveTowards(player4Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
             }
             canMove = false;
-            // Change player animation to run while transitioning left or right
-            if ((!goUp) && (!goDown))
+                // Change player animation to run while transitioning left or right
+                if ((!goUp) && (!goDown))
             {
                 SetNoAbilityOrOrbUseZoneTrue();
                 if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
@@ -700,6 +699,29 @@ public class Controls : MonoBehaviour
                 }
                 
                 transform.position += direction * playerSpeed / 4 * Time.deltaTime * speedMultiplier;
+            }
+            if ((goDown) && (Input.GetAxis(vertical) > 0))
+            {
+                GameObject buffer;
+                buffer = currentRoom;
+                currentRoom = lastRoom;
+                lastRoom = buffer;
+                direction *= -1;
+                canMove = false;
+                goDown = false;
+                goUp = true;
+            }
+            if ((goUp) && (Input.GetAxis(vertical) < 0))
+            {
+                GameObject buffer;
+                buffer = currentRoom;
+                currentRoom = lastRoom;
+                lastRoom = buffer;
+                direction *= -1;
+
+                canMove = false;
+                goDown = true;
+                goUp = false;
             }
             if (Input.GetAxis(horizontal) < 0 && (direction.x == 1) && (!goDown) && (!goUp))
             {
@@ -756,8 +778,7 @@ public class Controls : MonoBehaviour
                     if (speedMultiplier != 1)
                     {
                         speedMultiplier = 1;
-                    }
-                    invulnerable = false;
+                    }                                
                     moveCamera = false;
                     canMove = true;
                     player1NoDropOrbZone = false;
@@ -778,7 +799,6 @@ public class Controls : MonoBehaviour
                     {
                         speedMultiplier = 1;
                     }
-                    invulnerable = false;
                     moveCamera = false;
                     canMove = true;
                     player2NoDropOrbZone = false;
@@ -799,7 +819,6 @@ public class Controls : MonoBehaviour
                     {
                         speedMultiplier = 1;
                     }
-                    invulnerable = false;
                     moveCamera = false;
                     canMove = true;
                     player3NoDropOrbZone = false;
@@ -820,7 +839,6 @@ public class Controls : MonoBehaviour
                     {
                         speedMultiplier = 1;
                     }
-                    invulnerable = false;
                     moveCamera = false;
                     canMove = true;
                     player4NoDropOrbZone = false;
@@ -1126,7 +1144,7 @@ public class Controls : MonoBehaviour
         //kill player and turn on blood on murderer's shirt
         if (other.gameObject.tag == "Knife1" || other.gameObject.tag == "Knife2" || other.gameObject.tag == "Knife3" || other.gameObject.tag == "Knife4")
         {
-            if (!invulnerable)
+            if (canMove)
             {
                 if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4" &&
                     gameObject.tag != "DownedWimp1" && gameObject.tag != "DownedWimp2" && gameObject.tag != "DownedWimp3" && gameObject.tag != "DownedWimp4")
