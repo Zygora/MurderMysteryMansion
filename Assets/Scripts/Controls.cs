@@ -130,6 +130,7 @@ public class Controls : MonoBehaviour
     public static Vector2 currentPlayer4Pos;
     public static Vector2 murdererPosition;
     public Vector2 currentPos;
+    private bool invulnerable = true;
 
     void Start()
     {
@@ -609,6 +610,7 @@ public class Controls : MonoBehaviour
         // if player hits upArrow on the ladder go up
         if (Input.GetAxis(vertical) > 0 && (canGoUp))
         {
+            
             goUp = true;
             gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         }
@@ -638,6 +640,7 @@ public class Controls : MonoBehaviour
         // Change player animation to jump while transitioning up or down
         if (goDown || goUp)
         {
+            
             TorsoAnimator.SetBool("Jumping", true);
             LegsAnimator.SetBool("Jumping", true);
             SetNoAbilityOrOrbUseZoneTrue();
@@ -649,6 +652,7 @@ public class Controls : MonoBehaviour
         // If camera transitioning between rooms
         if (moveCamera)
         {
+            invulnerable = true;
             Vector3 nextRoomCamPos = currentRoom.transform.position;
             Vector3 direction;
             direction = new Vector3(currentRoom.transform.position.x - gameObject.transform.position.x, 0, 0);
@@ -753,6 +757,7 @@ public class Controls : MonoBehaviour
                     {
                         speedMultiplier = 1;
                     }
+                    invulnerable = false;
                     moveCamera = false;
                     canMove = true;
                     player1NoDropOrbZone = false;
@@ -773,6 +778,7 @@ public class Controls : MonoBehaviour
                     {
                         speedMultiplier = 1;
                     }
+                    invulnerable = false;
                     moveCamera = false;
                     canMove = true;
                     player2NoDropOrbZone = false;
@@ -793,6 +799,7 @@ public class Controls : MonoBehaviour
                     {
                         speedMultiplier = 1;
                     }
+                    invulnerable = false;
                     moveCamera = false;
                     canMove = true;
                     player3NoDropOrbZone = false;
@@ -813,6 +820,7 @@ public class Controls : MonoBehaviour
                     {
                         speedMultiplier = 1;
                     }
+                    invulnerable = false;
                     moveCamera = false;
                     canMove = true;
                     player4NoDropOrbZone = false;
@@ -824,6 +832,7 @@ public class Controls : MonoBehaviour
                 }
             }
         }
+        
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -1117,56 +1126,60 @@ public class Controls : MonoBehaviour
         //kill player and turn on blood on murderer's shirt
         if (other.gameObject.tag == "Knife1" || other.gameObject.tag == "Knife2" || other.gameObject.tag == "Knife3" || other.gameObject.tag == "Knife4")
         {
-            if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4" && 
-                gameObject.tag != "DownedWimp1" && gameObject.tag != "DownedWimp2" && gameObject.tag != "DownedWimp3" && gameObject.tag != "DownedWimp4")
+            if (!invulnerable)
             {
-                //activate diseased if killed player was diseased
-                if (diseased) {
-                    MurdererScripts.diseased = true;
-                }
-
-                //activate thrill of the hunt if the murderer has the ability
-                if (MurdererScripts.thrillActive)
+                if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4" &&
+                    gameObject.tag != "DownedWimp1" && gameObject.tag != "DownedWimp2" && gameObject.tag != "DownedWimp3" && gameObject.tag != "DownedWimp4")
                 {
-                    MurdererScripts.thrill = true;
-                }
+                    //activate diseased if killed player was diseased
+                    if (diseased)
+                    {
+                        MurdererScripts.diseased = true;
+                    }
 
-                TorsoAnimator.SetBool("Dead", true);
-                LegsAnimator.SetBool("Dead", true);
-                gameObject.layer = 8;
-                dead = true;
-                wimpKilled = true;
+                    //activate thrill of the hunt if the murderer has the ability
+                    if (MurdererScripts.thrillActive)
+                    {
+                        MurdererScripts.thrill = true;
+                    }
 
-                //increment wimps down needed for murderer win condition
-                if(Time.time>wimpDownedCooldown + wimpDownedDelay)
-                {
-                    wimpsDowned += 1;
-                    wimpDownedCooldown = Time.time;
+                    TorsoAnimator.SetBool("Dead", true);
+                    LegsAnimator.SetBool("Dead", true);
+                    gameObject.layer = 8;
+                    dead = true;
+                    wimpKilled = true;
+
+                    //increment wimps down needed for murderer win condition
+                    if (Time.time > wimpDownedCooldown + wimpDownedDelay)
+                    {
+                        wimpsDowned += 1;
+                        wimpDownedCooldown = Time.time;
+                    }
+                    gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+                    groundCheck.GetComponent<Collider2D>().isTrigger = true;
+                    //change player tags for use with the revive mechanic
+                    switch (gameObject.tag)
+                    {
+                        case "Player1":
+                            gameObject.tag = "DownedWimp1";
+                            break;
+                        case "Player2":
+                            gameObject.tag = "DownedWimp2";
+                            break;
+                        case "Player3":
+                            gameObject.tag = "DownedWimp3";
+                            break;
+                        case "Player4":
+                            gameObject.tag = "DownedWimp4";
+                            break;
+                    }
+
+                    Invoke("TurnOnBlood", .5f);
+                    //murderer weapon cooldown after killing wimp
+                    Invoke("RechargeWeapon", MurdererWeaponCooldown);
+
+                    bloodStained = true;
                 }
-                gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-                groundCheck.GetComponent<Collider2D>().isTrigger = true;
-                //change player tags for use with the revive mechanic
-                switch (gameObject.tag)
-                {
-                    case "Player1":
-                        gameObject.tag = "DownedWimp1";
-                        break;
-                    case "Player2":
-                        gameObject.tag = "DownedWimp2";
-                        break;
-                    case "Player3":
-                        gameObject.tag = "DownedWimp3";
-                        break;
-                    case "Player4":
-                        gameObject.tag = "DownedWimp4";
-                        break;
-                }
-                
-                Invoke("TurnOnBlood", .5f);
-                //murderer weapon cooldown after killing wimp
-                Invoke("RechargeWeapon", MurdererWeaponCooldown);
-                
-                bloodStained = true;
             }
         }
 
