@@ -608,14 +608,14 @@ public class Controls : MonoBehaviour
         }
 
         // if player hits upArrow on the ladder go up
-        if (Input.GetAxis(vertical) > 0 && (canGoUp))
+        if (Input.GetAxis(vertical) > 0 && (canGoUp) && (!gameObject.tag.Contains("DownedWimp")))
         {
             
             goUp = true;
             gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         }
         // Go up
-        if (goUp)
+        if ((goUp)&& (!gameObject.tag.Contains("DownedWimp")))
         {
             canMove = false;
             groundCheck.GetComponent<Collider2D>().enabled = false;
@@ -624,13 +624,13 @@ public class Controls : MonoBehaviour
         }
 
         // if player hits downArrow on the ladder go up
-        if (Input.GetAxis(vertical) < 0 && (canGoDown))
+        if (Input.GetAxis(vertical) < 0 && (canGoDown) && (!gameObject.tag.Contains("DownedWimp")))
         {
             goDown = true;
             gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         }
         // Go down
-        if (goDown)
+        if ((goDown)&&(!gameObject.tag.Contains("DownedWimp")))
         {
             canMove = false;
             groundCheck.GetComponent<Collider2D>().enabled = false;
