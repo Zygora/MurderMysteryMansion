@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using System.Collections.Generic;
 
 public class Controls : MonoBehaviour
 {
@@ -131,6 +131,41 @@ public class Controls : MonoBehaviour
     public static Vector2 currentPlayer4Pos;
     public static Vector2 murdererPosition;
     public Vector2 currentPos;
+    public static List<GameObject> camList;
+
+    private static System.Random rng = new System.Random();
+
+   /* public static void Shuffle<T>(this IList<T> list)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+    }
+    */
+    private List<E> ShuffleList<E>(List<E> inputList)
+    {
+        List<E> randomList = new List<E>();
+
+        System.Random r = new System.Random();
+        int randomIndex = 0;
+        while (inputList.Count > 0)
+        {
+            randomIndex = r.Next(0, inputList.Count); //Choose a random object in the list
+            randomList.Add(inputList[randomIndex]); //add it to the new, random list
+            inputList.RemoveAt(randomIndex); //remove to avoid duplicates
+        }
+
+        Debug.Log(randomList);
+        return randomList; //return the new random list
+
+    }
+
 
     void Start()
     {
@@ -174,6 +209,55 @@ public class Controls : MonoBehaviour
             revive = "Attack/Revive_P4";
         }
 
+        //Randomize camera placements
+        int val = Random.Range(0, 4);
+/*
+        camList.Add(player1Camera);
+        camList.Add(player2Camera);
+        camList.Add(player3Camera);
+        camList.Add(player4Camera);
+
+        camList = ShuffleList(camList);
+
+        for (var i = 0; i < camList.Count; i++)
+        {
+            switch (i)
+            {
+                case 0: camList[i].GetComponent<Camera>().rect = new Rect(0.0f, 0.0f, 0.5f, 0.5f);
+                    break;
+                case 1: camList[i].GetComponent<Camera>().rect = new Rect(0.0f, 0.5f, 0.5f, 0.5f);
+                    break;
+                case 2: camList[i].GetComponent<Camera>().rect = new Rect(0.5f, 0.0f, 0.5f, 0.5f);
+                    break;
+                case 3: camList[i].GetComponent<Camera>().rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                    break;
+            }
+        }
+*/
+       switch (val)
+        {
+                case 0: player1Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.0f, 0.5f, 0.5f);
+                        player2Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.5f, 0.5f, 0.5f);
+                        player3Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.0f, 0.5f, 0.5f);
+                        player4Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                    break;
+                case 1: player4Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.0f, 0.5f, 0.5f);
+                    player1Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.5f, 0.5f, 0.5f);
+                    player2Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.0f, 0.5f, 0.5f);
+                    player3Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f); 
+                    break;
+                case 2: player3Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.0f, 0.5f, 0.5f);
+                    player4Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.5f, 0.5f, 0.5f);
+                    player1Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.0f, 0.5f, 0.5f);
+                    player2Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f); 
+                    break;
+                case 3: player2Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.0f, 0.5f, 0.5f);
+                    player3Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.5f, 0.5f, 0.5f);
+                    player4Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.0f, 0.5f, 0.5f);
+                    player1Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f); 
+                    break;
+            }
+       
     }
 
     void Update()
