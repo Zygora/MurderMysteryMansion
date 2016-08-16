@@ -76,10 +76,10 @@ public class AddVectorToRoom : MonoBehaviour {
         //enable left door sprite of room 
         if (currentColumn == 3 && doorsSet == false)
          {
-            if (this.gameObject.name == "Altar Room(Clone)" || this.gameObject.name == "ButcherRoom(Clone)" ||
-                this.gameObject.name == "FireplaceRoom(Clone)")
+            if(this.gameObject.name != "Exit Room(Clone)")
             {
                 transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
+                transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
                 doorsSet = true;
             }
          }
@@ -87,10 +87,27 @@ public class AddVectorToRoom : MonoBehaviour {
         //enable sprite right door of room
         if (currentColumn == 0 && doorsSet == false)
         {
-            if (this.gameObject.name == "Exit Room(Clone)" || this.gameObject.name == "Window Hallway(Clone)")
+            if (this.gameObject.name != "Hall of Portraits(Clone)" && this.gameObject.name != "Library(Clone)")
             {
-                transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
+                transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
+                transform.GetChild(3).GetComponent<SpriteRenderer>().enabled = true;
                 doorsSet = true;
+            } 
+        }
+
+        if (doorsSet == false)
+        {
+            if (currentColumn != 0 || currentColumn != 3)
+            {
+                if (this.gameObject.name != "Hall of Portraits(Clone)" && this.gameObject.name != "Library(Clone)" &&
+                   this.gameObject.name != "Hall of Portraits(Second Half)(Clone)"
+                   && this.gameObject.name != "Library(Second Half)(Clone)")
+                {
+                    transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
+                    transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
+                    transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
+                    transform.GetChild(3).GetComponent<SpriteRenderer>().enabled = true;
+                }
             }
         }
 
