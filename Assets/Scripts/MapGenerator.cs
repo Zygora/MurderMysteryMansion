@@ -83,7 +83,9 @@ public class MapGenerator : MonoBehaviour {
 		int currentrow = 0;
         int roomCoordinateX = 0;
         int roomCoordinateY = 0;
+        int librarySecondHalfReference = 1;
 
+        bool hallofPortraitsCreated = false;
 
 
         //starting position of first room
@@ -94,15 +96,15 @@ public class MapGenerator : MonoBehaviour {
 
         //do while rows is still less than meax rows
         while (currentrow < YTiles && currentObjectCount!=16) {
-            
             //change max random number range to length of list +1;
             int maxRandomRange = Rooms.Count + 1;
-			int x = Random.Range (2, maxRandomRange);
+			int x = Random.Range (3, maxRandomRange);
 
-            if (currentObjectCount == 15)
+            if (currentObjectCount >= 14)
             {
                 x = Random.Range(1, maxRandomRange);
             }
+           
 
             // spawn the double room "hall of portraits together" and only if possible. 
             if (Rooms[x - 1].name == "Hall of Portraits")
@@ -143,11 +145,57 @@ public class MapGenerator : MonoBehaviour {
                         //increment number of current columns;
                         currentColumn++;
                         roomCoordinateX += 1;
+                        hallofPortraitsCreated = true;
                     }
                 }
 
+            // spawn the double room "library together" and only if possible. 
+            else if (Rooms[x - 1].name == "Library")
+            {
+                if (currentColumn != 3)
+                {
+                    //instantiate room based on random number
+                    GameObject gridObject1 = Instantiate(Rooms[x - 1], currentLocation, Quaternion.identity) as GameObject;
+                    currentObjectCount++;
+                    //make room child of empty container
+                    gridObject1.transform.SetParent(rootObject.transform);
+                    //set grid coordinate
+                    gridObject1.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
+                    //set column
+                    gridObject1.GetComponent<AddVectorToRoom>().currentColumn = currentColumn;
+                    //remove room from list so that it can't be repeated
+                    Rooms.RemoveAt(x - 1);
+                    //set location to the right of last gameobject
+                    currentLocation.x = currentLocation.x + spriteX;
+                    //increment number of current columns;
+                    currentColumn++;
+                    roomCoordinateX += 1;
+
+                    //instantiate second half of  library room
+                    if (hallofPortraitsCreated == true)
+                    {
+                        librarySecondHalfReference = 0;
+                    }
+                    GameObject gridObject2 = Instantiate(Rooms[librarySecondHalfReference], currentLocation, Quaternion.identity) as GameObject;
+                    currentObjectCount++;
+                    //make room child of empty container
+                    gridObject2.transform.SetParent(rootObject.transform);
+                    //set grid coordinate
+                    gridObject2.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
+                    //set column
+                    gridObject2.GetComponent<AddVectorToRoom>().currentColumn = currentColumn;
+                    //remove room from list so that it can't be repeated
+                    Rooms.RemoveAt(librarySecondHalfReference);
+                    //set location to the right of last gameobject
+                    currentLocation.x = currentLocation.x + spriteX;
+                    //increment number of current columns;
+                    currentColumn++;
+                    roomCoordinateX += 1;
+                }
+            }
+
             //spawn room
-           else
+           else if(Rooms[x - 1].name != "Library" && Rooms[x - 1].name != "Hall of Portraits")
            {
                 //instantiate room based on random number
                 GameObject gridObject = Instantiate(Rooms[x-1], currentLocation, Quaternion.identity) as GameObject;
@@ -179,7 +227,6 @@ public class MapGenerator : MonoBehaviour {
                 currentLocation.x = 0;
                 //move rooms down by height of rooms when it reaches max columns to start a new row
                 currentLocation.y = currentLocation.y + spriteY;
-
 			}
 
             //spawn players after level has been created
@@ -188,17 +235,18 @@ public class MapGenerator : MonoBehaviour {
             }
 		}
 
+        
         //Debug.Log(MasterObj.seed);
 
-        if (PhotonNetwork.player.isMasterClient)
+       /* if (PhotonNetwork.player.isMasterClient)
         {
             //MasterObj.isMaster = true;
             //Debug.Log("Is Master:"+MasterObj.isMaster);
-        }
+        }*/
     }
 
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+   /* public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
         
@@ -217,5 +265,5 @@ public class MapGenerator : MonoBehaviour {
 
         }
 
-    }
+    }*/
 }
