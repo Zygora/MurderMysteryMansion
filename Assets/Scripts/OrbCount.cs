@@ -121,12 +121,12 @@ public class OrbCount : MonoBehaviour {
         {
             if (carryingOrbs == 1 && orbsAtAltar1 == 0 && Input.GetButtonDown(interact))
             {
-                Instantiate(Orb, other.gameObject.transform.position + transform.up * 20f, Quaternion.identity);
+                Instantiate(Resources.Load("Orb Placed Left"), other.gameObject.transform.position + transform.up * 50f
+                          , Quaternion.identity);
                 carryingOrbs -= 1;
                 //keeps track of player carrying orb globally
                 CarryingOrb(false);
                 canDropOrb = false;
-                orbsAtAltar1 += 1;
             }
         }
 
@@ -135,7 +135,8 @@ public class OrbCount : MonoBehaviour {
         {
             if (carryingOrbs == 1 && orbsAtAltar2 == 0 && Input.GetButtonDown(interact))
             {
-                Instantiate(Orb, other.gameObject.transform.position + transform.up * 20f, Quaternion.identity);
+                Instantiate(Resources.Load("Orb Placed Middle"), other.gameObject.transform.position + transform.up * 50f
+                          , Quaternion.identity);
                 carryingOrbs -= 1;
                 //keeps track of player carrying orb globally
                 CarryingOrb(false);
@@ -149,7 +150,8 @@ public class OrbCount : MonoBehaviour {
         {
             if (carryingOrbs == 1 && orbsAtAltar3 == 0 && Input.GetButtonDown(interact))
             {
-                Instantiate(Orb, other.gameObject.transform.position + transform.up * 20f, Quaternion.identity);
+                Instantiate(Resources.Load("Orb Placed Right"), other.gameObject.transform.position + transform.up * 50f
+                          , Quaternion.identity);
                 carryingOrbs -= 1;
                 //keeps track of player carrying orb globally
                 CarryingOrb(false);
@@ -221,12 +223,13 @@ public class OrbCount : MonoBehaviour {
 	}
 
     void DropOrb() {
-        Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 28, Quaternion.identity);
+        Instantiate(Resources.Load("Orb"), this.transform.position + transform.up * 20, Quaternion.identity);
         carryingOrbs = 0;
         canDropOrb = false;
     }
 
     void CarryingOrb(bool carryingOrb) {
+
         if (gameObject.tag == "Player1")
         {
             player1CarryOrb = carryingOrb;

@@ -469,7 +469,7 @@ public class Controls : MonoBehaviour
                         TorsoAnimator.SetBool("Jumping", false);
                         LegsAnimator.SetBool("Jumping", false);
                         //allow use of abilities while on ground
-                        SetNoAbilityOrOrbUseZoneFalse();
+                        SetNoAbilityOrOrbUseZone(false);
                     }
                     // otherwise the player is in the air
                     else if (hit.distance >= 12f)//1.3
@@ -478,7 +478,7 @@ public class Controls : MonoBehaviour
                         TorsoAnimator.SetBool("Jumping", true);
                         LegsAnimator.SetBool("Jumping", true);
                         //disable use of abilities while on ground
-                        SetNoAbilityOrOrbUseZoneTrue();
+                        SetNoAbilityOrOrbUseZone(true);
                 }
                 }
                 // Create move vector
@@ -702,7 +702,7 @@ public class Controls : MonoBehaviour
         {
             TorsoAnimator.SetBool("Jumping", true);
             LegsAnimator.SetBool("Jumping", true);
-            SetNoAbilityOrOrbUseZoneTrue();
+            SetNoAbilityOrOrbUseZone(true);
             SetKillZone(true);
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
@@ -742,7 +742,7 @@ public class Controls : MonoBehaviour
                 // Change player animation to run while transitioning left or right
                 if ((!goUp) && (!goDown))
             {
-                SetNoAbilityOrOrbUseZoneTrue();
+                SetNoAbilityOrOrbUseZone(true);
                 SetKillZone(true);
                 if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
                 {
@@ -1082,7 +1082,7 @@ public class Controls : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
-            SetNoAbilityOrOrbUseZoneFalse();
+            SetNoAbilityOrOrbUseZone(false);
             SetKillZone(false);
         }
         if (other.tag == "TopLadder")
@@ -1095,7 +1095,7 @@ public class Controls : MonoBehaviour
             // gameObject.GetComponent<Collider2D>().enabled = true;
             groundCheck.GetComponent<Collider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
-            SetNoAbilityOrOrbUseZoneFalse();
+            SetNoAbilityOrOrbUseZone(false);
             SetKillZone(false);
 
         }
@@ -1448,50 +1448,27 @@ public class Controls : MonoBehaviour
     }
 
     //set zones where abilities cant be used and orb cant be dropped to false
-    void SetNoAbilityOrOrbUseZoneFalse() {
+    void SetNoAbilityOrOrbUseZone(bool inZone) {
         if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
         {
-            player1NoDropOrbZone = false;
+            player1NoDropOrbZone = inZone;
         }
 
         if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
         {
-            player2NoDropOrbZone = false;
+            player2NoDropOrbZone = inZone;
         }
 
         if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
         {
-            player3NoDropOrbZone = false;
+            player3NoDropOrbZone = inZone;
         }
 
         if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
         {
-            player4NoDropOrbZone = false;
+            player4NoDropOrbZone = inZone;
         }
     }
-
-    //set zones where abilities cant be used and orb cant be dropped to true
-    void SetNoAbilityOrOrbUseZoneTrue(){
-         if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
-                    {
-                        player1NoDropOrbZone = true;
-                    }
-
-                    if (gameObject.tag == "Player2" || gameObject.tag == "Murderer2")
-                    {
-                        player2NoDropOrbZone = true;
-                    }
-
-                    if (gameObject.tag == "Player3" || gameObject.tag == "Murderer3")
-                    {
-                        player3NoDropOrbZone = true;
-                    }
-
-                    if (gameObject.tag == "Player4" || gameObject.tag == "Murderer4")
-                    {
-                        player4NoDropOrbZone = true;
-                    }
-        }
 
     //set areas where player can and can't be killed
     void SetKillZone(bool canBeKilled) {
