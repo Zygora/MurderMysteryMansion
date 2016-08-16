@@ -134,22 +134,32 @@ public class ScaredCat : MonoBehaviour {
         //reset camera speed and stop running on arrival of destination
         if (scaredCatTargetRoom.transform.position.x > startingPosition.x)
         {
-            if (this.transform.position.x >= scaredCatTargetRoom.transform.position.x)
+            if (scaredCatOnLadder) {
+                if (this.transform.position.x >= scaredCatTargetRoom.transform.position.x - 240) {
+                    StopScaredyCat();
+                }
+            }
+
+           else if (this.transform.position.x >= scaredCatTargetRoom.transform.position.x)
             {
-                scaredCatRunning = false;
-                scaredCatOnLadder = false;
-                this.gameObject.GetComponent<Controls>().cameraSpeed = 70;
+                StopScaredyCat();
             }
         }
 
         //reset camera speed and stop running on arrival of destination
         if (scaredCatTargetRoom.transform.position.x < startingPosition.x)
         {
-            if (this.transform.position.x <= scaredCatTargetRoom.transform.position.x)
+            if (scaredCatOnLadder)
             {
-                scaredCatRunning = false;
-                scaredCatOnLadder = false;
-                this.gameObject.GetComponent<Controls>().cameraSpeed = 70;
+                if (this.transform.position.x <= scaredCatTargetRoom.transform.position.x + 240)
+                {
+                    StopScaredyCat();
+                }
+            }
+
+            else if (this.transform.position.x <= scaredCatTargetRoom.transform.position.x)
+            {
+                StopScaredyCat();
             }
         }
 
@@ -215,5 +225,12 @@ public class ScaredCat : MonoBehaviour {
             scaredCatRunning = true;
             canUseAbility = false;
         }
+    }
+
+    void StopScaredyCat()
+    {
+        scaredCatRunning = false;
+        scaredCatOnLadder = false;
+        this.gameObject.GetComponent<Controls>().cameraSpeed = 70;
     }
 }

@@ -121,7 +121,7 @@ public class OrbCount : MonoBehaviour {
         {
             if (carryingOrbs == 1 && orbsAtAltar1 == 0 && Input.GetButtonDown(interact))
             {
-                Instantiate(Resources.Load("Orb Placed Left"), other.gameObject.transform.position + transform.up * 50f
+                Instantiate(Resources.Load("Orb Placed Left"), other.gameObject.transform.position + transform.up * 45f
                           , Quaternion.identity);
                 carryingOrbs -= 1;
                 //keeps track of player carrying orb globally
@@ -135,7 +135,7 @@ public class OrbCount : MonoBehaviour {
         {
             if (carryingOrbs == 1 && orbsAtAltar2 == 0 && Input.GetButtonDown(interact))
             {
-                Instantiate(Resources.Load("Orb Placed Middle"), other.gameObject.transform.position + transform.up * 50f
+                Instantiate(Resources.Load("Orb Placed Middle"), other.gameObject.transform.position + transform.up * 45f
                           , Quaternion.identity);
                 carryingOrbs -= 1;
                 //keeps track of player carrying orb globally
@@ -150,7 +150,7 @@ public class OrbCount : MonoBehaviour {
         {
             if (carryingOrbs == 1 && orbsAtAltar3 == 0 && Input.GetButtonDown(interact))
             {
-                Instantiate(Resources.Load("Orb Placed Right"), other.gameObject.transform.position + transform.up * 50f
+                Instantiate(Resources.Load("Orb Placed Right"), other.gameObject.transform.position + transform.up * 45f
                           , Quaternion.identity);
                 carryingOrbs -= 1;
                 //keeps track of player carrying orb globally

@@ -242,6 +242,12 @@ public class Controls : MonoBehaviour
 
     void Update()
     {
+        if (dead && scaredCat && ScaredCat.scaredCatContinueRunning)
+        {
+            ScaredCat.scaredCatRunning = false;
+            ScaredCat.scaredCatOnLadder = false;
+            this.gameObject.GetComponent<Controls>().cameraSpeed = 70;
+        }
         //track the player being trapped
         if (Trapped == false && currentPlayerTrapped == false)
         {
@@ -708,7 +714,7 @@ public class Controls : MonoBehaviour
             groundCheck.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
             //different speed if scaredycat
-            if (scaredCat == true && ScaredCat.scaredCatRunning == true)
+            if (scaredCat == true && ScaredCat.scaredCatOnLadder == true)
             {
                 transform.position += new Vector3(0, 1, 0) * 120 * Time.deltaTime * speedMultiplier;
             }
@@ -737,7 +743,7 @@ public class Controls : MonoBehaviour
             groundCheck.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
             //different speed if scaredycat
-            if (scaredCat == true && ScaredCat.scaredCatRunning == true)
+            if (scaredCat == true && ScaredCat.scaredCatOnLadder == true)
             {
                 transform.position += new Vector3(0, -1, 0) * 120 * Time.deltaTime * speedMultiplier;
             }
