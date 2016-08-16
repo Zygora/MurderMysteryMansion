@@ -670,22 +670,63 @@ public class Controls : MonoBehaviour
         // if player hits upArrow on the ladder go up
         if (Input.GetAxis(vertical) > 0 && (canGoUp) && (!gameObject.tag.Contains("DownedWimp")))
         {
-            
+            //disable transitioning while scaredy cat is active
+            if (scaredCat == true && ScaredCat.scaredCatRunning == true)
+            {
+
+            }
             goUp = true;
             gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         }
+
+        // ladder collision for scaredy cat when scaredy cat is running
+        if (scaredCat && ScaredCat.scaredCatOnLadder == false && ScaredCat.scaredCatRunning && 
+            (canGoUp) && (!gameObject.tag.Contains("DownedWimp")))
+        {
+
+            goUp = true;
+            gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+            ScaredCat.scaredCatOnLadder = true;
+            ScaredCat.scaredCatContinueRunning = false;
+        }
+
+        // ladder collision for scaredy cat when scaredy cat is running
+        if (scaredCat && ScaredCat.scaredCatOnLadder == false && ScaredCat.scaredCatRunning &&
+            (canGoDown) && (!gameObject.tag.Contains("DownedWimp")))
+        {
+
+            goDown = true;
+            gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+            ScaredCat.scaredCatOnLadder = true;
+            ScaredCat.scaredCatContinueRunning = false;
+        }
+
         // Go up
         if ((goUp)&& (!gameObject.tag.Contains("DownedWimp")))
         {
             canMove = false;
             groundCheck.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-            transform.position += new Vector3(0, 1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
+            //different speed if scaredycat
+            if (scaredCat == true && ScaredCat.scaredCatRunning == true)
+            {
+                transform.position += new Vector3(0, 1, 0) * 120 * Time.deltaTime * speedMultiplier;
+            }
+
+            else
+            {
+                transform.position += new Vector3(0, 1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
+            }
         }
 
         // if player hits downArrow on the ladder go up
         if (Input.GetAxis(vertical) < 0 && (canGoDown) && (!gameObject.tag.Contains("DownedWimp")))
         {
+            //disable transitioning while scaredy cat is active
+            if (scaredCat == true && ScaredCat.scaredCatRunning == true)
+            {
+
+            }
             goDown = true;
             gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         }
@@ -695,7 +736,16 @@ public class Controls : MonoBehaviour
             canMove = false;
             groundCheck.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-            transform.position += new Vector3(0, -1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
+            //different speed if scaredycat
+            if (scaredCat == true && ScaredCat.scaredCatRunning == true)
+            {
+                transform.position += new Vector3(0, -1, 0) * 120 * Time.deltaTime * speedMultiplier;
+            }
+
+            else
+            {
+                transform.position += new Vector3(0, -1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
+            }
         }
         // Change player animation to jump while transitioning up or down
         if (goDown || goUp)
@@ -1084,6 +1134,15 @@ public class Controls : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
             SetNoAbilityOrOrbUseZone(false);
             SetKillZone(false);
+            if (scaredCat && ScaredCat.scaredCatRunning)
+            {
+                ladder = other.gameObject;
+                canGoUp = true;
+                if(ScaredCat.scaredCatOnLadder == true)
+                {
+                    ScaredCat.scaredCatContinueRunning = true;
+                }
+            }
         }
         if (other.tag == "TopLadder")
         {
@@ -1097,8 +1156,17 @@ public class Controls : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
             SetNoAbilityOrOrbUseZone(false);
             SetKillZone(false);
+            if (scaredCat && ScaredCat.scaredCatRunning)
+            {
+                ladder = other.gameObject;
+                canGoDown = true;
+                if (ScaredCat.scaredCatOnLadder == true)
+                {
+                    ScaredCat.scaredCatContinueRunning = true;
+                }
+            }
+        }       
 
-        }
         if (other.tag == "Room" || other.tag == "MurdererStart")
         {
             lastRoom = currentRoom;

@@ -4,20 +4,23 @@ using System.Collections;
 public class ScaredCat : MonoBehaviour {
     public Vector2 currentPos;
     public Vector3 facing;
+    public Vector3 startingPosition;
     public static Vector2 scaredCatTargetRoomLocation;
 
     public static GameObject scaredCatTargetRoom;
 
     private string ability;
 
-    public float scaredCatSpeed = 5;
+    public float scaredyCatSpeed = 165;
     public float coolDown = 15;
     public float timeSinceAbilityUse;
     public float movingHorizontal;
 
-
     public bool canUseAbility = true;
+    public static bool scaredCatOnLadder = false;
+    public static bool scaredCatContinueRunning = true;
     public static bool scaredCatRunning = false;
+
     
     // Use this for initialization
     void Start ()
@@ -49,9 +52,11 @@ public class ScaredCat : MonoBehaviour {
     void Update()
     {
         //cooldown manager
-        if (canUseAbility == false) {
+        if (canUseAbility == false)
+        {
             timeSinceAbilityUse += Time.deltaTime;
-            if (timeSinceAbilityUse > coolDown) {
+            if (timeSinceAbilityUse > coolDown)
+            {
                 canUseAbility = true;
                 timeSinceAbilityUse = 0;
             }
@@ -61,7 +66,7 @@ public class ScaredCat : MonoBehaviour {
         if (gameObject.tag == "Player1")
         {
             currentPos = Controls.currentPlayer1Pos;
-            if (currentPos == Controls.currentPlayer2Pos || currentPos == Controls.currentPlayer3Pos || 
+            if (currentPos == Controls.currentPlayer2Pos || currentPos == Controls.currentPlayer3Pos ||
                 currentPos == Controls.currentPlayer4Pos)
             {
                 if (Controls.player1NoDropOrbZone == false)
@@ -111,25 +116,45 @@ public class ScaredCat : MonoBehaviour {
         }
 
         //while ability is active player runs to target destination at increased player speed and camera speed
-        if(scaredCatRunning == true)
+        if (scaredCatRunning == true && scaredCatContinueRunning == true)
         {
-           this.transform.position = Vector3.MoveTowards(this.transform.position, scaredCatTargetRoom.transform.position, scaredCatSpeed);
-           this.gameObject.GetComponent<Controls>().cameraSpeed = 450;
-           this.gameObject.GetComponent<Controls>().TorsoAnimator.SetBool("Running", true);
-           this.gameObject.GetComponent<Controls>().LegsAnimator.SetBool("Running", true);
-           this.gameObject.GetComponent<Controls>().TorsoAnimator.SetBool("Idle", false);
-           this.gameObject.GetComponent<Controls>().LegsAnimator.SetBool("Idle", false);
-           this.gameObject.GetComponent<Controls>().TorsoAnimator.SetBool("Jumping", false);
-           this.gameObject.GetComponent<Controls>().LegsAnimator.SetBool("Jumping", false);
+            //this.transform.position = Vector3.MoveTowards(this.transform.position, scaredCatTargetRoom.transform.position, scaredCatSpeed);
+            this.transform.Translate(Vector2.right * scaredyCatSpeed * Time.deltaTime);
+            this.gameObject.GetComponent<Controls>().cameraSpeed = 450;
+            this.gameObject.GetComponent<Controls>().TorsoAnimator.SetBool("Running", true);
+            this.gameObject.GetComponent<Controls>().LegsAnimator.SetBool("Running", true);
+            this.gameObject.GetComponent<Controls>().TorsoAnimator.SetBool("Idle", false);
+            this.gameObject.GetComponent<Controls>().LegsAnimator.SetBool("Idle", false);
+            this.gameObject.GetComponent<Controls>().TorsoAnimator.SetBool("Jumping", false);
+            this.gameObject.GetComponent<Controls>().LegsAnimator.SetBool("Jumping", false);
             this.transform.eulerAngles = facing;
         }
 
+
         //reset camera speed and stop running on arrival of destination
-        if(this.transform.position == scaredCatTargetRoom.transform.position)
+        if (scaredCatTargetRoom.transform.position.x > startingPosition.x)
         {
-            scaredCatRunning = false;
-            this.gameObject.GetComponent<Controls>().cameraSpeed = 70;
+            if (this.transform.position.x >= scaredCatTargetRoom.transform.position.x)
+            {
+                scaredCatRunning = false;
+                scaredCatOnLadder = false;
+                this.gameObject.GetComponent<Controls>().cameraSpeed = 70;
+            }
         }
+
+        //reset camera speed and stop running on arrival of destination
+        if (scaredCatTargetRoom.transform.position.x < startingPosition.x)
+        {
+            if (this.transform.position.x <= scaredCatTargetRoom.transform.position.x)
+            {
+                scaredCatRunning = false;
+                scaredCatOnLadder = false;
+                this.gameObject.GetComponent<Controls>().cameraSpeed = 70;
+            }
+        }
+
+
+
     }
 
     //FUNCTIONS
@@ -144,6 +169,7 @@ public class ScaredCat : MonoBehaviour {
                 scaredCatTargetRoomLocation.x = currentPos.x + 2;
                 this.transform.eulerAngles = new Vector3(0, 0, 0);
                 facing = new Vector3(0, 0, 0);
+                startingPosition = this.transform.position;
             }
 
             else if (currentPos.x - 2 >= 0)
@@ -151,6 +177,7 @@ public class ScaredCat : MonoBehaviour {
                 scaredCatTargetRoomLocation.x = currentPos.x - 2;
                 this.transform.eulerAngles = new Vector3(0, 180, 0);
                 facing = new Vector3(0, 180, 0);
+                startingPosition = this.transform.position;
             }
 
            //used for  old 5x5 grid size
@@ -187,10 +214,6 @@ public class ScaredCat : MonoBehaviour {
             }*/
             scaredCatRunning = true;
             canUseAbility = false;
-            Debug.Log("scared cat");
-            Debug.Log(scaredCatTargetRoomLocation);
-            Debug.Log(scaredCatRunning);
-            Debug.Log(scaredCatTargetRoom.name);
         }
     }
 }
