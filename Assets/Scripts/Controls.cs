@@ -135,7 +135,7 @@ public class Controls : MonoBehaviour
 
     private static System.Random rng = new System.Random();
 
-   /* public static void Shuffle<T>(this IList<T> list)
+    public void Shuffle<T>(this IList<T> list)
     {
         int n = list.Count;
         while (n > 1)
@@ -147,25 +147,33 @@ public class Controls : MonoBehaviour
             list[n] = value;
         }
     }
-    */
-    private List<E> ShuffleList<E>(List<E> inputList)
-    {
-        List<E> randomList = new List<E>();
 
-        System.Random r = new System.Random();
-        int randomIndex = 0;
-        while (inputList.Count > 0)
+    float xVal(int a)
+    {
+        switch (a)
         {
-            randomIndex = r.Next(0, inputList.Count); //Choose a random object in the list
-            randomList.Add(inputList[randomIndex]); //add it to the new, random list
-            inputList.RemoveAt(randomIndex); //remove to avoid duplicates
+
+            case 0: return 0.0f;
+            case 1: return 0.5f;
+            case 2: return 0.0f;
+            case 3: return 0.5f;
+            default: return 0.0f;
         }
 
-        Debug.Log(randomList);
-        return randomList; //return the new random list
+    }
+    float yVal(int a)
+    {
+        switch (a)
+        {
+
+            case 0: return 0.0f;
+            case 1: return 0.0f;
+            case 2: return 0.5f;
+            case 3: return 0.5f;
+            default: return 0.0f;
+        }
 
     }
-
 
     void Start()
     {
@@ -211,52 +219,24 @@ public class Controls : MonoBehaviour
 
         //Randomize camera placements
         int val = Random.Range(0, 4);
-/*
-        camList.Add(player1Camera);
-        camList.Add(player2Camera);
-        camList.Add(player3Camera);
-        camList.Add(player4Camera);
+        int c1 = 1, c2 = 2, c3 = 3, c4 = 4;
 
-        camList = ShuffleList(camList);
+        List<int> arrayList = new List<int>();
 
-        for (var i = 0; i < camList.Count; i++)
-        {
-            switch (i)
-            {
-                case 0: camList[i].GetComponent<Camera>().rect = new Rect(0.0f, 0.0f, 0.5f, 0.5f);
-                    break;
-                case 1: camList[i].GetComponent<Camera>().rect = new Rect(0.0f, 0.5f, 0.5f, 0.5f);
-                    break;
-                case 2: camList[i].GetComponent<Camera>().rect = new Rect(0.5f, 0.0f, 0.5f, 0.5f);
-                    break;
-                case 3: camList[i].GetComponent<Camera>().rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
-                    break;
-            }
-        }
-*/
-       switch (val)
-        {
-                case 0: player1Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.0f, 0.5f, 0.5f);
-                        player2Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.5f, 0.5f, 0.5f);
-                        player3Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.0f, 0.5f, 0.5f);
-                        player4Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
-                    break;
-                case 1: player4Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.0f, 0.5f, 0.5f);
-                    player1Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.5f, 0.5f, 0.5f);
-                    player2Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.0f, 0.5f, 0.5f);
-                    player3Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f); 
-                    break;
-                case 2: player3Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.0f, 0.5f, 0.5f);
-                    player4Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.5f, 0.5f, 0.5f);
-                    player1Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.0f, 0.5f, 0.5f);
-                    player2Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f); 
-                    break;
-                case 3: player2Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.0f, 0.5f, 0.5f);
-                    player3Camera.GetComponent<Camera>().rect = new Rect(0.0f, 0.5f, 0.5f, 0.5f);
-                    player4Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.0f, 0.5f, 0.5f);
-                    player1Camera.GetComponent<Camera>().rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f); 
-                    break;
-            }
+        arrayList.Add(c1);
+        arrayList.Add(c2);
+        arrayList.Add(c3);
+        arrayList.Add(c4);
+
+        Shuffle(arrayList);
+
+        // Debug.Log("List:"+cList[1]);
+        
+        player1Camera.GetComponent<Camera>().rect = new Rect(xVal(arrayList[0]), yVal(arrayList[0]), 0.5f, 0.5f);
+        player2Camera.GetComponent<Camera>().rect = new Rect(xVal(arrayList[1]), yVal(arrayList[1]), 0.5f, 0.5f);
+        player3Camera.GetComponent<Camera>().rect = new Rect(xVal(arrayList[2]), yVal(arrayList[2]), 0.5f, 0.5f);
+        player4Camera.GetComponent<Camera>().rect = new Rect(xVal(arrayList[3]), yVal(arrayList[3]), 0.5f, 0.5f);
+
        
     }
 
