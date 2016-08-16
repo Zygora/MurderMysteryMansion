@@ -91,10 +91,18 @@ public class AddVectorToRoom : MonoBehaviour {
             {
                 transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
                 transform.GetChild(3).GetComponent<SpriteRenderer>().enabled = true;
-                doorsSet = true;
-            } 
+            }
+
+            else
+            {
+                transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+                transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = false;
+            }
+
+            doorsSet = true;
         }
 
+        //enable double door sprites
         if (doorsSet == false)
         {
             if (currentColumn != 0 || currentColumn != 3)

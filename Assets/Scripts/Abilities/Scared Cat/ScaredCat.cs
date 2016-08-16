@@ -16,7 +16,7 @@ public class ScaredCat : MonoBehaviour {
     public float movingHorizontal;
 
 
-    public bool canUseAbility;
+    public bool canUseAbility = true;
     public static bool scaredCatRunning = false;
     
     // Use this for initialization

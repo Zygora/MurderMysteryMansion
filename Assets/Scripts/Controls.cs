@@ -350,7 +350,6 @@ public class Controls : MonoBehaviour
             if (gameObject.tag == "Player1" && OrbCount.player1Exited == true && Input.GetButtonDown(interact) && OrbCount.player1CanEnter == true)
             {
                 OnWimpReEnter();
-                //reset values to false so that player can exit again and re enter after exiting
                 OrbCount.player1Exited = false;
                 OrbCount.player1CanEnter = false;
             }
@@ -358,7 +357,6 @@ public class Controls : MonoBehaviour
             if (gameObject.tag == "Player2" && OrbCount.player2Exited == true && Input.GetButtonDown(interact) && OrbCount.player2CanEnter == true)
             {
                 OnWimpReEnter();
-                //reset values to false so that player can exit again and re enter after exiting
                 OrbCount.player2Exited = false;
                 OrbCount.player2CanEnter = false;
                 
@@ -367,7 +365,6 @@ public class Controls : MonoBehaviour
             if (gameObject.tag == "Player3" && OrbCount.player3Exited == true && Input.GetButtonDown(interact) && OrbCount.player3CanEnter == true)
             {
                 OnWimpReEnter();
-                //reset values to false so that player can exit again and re enter after exiting
                 OrbCount.player3Exited = false;
                 OrbCount.player3CanEnter = false;
                
@@ -376,7 +373,6 @@ public class Controls : MonoBehaviour
             if (gameObject.tag == "Player4" && OrbCount.player4Exited == true && Input.GetButtonDown(interact) && OrbCount.player4CanEnter == true)
             {
                 OnWimpReEnter();
-                //reset values to false so that player can exit again and re enter after exiting
                 OrbCount.player4Exited = false;
                 OrbCount.player4CanEnter = false;
                 
@@ -1428,11 +1424,8 @@ public class Controls : MonoBehaviour
     void OnWimpExit() {
         //make exited player not visible to the camera
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -50);
-        //turn player speed to 0 preventing movement
         playerSpeed = 0;
-        //make player to prevent player from falling through floor
         gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-        //disable player colliders
         gameObject.GetComponent<Collider2D>().enabled = false;
         groundCheck.GetComponent<Collider2D>().enabled = false;
         exited = true;
@@ -1442,19 +1435,14 @@ public class Controls : MonoBehaviour
     void OnWimpReEnter() {
         //make player visible to camera again
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
-        //restore player speed
         playerSpeed = speedWhileNotCarryOrb;
-        //play idle animation on re entry
         TorsoAnimator.SetBool("Running", false);
         LegsAnimator.SetBool("Running", false);
         TorsoAnimator.SetBool("Idle", true);
         LegsAnimator.SetBool("Idle", true);
-        //restore rigidbody parameters to normal
         gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-        //enable player colliders
         gameObject.GetComponent<Collider2D>().enabled = true;
         groundCheck.GetComponent<Collider2D>().enabled = true;
-        //decrease wimps exited by 1 when player re enters
         OrbCount.wimpsExited -= 1;
         exited = false;
     }

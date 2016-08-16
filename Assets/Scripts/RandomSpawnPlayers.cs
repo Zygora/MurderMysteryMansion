@@ -85,122 +85,44 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //spawn ladders
        if (laddersSpawned < 6) {
             if (laddersSpawned == 0) {
-                randomLadderNumber = Random.Range(0, 4);
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * -ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
-                ladderSpawnPositions.Add(randomLadderNumber);
-                laddersSpawned += 1;
+                SpawnLadder(0, 4, -1);
             }
 
             if (laddersSpawned == 1) {
-                randomLadderNumber = Random.Range(0, 4);
-                while (ladderSpawnPositions.Contains(randomLadderNumber)) {
-                    randomLadderNumber = Random.Range(0, 5);
-                }
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * -ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
-                ladderSpawnPositions.Add(randomLadderNumber);
-                laddersSpawned += 1;
+                SpawnLadderSameFloor(0, 4, -1);
             }
 
             if(laddersSpawned == 2) {
-                randomLadderNumber = Random.Range(4, 8);
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
-                ladderSpawnPositions.Add(randomLadderNumber);
-                laddersSpawned += 1;
+                SpawnLadder(4, 8, 1);
             }
 
             if (laddersSpawned == 3)
             {
-                randomLadderNumber = Random.Range(4, 8);
-                while (ladderSpawnPositions.Contains(randomLadderNumber))
-                {
-                    randomLadderNumber = Random.Range(4, 8);
-                }
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
-                ladderSpawnPositions.Add(randomLadderNumber);
-                laddersSpawned += 1;
+                SpawnLadderSameFloor(4, 8, 1);
             }
 
             if (laddersSpawned == 4)
             {
-                randomLadderNumber = Random.Range(8, 12);
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * -ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
-                ladderSpawnPositions.Add(randomLadderNumber);
-                laddersSpawned += 1;
+                SpawnLadder(8, 12, -1);
             }
 
             if (laddersSpawned == 5)
             {
-                randomLadderNumber = Random.Range(8, 12);
-                while (ladderSpawnPositions.Contains(randomLadderNumber))
-                {
-                    randomLadderNumber = Random.Range(8, 12);
-                }
-                Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * -ladderXOffset) + (transform.up * ladderYoffset), Quaternion.identity);
-                ladderSpawnPositions.Add(randomLadderNumber);
-                laddersSpawned += 1;
+                SpawnLadderSameFloor(8, 12, -1);
             }
         }
         
         //spawn player1 if not murderer in a random room not containing another player
         if (player1Spawned == false && randomMurdererNumber != 0)
         {
-            random = Random.Range(0, randomMax);
-            //instantiate from resources folder
-            Instantiate(Resources.Load("MainPlayer_1"), RoomPositions[random].position, Quaternion.identity);
-            //move player 1 camera to same position as player1
-            player1Camera.transform.position = new Vector3(RoomPositions[random].position.x, RoomPositions[random].position.y, -15);
-            //remove room from list so that nothing else can spawn in that same room
-            RoomPositions.RemoveAt(random);
-            //reduce randomMax by 1 so that it matches the size of the roomPositions list
-            randomMax -= 1;
+            SpawnWimp("MainPlayer_1", "Player1", player1Camera, player2Camera, player3Camera,
+                       player4Camera);
             player1Spawned = true;
-            //give player randomly generated ability
-            randomPlayerAbility = Random.Range(0, numberOfPlayerAbilities);
-            PlayerAbilities.Add(randomPlayerAbility);
-            if(randomPlayerAbility == 0){
-                GameObject.FindGameObjectWithTag("Player1").AddComponent<CrazedAlchemist>();
-            }
-            if (randomPlayerAbility == 1)
-            {
-                GameObject.FindGameObjectWithTag("Player1").AddComponent<Doppelganger>();
-            }
-            
-            if (randomPlayerAbility == 2)
-            {
-                GameObject.FindGameObjectWithTag("Player1").AddComponent<Squeler>();
-                //allow other players to see arrows associated with ability
-                player2Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
-                player3Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
-                player4Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
-            }
-            if (randomPlayerAbility == 3)
-            {
-                GameObject.FindGameObjectWithTag("Player1").AddComponent<ThirdEye>();
-                //make player able to see arrows associated with ability
-                player1Camera.GetComponent<Camera>().cullingMask |= (1<<15);
-            }
-
-            if (randomPlayerAbility == 4)
-            {
-                GameObject.FindGameObjectWithTag("Player1").AddComponent<DrNerd>();
-            }
-
-            if (randomPlayerAbility == 5)
-            {
-                GameObject.FindGameObjectWithTag("Player1").AddComponent<Diseased>();
-            }
-
-            if (randomPlayerAbility == 6)
-            {
-                GameObject.FindGameObjectWithTag("Player1").AddComponent<ScaredCat>();
-            }
         }
 
         //spawn player 1 if murderer in butcher room
         else if (player1Spawned == false && randomMurdererNumber == 0) {
-            //instantiate from resources folder
             Instantiate(Resources.Load("MainPlayer_1"), butcherRoom.transform.position, Quaternion.identity);
-            //move player 1 camera to same position as player1
             player1Camera.transform.position = new Vector3(butcherRoom.transform.position.x, butcherRoom.transform.position.y, -15);
             player1Spawned = true;
         }
@@ -208,69 +130,15 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //spawn player2 if not murderer  in a random room not containing another player
         if (player2Spawned == false && randomMurdererNumber != 1)
         {
-            random = Random.Range(0, randomMax);
-            //instantiate from resources folder
-            Instantiate(Resources.Load("MainPlayer_2"), RoomPositions[random].position, Quaternion.identity);
-            //move player 2 camera to same position as player2
-            player2Camera.transform.position = new Vector3(RoomPositions[random].position.x, RoomPositions[random].position.y, -15);
-            //remove room from list so that nothing else can spawn in that same room
-            RoomPositions.RemoveAt(random);
-            //reduce randomMax by 1 so that it matches the size of the roomPositions list
-            randomMax -= 1;
+            SpawnWimp("MainPlayer_2", "Player2", player2Camera, player1Camera, player3Camera,
+                       player4Camera);
             player2Spawned = true;
-            //give player randomly generated ability
-            randomPlayerAbility = Random.Range(0, numberOfPlayerAbilities);
-            //makes sure the same player ability doesn't get repeated
-            while(PlayerAbilities.Contains(randomPlayerAbility)) {
-                randomPlayerAbility = Random.Range(0, numberOfPlayerAbilities);
-            }
-            PlayerAbilities.Add(randomPlayerAbility);
-            if (randomPlayerAbility == 0)
-            {
-                GameObject.FindGameObjectWithTag("Player2").AddComponent<CrazedAlchemist>();
-            }
-            if (randomPlayerAbility == 1)
-            {
-                GameObject.FindGameObjectWithTag("Player2").AddComponent<Doppelganger>();
-            }
-
-            if (randomPlayerAbility == 2)
-            {
-                GameObject.FindGameObjectWithTag("Player2").AddComponent<Squeler>();
-                //allow other players to see arrows associated with ability
-                player1Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
-                player3Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
-                player4Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
-            }
-            if (randomPlayerAbility == 3)
-            {
-                GameObject.FindGameObjectWithTag("Player2").AddComponent<ThirdEye>();
-                //make player able to see arrows associated with ability
-                player2Camera.GetComponent<Camera>().cullingMask |= (1 << 15);
-            }
-
-            if (randomPlayerAbility == 4)
-            {
-                GameObject.FindGameObjectWithTag("Player2").AddComponent<DrNerd>();
-            }
-
-            if (randomPlayerAbility == 5)
-            {
-                GameObject.FindGameObjectWithTag("Player2").AddComponent<Diseased>();
-            }
-
-            if (randomPlayerAbility == 6)
-            {
-                GameObject.FindGameObjectWithTag("Player2").AddComponent<ScaredCat>();
-            }
         }
 
         //spawn player 2 if murderer in butcher room
         else if (player2Spawned == false && randomMurdererNumber == 1)
         {
-            //instantiate from resources folder
             Instantiate(Resources.Load("MainPlayer_2"), butcherRoom.transform.position, Quaternion.identity);
-            //move player 2 camera to same position as player2
             player2Camera.transform.position = new Vector3(butcherRoom.transform.position.x, butcherRoom.transform.position.y, -15);
             player2Spawned = true;
         }
@@ -278,70 +146,15 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //spawn player3 if not murderer  in a random room not containing another player
         if (player3Spawned == false && randomMurdererNumber != 2)
         {
-            random = Random.Range(0, randomMax);
-            //instantiate from resources folder
-            Instantiate(Resources.Load("MainPlayer_3"), RoomPositions[random].position, Quaternion.identity);
-            //move player 3 camera to same position as player3
-            player3Camera.transform.position = new Vector3(RoomPositions[random].position.x, RoomPositions[random].position.y, -15);
-            //remove room from list so that nothing else can spawn in that same room
-            RoomPositions.RemoveAt(random);
-            //reduce randomMax by 1 so that it matches the size of the roomPositions list
-            randomMax -= 1;
+            SpawnWimp("MainPlayer_3", "Player3", player3Camera, player1Camera, player2Camera,
+                       player4Camera);
             player3Spawned = true;
-            //give player randomly generated ability
-            randomPlayerAbility = Random.Range(0, numberOfPlayerAbilities);
-            //makes sure the same player ability doesn't get repeated
-            while (PlayerAbilities.Contains(randomPlayerAbility))
-            {
-                randomPlayerAbility = Random.Range(0, numberOfPlayerAbilities);
-            }
-            PlayerAbilities.Add(randomPlayerAbility);
-            if (randomPlayerAbility == 0)
-            {
-                GameObject.FindGameObjectWithTag("Player3").AddComponent<CrazedAlchemist>();
-            }
-            if (randomPlayerAbility == 1)
-            {
-                GameObject.FindGameObjectWithTag("Player3").AddComponent<Doppelganger>();
-            }
-
-            if (randomPlayerAbility == 2)
-            {
-                GameObject.FindGameObjectWithTag("Player3").AddComponent<Squeler>();
-                //allow other players to see arrows associated with ability
-                player1Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
-                player2Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
-                player4Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
-            }
-            if (randomPlayerAbility == 3)
-            {
-                GameObject.FindGameObjectWithTag("Player3").AddComponent<ThirdEye>();
-                //make player able to see arrows associated with ability
-                player3Camera.GetComponent<Camera>().cullingMask |= (1 << 15);
-            }
-
-            if (randomPlayerAbility == 4)
-            {
-                GameObject.FindGameObjectWithTag("Player3").AddComponent<DrNerd>();
-            }
-
-            if (randomPlayerAbility == 5)
-            {
-                GameObject.FindGameObjectWithTag("Player3").AddComponent<Diseased>();
-            }
-
-            if (randomPlayerAbility == 6)
-            {
-                GameObject.FindGameObjectWithTag("Player3").AddComponent<ScaredCat>();
-            }
         }
 
         //spawn player 3 if murderer in butcher room
         else if (player3Spawned == false && randomMurdererNumber == 2)
         {
-            //instantiate from resources folder
             Instantiate(Resources.Load("MainPlayer_3"), butcherRoom.transform.position, Quaternion.identity);
-            //move player 3 camera to same position as player3
             player3Camera.transform.position = new Vector3(butcherRoom.transform.position.x, butcherRoom.transform.position.y, -15);
             player3Spawned = true;
         }
@@ -349,70 +162,15 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //spawn player4 if not murderer in a random room not containing another player
         if (player4Spawned == false && randomMurdererNumber != 3)
         {
-            random = Random.Range(0, randomMax);
-            //instantiate from resources folder
-            Instantiate(Resources.Load("MainPlayer_4"), RoomPositions[random].position, Quaternion.identity);
-            //move player 4 camera to same position as player4
-            player4Camera.transform.position = new Vector3(RoomPositions[random].position.x, RoomPositions[random].position.y, -15);
-            //remove room from list so that nothing else can spawn in that same room
-            RoomPositions.RemoveAt(random);
-            //reduce randomMax by 1 so that it matches the size of the roomPositions list
-            randomMax -= 1;
+            SpawnWimp("MainPlayer_4", "Player4", player4Camera, player1Camera, player2Camera,
+                       player3Camera);
             player4Spawned = true;
-            //give player randomly generated ability
-            randomPlayerAbility = Random.Range(0, numberOfPlayerAbilities);
-            //makes sure the same player ability doesn't get repeated
-            while (PlayerAbilities.Contains(randomPlayerAbility))
-            {
-                randomPlayerAbility = Random.Range(0, numberOfPlayerAbilities);
-            }
-            PlayerAbilities.Add(randomPlayerAbility);
-            if (randomPlayerAbility == 0)
-            {
-                GameObject.FindGameObjectWithTag("Player4").AddComponent<CrazedAlchemist>();
-            }
-            if (randomPlayerAbility == 1)
-            {
-                GameObject.FindGameObjectWithTag("Player4").AddComponent<Doppelganger>();
-            }
-
-            if (randomPlayerAbility == 2)
-            {
-                GameObject.FindGameObjectWithTag("Player4").AddComponent<Squeler>();
-                //allow other players to see arrows associated with ability
-                player1Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
-                player2Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
-                player3Camera.GetComponent<Camera>().cullingMask |= (1 << 18);
-            }
-            if (randomPlayerAbility == 3)
-            {
-                GameObject.FindGameObjectWithTag("Player4").AddComponent<ThirdEye>();
-                //make player able to see arrows associated with ability
-                player4Camera.GetComponent<Camera>().cullingMask |= (1 << 15);
-            }
-
-            if (randomPlayerAbility == 4)
-            {
-                GameObject.FindGameObjectWithTag("Player4").AddComponent<DrNerd>();
-            }
-
-            if (randomPlayerAbility == 5)
-            {
-                GameObject.FindGameObjectWithTag("Player4").AddComponent<Diseased>();
-            }
-
-            if (randomPlayerAbility == 6)
-            {
-                GameObject.FindGameObjectWithTag("Player4").AddComponent<ScaredCat>();
-            }
         }
 
         //spawn player 4 if murderer in butcher room
         else if (player4Spawned == false && randomMurdererNumber == 3)
         {
-            //instantiate from resources folder
             Instantiate(Resources.Load("MainPlayer_4"), butcherRoom.transform.position, Quaternion.identity);
-            //move player 4 camera to same position as player4
             player4Camera.transform.position = new Vector3(butcherRoom.transform.position.x, butcherRoom.transform.position.y, -15);
             player4Spawned = true;
         }
@@ -423,11 +181,8 @@ public class RandomSpawnPlayers : MonoBehaviour {
             //prevent orb from spawning in altar room
             if (RoomPositions[random].name != "Altar Room(Clone)")
             {
-                //instantiate from resources folder
                 Instantiate(Resources.Load("Orb"), RoomPositions[random].position, Quaternion.identity);
-                //remove room from list so that nothing else can spawn in that same room
                 RoomPositions.RemoveAt(random);
-                //reduce randomMax by 1 so that it matches the size of the roomPositions list
                 randomMax -= 1;
                 orbsSpawned += 1;
             }
@@ -436,31 +191,19 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //enable murderer script if player is the murderer also change player tag and disable visibility of squeler arrows
         if (randomMurdererNumber == 0 && murdererSpawned == false)
         {
-            GameObject.FindGameObjectWithTag("Player1").GetComponent<MurdererScripts>().enabled = true;
-            GameObject.FindGameObjectWithTag("Player1").gameObject.tag = "Murderer1";
-            murdererSpawned = true;
-            player1Camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
+            EnableMurder("Player1","Murderer1",true,player1Camera);
         }
         if (randomMurdererNumber == 1 && murdererSpawned == false)
         {
-            GameObject.FindGameObjectWithTag("Player2").GetComponent<MurdererScripts>().enabled = true;
-            GameObject.FindGameObjectWithTag("Player2").gameObject.tag = "Murderer2";
-            murdererSpawned = true;
-            player2Camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
+            EnableMurder("Player2", "Murderer2", true, player2Camera);
         }
         if (randomMurdererNumber == 2 && murdererSpawned == false)
         {
-            GameObject.FindGameObjectWithTag("Player3").GetComponent<MurdererScripts>().enabled = true;
-            GameObject.FindGameObjectWithTag("Player3").gameObject.tag = "Murderer3";
-            murdererSpawned = true;
-            player3Camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
+            EnableMurder("Player3", "Murderer3", true, player3Camera);
         }
         if (randomMurdererNumber == 3 && murdererSpawned == false)
         {
-            GameObject.FindGameObjectWithTag("Player4").GetComponent<MurdererScripts>().enabled = true;
-            GameObject.FindGameObjectWithTag("Player4").gameObject.tag = "Murderer4";
-            murdererSpawned = true;
-            player4Camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
+            EnableMurder("Player4", "Murderer4", true, player4Camera);
         }
 
         //give the murderer a random ability
@@ -484,5 +227,87 @@ public class RandomSpawnPlayers : MonoBehaviour {
             }
             murdererHasAbility = true;
         }
+    }
+    //FUNCTIONS
+    void SpawnLadder(int min, int max, int side)
+    {
+        randomLadderNumber = Random.Range(min, max);
+        Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * ladderXOffset * side) + (transform.up * ladderYoffset), Quaternion.identity);
+        ladderSpawnPositions.Add(randomLadderNumber);
+        laddersSpawned += 1;
+    }
+
+    void SpawnLadderSameFloor(int min, int max, int side)
+    {
+        randomLadderNumber = Random.Range(min, max);
+        while (ladderSpawnPositions.Contains(randomLadderNumber))
+        {
+            randomLadderNumber = Random.Range(min, max);
+        }
+        Instantiate(Resources.Load("Ladder"), RoomPositions2[randomLadderNumber].position + (transform.right * ladderXOffset * side) + (transform.up * ladderYoffset), Quaternion.identity);
+        ladderSpawnPositions.Add(randomLadderNumber);
+        laddersSpawned += 1;
+    }
+
+    void SpawnWimp(string prefab , string tag , GameObject camera1, GameObject camera2,
+         GameObject camera3, GameObject camera4)
+    {
+        random = Random.Range(0, randomMax);
+        Instantiate(Resources.Load(prefab), RoomPositions[random].position, Quaternion.identity);
+        //move camera to same position as player
+        camera1.transform.position = new Vector3(RoomPositions[random].position.x, RoomPositions[random].position.y, -15);
+        //remove room from list so that nothing else can spawn in that same room
+        RoomPositions.RemoveAt(random);
+        //reduce randomMax by 1 so that it matches the size of the roomPositions list
+        randomMax -= 1;
+        //give player randomly generated ability
+        randomPlayerAbility = Random.Range(0, numberOfPlayerAbilities);
+        PlayerAbilities.Add(randomPlayerAbility);
+        if (randomPlayerAbility == 0)
+        {
+            GameObject.FindGameObjectWithTag(tag).AddComponent<CrazedAlchemist>();
+        }
+        if (randomPlayerAbility == 1)
+        {
+            GameObject.FindGameObjectWithTag(tag).AddComponent<Doppelganger>();
+        }
+
+        if (randomPlayerAbility == 2)
+        {
+            GameObject.FindGameObjectWithTag(tag).AddComponent<Squeler>();
+            //allow other players to see arrows associated with ability
+            camera2.GetComponent<Camera>().cullingMask |= (1 << 18);
+            camera3.GetComponent<Camera>().cullingMask |= (1 << 18);
+            camera4.GetComponent<Camera>().cullingMask |= (1 << 18);
+        }
+        if (randomPlayerAbility == 3)
+        {
+            GameObject.FindGameObjectWithTag(tag).AddComponent<ThirdEye>();
+            //make player able to see arrows associated with ability
+            camera1.GetComponent<Camera>().cullingMask |= (1 << 15);
+        }
+
+        if (randomPlayerAbility == 4)
+        {
+            GameObject.FindGameObjectWithTag(tag).AddComponent<DrNerd>();
+        }
+
+        if (randomPlayerAbility == 5)
+        {
+            GameObject.FindGameObjectWithTag(tag).AddComponent<Diseased>();
+        }
+
+        if (randomPlayerAbility == 6)
+        {
+            GameObject.FindGameObjectWithTag(tag).AddComponent<ScaredCat>();
+        }
+    }
+
+    void EnableMurder(string previousTag, string nextTag, bool spawned, GameObject camera)
+    {
+        GameObject.FindGameObjectWithTag(previousTag).GetComponent<MurdererScripts>().enabled = true;
+        GameObject.FindGameObjectWithTag(previousTag).gameObject.tag = nextTag;
+        murdererSpawned = spawned;
+        camera.GetComponent<Camera>().cullingMask &= ~(1 << 18);
     }
 }

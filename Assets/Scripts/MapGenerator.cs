@@ -33,7 +33,6 @@ public class MapGenerator : MonoBehaviour {
     void Start () {
 		TileSpriteRootGameObjectName = "Rooms";
 
-		//create rooms on script start
 		CreateSpriteTiledGameObject (XTiles, YTiles, 
 			Room1, Room2,Room3,Room4,Room5, 
 			Room6, Room7,Room8,Room9,Room10,
@@ -49,15 +48,12 @@ public class MapGenerator : MonoBehaviour {
 		GameObject SpriteLevelFile11, GameObject SpriteLevelFile12, GameObject SpriteLevelFile13, GameObject SpriteLevelFile14, GameObject SpriteLevelFile15,
 		GameObject SpriteLevelFile16, string RootObjectName) {
 
-		// store the size of the gameobject
 		float spriteX = SpriteLevelFile1.GetComponent<Renderer>().bounds.size.x;
 		float spriteY = SpriteLevelFile1.GetComponent<Renderer>().bounds.size.y;
 
-		//create new gameobject
 		GameObject rootObject = new GameObject ();
 		rootObject.transform.position = new Vector3 (0.0f, 0.0f, 0.0f);
 		rootObject.name = RootObjectName;
-        
 
 		//list holding all rooms
 		List<GameObject> Rooms = new List<GameObject> ();
@@ -87,16 +83,12 @@ public class MapGenerator : MonoBehaviour {
 
         bool hallofPortraitsCreated = false;
 
-
-        //starting position of first room
- 
         Vector3 currentLocation = new Vector3(0.0f, 0.0f, 0.0f);
 
         //MapGenerator MasterObj = new MapGenerator();
 
-        //do while rows is still less than meax rows
+        //create map
         while (currentrow < YTiles && currentObjectCount!=16) {
-            //change max random number range to length of list +1;
             int maxRandomRange = Rooms.Count + 1;
 			int x = Random.Range (3, maxRandomRange);
 
@@ -104,70 +96,50 @@ public class MapGenerator : MonoBehaviour {
             {
                 x = Random.Range(1, maxRandomRange);
             }
-           
 
-            // spawn the double room "hall of portraits together" and only if possible. 
+
+            // spawn the double room hall of portraits
             if (Rooms[x - 1].name == "Hall of Portraits")
             {
-                if (currentColumn!=3)
+                if (currentColumn != 3)
                 {
-                    //instantiate room based on random number
-                    GameObject gridObject1 = Instantiate(Rooms[x-1], currentLocation, Quaternion.identity) as GameObject;
+                    GameObject gridObject1 = Instantiate(Rooms[x - 1], currentLocation, Quaternion.identity) as GameObject;
                     currentObjectCount++;
-                    //make room child of empty container
                     gridObject1.transform.SetParent(rootObject.transform);
-                    //set grid coordinate
                     gridObject1.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
-                    //set column
                     gridObject1.GetComponent<AddVectorToRoom>().currentColumn = currentColumn;
-                    //remove room from list so that it can't be repeated
-                    Rooms.RemoveAt(x-1);
-                    //set location to the right of last gameobject
+                    Rooms.RemoveAt(x - 1);
                     currentLocation.x = currentLocation.x + spriteX;
-                    //increment number of current columns;
                     currentColumn++;
                     roomCoordinateX += 1;
 
-                    //instantiate second half of  hall of portraits room
-                    
-                        GameObject gridObject2 = Instantiate(Rooms[0], currentLocation, Quaternion.identity) as GameObject;
-                        currentObjectCount++;
-                        //make room child of empty container
-                        gridObject2.transform.SetParent(rootObject.transform);
-                        //set grid coordinate
-                        gridObject2.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
-                        //set column
-                        gridObject2.GetComponent<AddVectorToRoom>().currentColumn = currentColumn;
-                        //remove room from list so that it can't be repeated
-                        Rooms.RemoveAt(0);
-                        //set location to the right of last gameobject
-                        currentLocation.x = currentLocation.x + spriteX;
-                        //increment number of current columns;
-                        currentColumn++;
-                        roomCoordinateX += 1;
-                        hallofPortraitsCreated = true;
-                    }
-                }
+                    //instantiate second half of hall of portraits room
 
-            // spawn the double room "library together" and only if possible. 
+                    GameObject gridObject2 = Instantiate(Rooms[0], currentLocation, Quaternion.identity) as GameObject;
+                    currentObjectCount++;
+                    gridObject2.transform.SetParent(rootObject.transform);
+                    gridObject2.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
+                    gridObject2.GetComponent<AddVectorToRoom>().currentColumn = currentColumn;
+                    Rooms.RemoveAt(0);
+                    currentLocation.x = currentLocation.x + spriteX;
+                    currentColumn++;
+                    roomCoordinateX += 1;
+                    hallofPortraitsCreated = true;
+                }
+            }
+
+            //spawn the double room library 
             else if (Rooms[x - 1].name == "Library")
             {
                 if (currentColumn != 3)
                 {
-                    //instantiate room based on random number
                     GameObject gridObject1 = Instantiate(Rooms[x - 1], currentLocation, Quaternion.identity) as GameObject;
                     currentObjectCount++;
-                    //make room child of empty container
                     gridObject1.transform.SetParent(rootObject.transform);
-                    //set grid coordinate
                     gridObject1.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
-                    //set column
                     gridObject1.GetComponent<AddVectorToRoom>().currentColumn = currentColumn;
-                    //remove room from list so that it can't be repeated
                     Rooms.RemoveAt(x - 1);
-                    //set location to the right of last gameobject
                     currentLocation.x = currentLocation.x + spriteX;
-                    //increment number of current columns;
                     currentColumn++;
                     roomCoordinateX += 1;
 
@@ -178,54 +150,38 @@ public class MapGenerator : MonoBehaviour {
                     }
                     GameObject gridObject2 = Instantiate(Rooms[librarySecondHalfReference], currentLocation, Quaternion.identity) as GameObject;
                     currentObjectCount++;
-                    //make room child of empty container
                     gridObject2.transform.SetParent(rootObject.transform);
-                    //set grid coordinate
                     gridObject2.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
-                    //set column
                     gridObject2.GetComponent<AddVectorToRoom>().currentColumn = currentColumn;
-                    //remove room from list so that it can't be repeated
                     Rooms.RemoveAt(librarySecondHalfReference);
-                    //set location to the right of last gameobject
                     currentLocation.x = currentLocation.x + spriteX;
-                    //increment number of current columns;
                     currentColumn++;
                     roomCoordinateX += 1;
                 }
             }
 
             //spawn room
-           else if(Rooms[x - 1].name != "Library" && Rooms[x - 1].name != "Hall of Portraits")
-           {
-                //instantiate room based on random number
-                GameObject gridObject = Instantiate(Rooms[x-1], currentLocation, Quaternion.identity) as GameObject;
+            else if (Rooms[x - 1].name != "Library" && Rooms[x - 1].name != "Hall of Portraits")
+            {
+                GameObject gridObject = Instantiate(Rooms[x - 1], currentLocation, Quaternion.identity) as GameObject;
                 currentObjectCount++;
-                //make room child of empty container
                 gridObject.transform.SetParent(rootObject.transform);
-                //set grid coordinate
                 gridObject.GetComponent<AddVectorToRoom>().roomCoordinate = new Vector2(roomCoordinateX, roomCoordinateY);
-                //set column
                 gridObject.GetComponent<AddVectorToRoom>().currentColumn = currentColumn;
-                //remove room from list so that it can't be repeated
-                Rooms.RemoveAt(x-1);
-                //set location to the right of last gameobject
+                Rooms.RemoveAt(x - 1);
                 currentLocation.x = currentLocation.x + spriteX;
-                //increment number of current columns;
                 currentColumn++;
                 roomCoordinateX += 1;
             }
 
-            if (currentColumn >= XTiles) {
-				//reset column to 0 when it reaches max columns
+            //move to next row
+            if (currentColumn >= XTiles)
+            { 
 				currentColumn = 0;
                 roomCoordinateX = 0;
-				//increment rows when it reaches max columns
 				currentrow++;
                 roomCoordinateY += 1;
-                //reset starting location when it reaches max columns
-                //currentLocation.x = 0;
                 currentLocation.x = 0;
-                //move rooms down by height of rooms when it reaches max columns to start a new row
                 currentLocation.y = currentLocation.y + spriteY;
 			}
 
