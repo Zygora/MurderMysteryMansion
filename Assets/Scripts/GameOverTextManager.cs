@@ -31,25 +31,28 @@ public class GameOverTextManager : MonoBehaviour {
         }
         //game over if all wimps exited. displays text
         if (OrbCount.wimpsExited == 3 || wimpsWin == true) {
-            gameOverTextP1.GetComponent<Text>().enabled = true;
-            gameOverTextP2.GetComponent<Text>().enabled = true;
-            gameOverTextP3.GetComponent<Text>().enabled = true;
-            gameOverTextP4.GetComponent<Text>().enabled = true;
-            gameOver = true;
+            EnableText("  Wimps Wins");
         }
 
         //game over if all wimps downed. displays text
         if (Controls.wimpsDowned == 3) {
-            gameOverTextP1.GetComponent<Text>().text = "Murderer Wins";
-            gameOverTextP2.GetComponent<Text>().text = "Murderer Wins";
-            gameOverTextP3.GetComponent<Text>().text = "Murderer Wins";
-            gameOverTextP4.GetComponent<Text>().text = "Murderer Wins";
-
-            gameOverTextP1.GetComponent<Text>().enabled = true;
-            gameOverTextP2.GetComponent<Text>().enabled = true;
-            gameOverTextP3.GetComponent<Text>().enabled = true;
-            gameOverTextP4.GetComponent<Text>().enabled = true;
-            gameOver = true;
+            
+            EnableText("Murderer Wins");
         }
 	}
+
+    void EnableText(string gameOverText)
+    {
+        gameOverTextP1.GetComponent<Text>().text = gameOverText;
+        gameOverTextP2.GetComponent<Text>().text = gameOverText;
+        gameOverTextP3.GetComponent<Text>().text = gameOverText;
+        gameOverTextP4.GetComponent<Text>().text = gameOverText;
+
+        gameOverTextP1.GetComponent<Text>().enabled = true;
+        gameOverTextP2.GetComponent<Text>().enabled = true;
+        gameOverTextP3.GetComponent<Text>().enabled = true;
+        gameOverTextP4.GetComponent<Text>().enabled = true;
+
+        gameOver = true;
+    }
 }

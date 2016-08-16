@@ -39,22 +39,7 @@ public class ShittyPossum : MonoBehaviour {
             gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
             gameObject.GetComponent<Collider2D>().isTrigger = false;
             //turn on bloody shirt animtors
-            if (gameObject.tag == "Murderer1" && Controls.bloodStained == true)
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = true;
-            }
-            if (gameObject.tag == "Murderer2" && Controls.bloodStained == true)
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt2").GetComponent<Animator>().enabled = true;
-            }
-            if (gameObject.tag == "Murderer3" && Controls.bloodStained == true)
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt3").GetComponent<Animator>().enabled = true;
-            }
-            if (gameObject.tag == "Murderer4" && Controls.bloodStained == true)
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = true;
-            }
+            BloodShirtToggle(true);
             possumed = false;
             unPossum = false;
             Invoke("CanPossum", 1f);
@@ -66,22 +51,7 @@ public class ShittyPossum : MonoBehaviour {
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             gameObject.GetComponent<Collider2D>().isTrigger = true;
             //turn off bloody shirt animators
-            if (gameObject.tag == "Murderer1")
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = false;
-            }
-            if (gameObject.tag == "Murderer2")
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt2").GetComponent<Animator>().enabled = false;
-            }
-            if (gameObject.tag == "Murderer3")
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt3").GetComponent<Animator>().enabled = false;
-            }
-            if (gameObject.tag == "Murderer4")
-            {
-                GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = false;
-            }
+            BloodShirtToggle(false);
             possumed = true;
             canPossum = false;
             // Controls come back after a second after any button is pressed
@@ -97,5 +67,26 @@ public class ShittyPossum : MonoBehaviour {
     void CanPossum()
     {
         canPossum = true;
+    }
+
+    void BloodShirtToggle(bool bloody)
+    {
+        //turn off bloody shirt animators
+        if (gameObject.tag == "Murderer1")
+        {
+            GameObject.FindGameObjectWithTag("MurdererShirt1").GetComponent<Animator>().enabled = bloody;
+        }
+        if (gameObject.tag == "Murderer2")
+        {
+            GameObject.FindGameObjectWithTag("MurdererShirt2").GetComponent<Animator>().enabled = bloody;
+        }
+        if (gameObject.tag == "Murderer3")
+        {
+            GameObject.FindGameObjectWithTag("MurdererShirt3").GetComponent<Animator>().enabled = bloody;
+        }
+        if (gameObject.tag == "Murderer4")
+        {
+            GameObject.FindGameObjectWithTag("MurdererShirt4").GetComponent<Animator>().enabled = bloody;
+        }
     }
 }

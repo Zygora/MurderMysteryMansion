@@ -125,8 +125,8 @@ public class OrbCount : MonoBehaviour {
                 carryingOrbs -= 1;
                 //keeps track of player carrying orb globally
                 CarryingOrb(false);
-                orbsAtAltar1 += 1;
                 canDropOrb = false;
+                orbsAtAltar1 += 1;
             }
         }
 
