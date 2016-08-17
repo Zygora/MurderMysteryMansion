@@ -31,7 +31,7 @@ public class GameOverTextManager : MonoBehaviour {
         }
         //game over if all wimps exited. displays text
         if (OrbCount.wimpsExited == 3 || wimpsWin == true) {
-            EnableText("  Wimps Wins");
+            EnableText("  Wimps Win");
         }
 
         //game over if all wimps downed. displays text

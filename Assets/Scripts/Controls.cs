@@ -1435,11 +1435,6 @@ public class Controls : MonoBehaviour
         {
             playerSpeed = speedWhileCarryOrb * 2;
         }
-
-        if (scaredCat == true && ScaredCat.scaredCatRunning == true)
-        {
-            playerSpeed = 0;
-        }
     }
 
     //restore speed of player while carrying an orb
@@ -1449,11 +1444,6 @@ public class Controls : MonoBehaviour
         if (speedIncreased == false)
         {
             playerSpeed = speedWhileNotCarryOrb;
-        }
-
-        if (scaredCat == true && ScaredCat.scaredCatRunning == true)
-        {
-            playerSpeed = 0;
         }
     }
 

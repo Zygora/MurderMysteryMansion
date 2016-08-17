@@ -31,8 +31,8 @@ public class RandomSpawnPlayers : MonoBehaviour {
     private int randomMurdererAbility;
     private int murdererPlayerNumber;
     private int randomLadderNumber;
-    private int ladderXOffset = 90;
-    private int ladderYoffset = 50;
+    private int ladderXOffset = 89;
+    private int ladderYoffset = 33;
 
     // Use this for initialization
     void Start () {
