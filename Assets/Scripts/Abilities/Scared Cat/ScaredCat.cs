@@ -14,7 +14,7 @@ public class ScaredCat : MonoBehaviour {
     public float scaredyCatSpeed = 165;
     public float coolDown = 15;
     public float timeSinceAbilityUse;
-    public float movingHorizontal;
+    public float cameraSpeed = 300;
 
     public bool canUseAbility = true;
     public static bool scaredCatOnLadder = false;
@@ -120,7 +120,7 @@ public class ScaredCat : MonoBehaviour {
         {
             //this.transform.position = Vector3.MoveTowards(this.transform.position, scaredCatTargetRoom.transform.position, scaredCatSpeed);
             this.transform.Translate(Vector2.right * scaredyCatSpeed * Time.deltaTime);
-            this.gameObject.GetComponent<Controls>().cameraSpeed = 450;
+            this.gameObject.GetComponent<Controls>().cameraSpeed = cameraSpeed;
             this.gameObject.GetComponent<Controls>().TorsoAnimator.SetBool("Running", true);
             this.gameObject.GetComponent<Controls>().LegsAnimator.SetBool("Running", true);
             this.gameObject.GetComponent<Controls>().TorsoAnimator.SetBool("Idle", false);
@@ -137,12 +137,14 @@ public class ScaredCat : MonoBehaviour {
             if (scaredCatOnLadder) {
                 if (this.transform.position.x >= scaredCatTargetRoom.transform.position.x - 240) {
                     StopScaredyCat();
+                    Invoke("OnLadderDelay",1.5f);
                 }
             }
 
            else if (this.transform.position.x >= scaredCatTargetRoom.transform.position.x)
             {
                 StopScaredyCat();
+                Invoke("OnLadderDelay", 1.5f);
             }
         }
 
@@ -154,12 +156,14 @@ public class ScaredCat : MonoBehaviour {
                 if (this.transform.position.x <= scaredCatTargetRoom.transform.position.x + 240)
                 {
                     StopScaredyCat();
+                    Invoke("OnLadderDelay", 1.5f);
                 }
             }
 
             else if (this.transform.position.x <= scaredCatTargetRoom.transform.position.x)
             {
                 StopScaredyCat();
+                Invoke("OnLadderDelay", 1.5f);
             }
         }
 
@@ -230,7 +234,11 @@ public class ScaredCat : MonoBehaviour {
     void StopScaredyCat()
     {
         scaredCatRunning = false;
-        scaredCatOnLadder = false;
         this.gameObject.GetComponent<Controls>().cameraSpeed = 70;
+    }
+
+    void OnLadderDelay()
+    {
+        scaredCatOnLadder = false;
     }
 }

@@ -8,23 +8,23 @@ public class GameOverTextManager : MonoBehaviour {
     public GameObject gameOverTextP3;
     public GameObject gameOverTextP4;
 
-    public float GameLength;
-
+    public float GameLengthMinutes;
+    public float AbilityTextUptimeSeconds;
     public static bool gameOver = false;
     private bool wimpsWin = false;
     // Use this for initialization
     void Start () {
         //reset game values
-        GameLength = GameLength * 60;
+        GameLengthMinutes = GameLengthMinutes * 60;
         Controls.wimpsDowned = 0;
         OrbCount.wimpsExited = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        GameLength -= Time.smoothDeltaTime;
+        GameLengthMinutes -= Time.smoothDeltaTime;
         //game over if time is up
-        if (GameLength <= 0)
+        if (GameLengthMinutes <= 0)
         {
             gameOver = true;
             wimpsWin = true;

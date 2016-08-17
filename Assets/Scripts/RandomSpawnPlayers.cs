@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class RandomSpawnPlayers : MonoBehaviour {
     public List<Transform> RoomPositions;
+    public List<Transform> SpawnPositions;
     public List<Transform> RoomPositions2;
     public List<int> PlayerAbilities;
     public List<int> ladderSpawnPositions;
@@ -20,6 +22,18 @@ public class RandomSpawnPlayers : MonoBehaviour {
     private GameObject player4Camera;
     private GameObject butcherRoom;
 
+    public static Transform Player1Spawn;
+    public static Transform Player2Spawn;
+    public static Transform Player3Spawn;
+    public static Transform Player4Spawn;
+
+    private Text Player1AbilityText;
+    private Text Player2AbilityText;
+    private Text Player3AbilityText;
+    private Text Player4AbilityText;
+
+    public float AbilityTextTime;
+
     private int orbsSpawned = 0;
     private int laddersSpawned = 0;
     private int random;
@@ -36,6 +50,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        SpawnPositions = new List<Transform>();
         RoomPositions = new List<Transform>();
         RoomPositions2 = new List<Transform>();
         PlayerAbilities = new List<int>();
@@ -77,13 +92,20 @@ public class RandomSpawnPlayers : MonoBehaviour {
         randomMurdererAbility = Random.Range(0, numberOfMurdererAbilities);
         //set the number of the player that is the murderer
         murdererPlayerNumber = randomMurdererNumber + 1;
-
-     }
+        //grab text to display ability name
+        Player1AbilityText = GameObject.FindGameObjectWithTag("Player1AbilityText").GetComponent<Text>();
+        Player2AbilityText = GameObject.FindGameObjectWithTag("Player2AbilityText").GetComponent<Text>();
+        Player3AbilityText = GameObject.FindGameObjectWithTag("Player3AbilityText").GetComponent<Text>();
+        Player4AbilityText = GameObject.FindGameObjectWithTag("Player4AbilityText").GetComponent<Text>();
+        //set time text stays up for
+        AbilityTextTime 
+            = GameObject.FindGameObjectWithTag("LevelGenerator").GetComponent<GameOverTextManager>().AbilityTextUptimeSeconds;
+    }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () {       
         //spawn ladders
-       if (laddersSpawned < 6) {
+        if (laddersSpawned < 6) {
             if (laddersSpawned == 0) {
                 SpawnLadder(0, 4, -1);
             }
@@ -116,13 +138,14 @@ public class RandomSpawnPlayers : MonoBehaviour {
         if (player1Spawned == false && randomMurdererNumber != 0)
         {
             SpawnWimp("MainPlayer_1", "Player1", player1Camera, player2Camera, player3Camera,
-                       player4Camera);
+                       player4Camera , Player1AbilityText);
             player1Spawned = true;
         }
 
         //spawn player 1 if murderer in butcher room
         else if (player1Spawned == false && randomMurdererNumber == 0) {
             Instantiate(Resources.Load("MainPlayer_1"), butcherRoom.transform.position, Quaternion.identity);
+            SpawnPositions.Add(butcherRoom.transform);
             player1Camera.transform.position = new Vector3(butcherRoom.transform.position.x, butcherRoom.transform.position.y, -15);
             player1Spawned = true;
         }
@@ -131,7 +154,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
         if (player2Spawned == false && randomMurdererNumber != 1)
         {
             SpawnWimp("MainPlayer_2", "Player2", player2Camera, player1Camera, player3Camera,
-                       player4Camera);
+                       player4Camera, Player2AbilityText);
             player2Spawned = true;
         }
 
@@ -139,6 +162,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
         else if (player2Spawned == false && randomMurdererNumber == 1)
         {
             Instantiate(Resources.Load("MainPlayer_2"), butcherRoom.transform.position, Quaternion.identity);
+            SpawnPositions.Add(butcherRoom.transform);
             player2Camera.transform.position = new Vector3(butcherRoom.transform.position.x, butcherRoom.transform.position.y, -15);
             player2Spawned = true;
         }
@@ -147,7 +171,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
         if (player3Spawned == false && randomMurdererNumber != 2)
         {
             SpawnWimp("MainPlayer_3", "Player3", player3Camera, player1Camera, player2Camera,
-                       player4Camera);
+                       player4Camera, Player3AbilityText);
             player3Spawned = true;
         }
 
@@ -155,6 +179,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
         else if (player3Spawned == false && randomMurdererNumber == 2)
         {
             Instantiate(Resources.Load("MainPlayer_3"), butcherRoom.transform.position, Quaternion.identity);
+            SpawnPositions.Add(butcherRoom.transform);
             player3Camera.transform.position = new Vector3(butcherRoom.transform.position.x, butcherRoom.transform.position.y, -15);
             player3Spawned = true;
         }
@@ -163,7 +188,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
         if (player4Spawned == false && randomMurdererNumber != 3)
         {
             SpawnWimp("MainPlayer_4", "Player4", player4Camera, player1Camera, player2Camera,
-                       player3Camera);
+                       player3Camera, Player4AbilityText);
             player4Spawned = true;
         }
 
@@ -171,6 +196,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
         else if (player4Spawned == false && randomMurdererNumber == 3)
         {
             Instantiate(Resources.Load("MainPlayer_4"), butcherRoom.transform.position, Quaternion.identity);
+            SpawnPositions.Add(butcherRoom.transform);
             player4Camera.transform.position = new Vector3(butcherRoom.transform.position.x, butcherRoom.transform.position.y, -15);
             player4Spawned = true;
         }
@@ -212,11 +238,15 @@ public class RandomSpawnPlayers : MonoBehaviour {
            if (randomMurdererAbility == 0)
             {
                 GameObject.FindGameObjectWithTag("Murderer" + murdererPlayerNumber).AddComponent<ShittyPossum>();
+                GameObject.FindGameObjectWithTag("Player" + murdererPlayerNumber + "AbilityText").GetComponent<Text>().text
+                    = "Possum";
             }
 
            else if (randomMurdererAbility == 1)
             {
                 GameObject.FindGameObjectWithTag("Murderer" + murdererPlayerNumber).AddComponent<ThrillOfTheHunt>();
+                GameObject.FindGameObjectWithTag("Player" + murdererPlayerNumber + "AbilityText").GetComponent<Text>().text
+                    = "Thrill of The Hunt";
             }
 
            else if (randomMurdererAbility == 2)
@@ -224,9 +254,69 @@ public class RandomSpawnPlayers : MonoBehaviour {
                 GameObject.FindGameObjectWithTag("Murderer" + murdererPlayerNumber).AddComponent<Traps>();
                 //allow player to see arrows associated with ability
                 GameObject.FindGameObjectWithTag("Player" + murdererPlayerNumber+"Camera").GetComponent<Camera>().cullingMask |= (1 << 17);
+                GameObject.FindGameObjectWithTag("Player" + murdererPlayerNumber + "AbilityText").GetComponent<Text>().text
+                    = "Trapper";
             }
             murdererHasAbility = true;
         }
+
+        if (AbilityTextTime > 0)
+        {
+            AbilityTextTime -= Time.deltaTime;
+            //toggle player ability text
+            if (SpawnPositions[0].position.x != player1Camera.transform.position.x ||
+                SpawnPositions[0].position.y != player1Camera.transform.position.y)
+            {
+                Player1AbilityText.enabled = false;
+            }
+
+            else
+            {
+                Player1AbilityText.enabled = true;
+            }
+
+            if (SpawnPositions[1].position.x != player2Camera.transform.position.x ||
+                SpawnPositions[1].position.y != player2Camera.transform.position.y)
+            {
+                Player2AbilityText.enabled = false;
+            }
+
+            else
+            {
+                Player2AbilityText.enabled = true;
+            }
+
+            if (SpawnPositions[2].position.x != player3Camera.transform.position.x ||
+                SpawnPositions[2].position.y != player3Camera.transform.position.y)
+            {
+                Player3AbilityText.enabled = false;
+            }
+
+            else
+            {
+                Player3AbilityText.enabled = true;
+            }
+
+            if (SpawnPositions[3].position.x != player4Camera.transform.position.x ||
+                SpawnPositions[3].position.y != player4Camera.transform.position.y)
+            {
+                Player4AbilityText.enabled = false;
+            }
+
+            else
+            {
+                Player4AbilityText.enabled = true;
+            }
+        }
+
+        else
+        {
+            Player1AbilityText.enabled = false;
+            Player2AbilityText.enabled = false;
+            Player3AbilityText.enabled = false;
+            Player4AbilityText.enabled = false;
+        }
+
     }
     //FUNCTIONS
     void SpawnLadder(int min, int max, int side)
@@ -250,26 +340,33 @@ public class RandomSpawnPlayers : MonoBehaviour {
     }
 
     void SpawnWimp(string prefab , string tag , GameObject camera1, GameObject camera2,
-         GameObject camera3, GameObject camera4)
+         GameObject camera3, GameObject camera4 ,Text abilityText)
     {
         random = Random.Range(0, randomMax);
         Instantiate(Resources.Load(prefab), RoomPositions[random].position, Quaternion.identity);
         //move camera to same position as player
         camera1.transform.position = new Vector3(RoomPositions[random].position.x, RoomPositions[random].position.y, -15);
+        SpawnPositions.Add(RoomPositions[random]);
         //remove room from list so that nothing else can spawn in that same room
         RoomPositions.RemoveAt(random);
         //reduce randomMax by 1 so that it matches the size of the roomPositions list
         randomMax -= 1;
         //give player randomly generated ability
         randomPlayerAbility = Random.Range(0, numberOfPlayerAbilities);
+        while (PlayerAbilities.Contains(randomPlayerAbility))
+        {
+            randomPlayerAbility = Random.Range(0, numberOfPlayerAbilities);
+        }
         PlayerAbilities.Add(randomPlayerAbility);
         if (randomPlayerAbility == 0)
         {
             GameObject.FindGameObjectWithTag(tag).AddComponent<CrazedAlchemist>();
+            abilityText.text = "Crazed Alchemist";
         }
         if (randomPlayerAbility == 1)
         {
             GameObject.FindGameObjectWithTag(tag).AddComponent<Doppelganger>();
+            abilityText.text = "Doppelganger";
         }
 
         if (randomPlayerAbility == 2)
@@ -279,27 +376,32 @@ public class RandomSpawnPlayers : MonoBehaviour {
             camera2.GetComponent<Camera>().cullingMask |= (1 << 18);
             camera3.GetComponent<Camera>().cullingMask |= (1 << 18);
             camera4.GetComponent<Camera>().cullingMask |= (1 << 18);
+            abilityText.text = "Squeler";
         }
         if (randomPlayerAbility == 3)
         {
             GameObject.FindGameObjectWithTag(tag).AddComponent<ThirdEye>();
             //make player able to see arrows associated with ability
             camera1.GetComponent<Camera>().cullingMask |= (1 << 15);
+            abilityText.text = "Third Eye";
         }
 
         if (randomPlayerAbility == 4)
         {
             GameObject.FindGameObjectWithTag(tag).AddComponent<DrNerd>();
+            abilityText.text = "Dr. Nerd";
         }
 
         if (randomPlayerAbility == 5)
         {
             GameObject.FindGameObjectWithTag(tag).AddComponent<Diseased>();
+            abilityText.text = "Diseased";
         }
 
         if (randomPlayerAbility == 6)
         {
             GameObject.FindGameObjectWithTag(tag).AddComponent<ScaredCat>();
+            abilityText.text = "Scaredy Cat";
         }
     }
 

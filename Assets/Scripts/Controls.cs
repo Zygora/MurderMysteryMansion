@@ -242,6 +242,14 @@ public class Controls : MonoBehaviour
 
     void Update()
     {
+        if (scaredCat == true && ScaredCat.scaredCatOnLadder == true)
+        {
+            playerClimbSpeed = 120;
+        }
+
+        else
+            playerClimbSpeed = 40;
+
         if (dead && scaredCat && ScaredCat.scaredCatContinueRunning)
         {
             ScaredCat.scaredCatRunning = false;
@@ -714,15 +722,15 @@ public class Controls : MonoBehaviour
             groundCheck.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
             //different speed if scaredycat
-            if (scaredCat == true && ScaredCat.scaredCatOnLadder == true)
+           /* if (scaredCat == true && ScaredCat.scaredCatOnLadder == true)
             {
                 transform.position += new Vector3(0, 1, 0) * 120 * Time.deltaTime * speedMultiplier;
-            }
+            }*/
 
-            else
-            {
+           // else
+           // {
                 transform.position += new Vector3(0, 1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
-            }
+           // }
         }
 
         // if player hits downArrow on the ladder go up
@@ -743,15 +751,15 @@ public class Controls : MonoBehaviour
             groundCheck.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
             //different speed if scaredycat
-            if (scaredCat == true && ScaredCat.scaredCatOnLadder == true)
+            /*if (scaredCat == true && ScaredCat.scaredCatOnLadder == true)
             {
                 transform.position += new Vector3(0, -1, 0) * 120 * Time.deltaTime * speedMultiplier;
-            }
+            }*/
 
-            else
-            {
+           // else
+           // {
                 transform.position += new Vector3(0, -1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
-            }
+            //}
         }
         // Change player animation to jump while transitioning up or down
         if (goDown || goUp)
