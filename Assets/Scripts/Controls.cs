@@ -250,7 +250,7 @@ public class Controls : MonoBehaviour
         else
             playerClimbSpeed = 40;
 
-        if (dead && scaredCat && ScaredCat.scaredCatContinueRunning)
+        if (dead && scaredCat && ScaredCat.scaredCatRunning)
         {
             ScaredCat.scaredCatRunning = false;
             ScaredCat.scaredCatOnLadder = false;
@@ -702,6 +702,8 @@ public class Controls : MonoBehaviour
             gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
             ScaredCat.scaredCatOnLadder = true;
             ScaredCat.scaredCatContinueRunning = false;
+            ScaredCat.scaredCatGoingDown = false;
+            ScaredCat.scaredCatGoingUp = true;
         }
 
         // ladder collision for scaredy cat when scaredy cat is running
@@ -713,6 +715,8 @@ public class Controls : MonoBehaviour
             gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
             ScaredCat.scaredCatOnLadder = true;
             ScaredCat.scaredCatContinueRunning = false;
+            ScaredCat.scaredCatGoingDown = true;
+            ScaredCat.scaredCatGoingUp = false;
         }
 
         // Go up
@@ -721,16 +725,7 @@ public class Controls : MonoBehaviour
             canMove = false;
             groundCheck.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-            //different speed if scaredycat
-           /* if (scaredCat == true && ScaredCat.scaredCatOnLadder == true)
-            {
-                transform.position += new Vector3(0, 1, 0) * 120 * Time.deltaTime * speedMultiplier;
-            }*/
-
-           // else
-           // {
-                transform.position += new Vector3(0, 1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
-           // }
+            transform.position += new Vector3(0, 1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
         }
 
         // if player hits downArrow on the ladder go up
@@ -750,16 +745,7 @@ public class Controls : MonoBehaviour
             canMove = false;
             groundCheck.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-            //different speed if scaredycat
-            /*if (scaredCat == true && ScaredCat.scaredCatOnLadder == true)
-            {
-                transform.position += new Vector3(0, -1, 0) * 120 * Time.deltaTime * speedMultiplier;
-            }*/
-
-           // else
-           // {
-                transform.position += new Vector3(0, -1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
-            //}
+            transform.position += new Vector3(0, -1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
         }
         // Change player animation to jump while transitioning up or down
         if (goDown || goUp)
@@ -1155,6 +1141,8 @@ public class Controls : MonoBehaviour
                 if(ScaredCat.scaredCatOnLadder == true)
                 {
                     ScaredCat.scaredCatContinueRunning = true;
+                    canGoDown = false;
+                    canGoUp = false;
                 }
             }
         }
@@ -1177,6 +1165,8 @@ public class Controls : MonoBehaviour
                 if (ScaredCat.scaredCatOnLadder == true)
                 {
                     ScaredCat.scaredCatContinueRunning = true;
+                    canGoDown = false;
+                    canGoUp = false;
                 }
             }
         }       

@@ -403,6 +403,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             GameObject.FindGameObjectWithTag(tag).AddComponent<ScaredCat>();
             abilityText.text = "Scaredy Cat";
         }
+        
     }
 
     void EnableMurder(string previousTag, string nextTag, bool spawned, GameObject camera)
