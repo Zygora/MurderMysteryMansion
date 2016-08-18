@@ -85,9 +85,9 @@ public class RandomSpawnPlayers : MonoBehaviour {
         //grab butcher room from scene
         butcherRoom = GameObject.FindGameObjectWithTag("MurdererStart");
         //random number for deciding the murderer
-        //randomMurdererNumber = Random.Range(0, 4);
+        randomMurdererNumber = Random.Range(0, 4);
         //used for changing who the murderer is(just for testing purposes)
-        randomMurdererNumber = 0;
+        //randomMurdererNumber = 0;
         //random number for deciding murderer ability
         randomMurdererAbility = Random.Range(0, numberOfMurdererAbilities);
         //set the number of the player that is the murderer
