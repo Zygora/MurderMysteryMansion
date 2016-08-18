@@ -32,6 +32,7 @@ public class AddVectorToRoom : MonoBehaviour
             GetComponent<SpriteRenderer>().sprite = exitRoomClosed;
             SwitchExitDoors(0, 2, 4, 4);
             exitDoorChange = 1;
+            Debug.Log(exitDoorChange);
         }
 
 

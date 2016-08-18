@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 public class OrbCount : MonoBehaviour {
     public Text orbCount;
-    
-    public GameObject Orb;
 
     public static int orbsAtAltar1;
     public static int orbsAtAltar2;
@@ -108,7 +106,7 @@ public class OrbCount : MonoBehaviour {
             if (carryingOrbs == 0 && other.gameObject.tag == "Orb" && Input.GetButtonDown(interact))
             {
                 carryingOrbs += 1;
-                Destroy(other.gameObject);
+                Destroy(other.transform.parent.gameObject);
                 //keeps track of player carrying orb globally
                 CarryingOrb(true);
                 //allowing dropping of orb after delay
@@ -126,6 +124,7 @@ public class OrbCount : MonoBehaviour {
                 carryingOrbs -= 1;
                 //keeps track of player carrying orb globally
                 CarryingOrb(false);
+                orbsAtAltar1 += 1;
                 canDropOrb = false;
             }
         }
