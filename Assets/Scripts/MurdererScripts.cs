@@ -53,7 +53,13 @@ public class MurdererScripts : MonoBehaviour {
         }
         gameObject.layer = 9;
         originalDiseasedTime = diseasedTime;
-	}
+        //reset values
+        washingClothes = false;
+        diseased = false;
+        thrill = false;
+        thrillActive = false;
+        ShittyPossum.possumed = false;
+    }
 
 	// Update is called once per frame
 	void Update () {

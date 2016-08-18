@@ -46,7 +46,14 @@ public class ScaredCat : MonoBehaviour {
         {
             ability = "Ability_P4";
         }
+        
         this.gameObject.GetComponent<Controls>().scaredCat = true;
+        //reset values
+        scaredCatOnLadder = false;
+        scaredCatContinueRunning = true;
+        scaredCatRunning = false;
+        scaredCatGoingDown = false;
+        scaredCatGoingUp = false;
     }
 
     // Update is called once per frame

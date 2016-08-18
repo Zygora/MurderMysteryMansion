@@ -24,6 +24,9 @@ public class Squeler : MonoBehaviour
     void Start() {
         scream = gameObject.GetComponent<Controls>().scream;
         Audio = gameObject.GetComponent<AudioSource>();
+        //reset values
+        murderer = null;
+        destroyArrow = false;
     }
 
     void Update()

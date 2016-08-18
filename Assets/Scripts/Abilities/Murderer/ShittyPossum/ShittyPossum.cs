@@ -30,6 +30,7 @@ public class ShittyPossum : MonoBehaviour {
         {
             ability = "Ability_P4";
         }
+        
     }
     // Update is called once per frame
     void Update () {

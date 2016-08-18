@@ -57,6 +57,22 @@ public class OrbCount : MonoBehaviour {
         {
             interact = "Interact_P4";
         }
+
+        //reset values
+        player1CarryOrb = false;
+        player2CarryOrb = false;
+        player3CarryOrb = false;
+        player4CarryOrb = false;
+        player1Exited = false;
+        player2Exited = false;
+        player3Exited = false;
+        player4Exited = false;
+        player1CanEnter = false;
+        player2CanEnter = false;
+        player3CanEnter = false;
+        player4CanEnter = false;
+        doorOpen = false;
+        wimpsWin = false;
     }
 	
 	// Update is called once per frame

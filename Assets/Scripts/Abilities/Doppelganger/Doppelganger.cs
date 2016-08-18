@@ -38,6 +38,9 @@ public class Doppelganger : MonoBehaviour
         {
             ability = "Ability_P4";
         }
+        //reset values
+        cloneMoving = false;
+        cloneAlive = false;
     }
     void Update()
     {

@@ -237,7 +237,11 @@ public class Controls : MonoBehaviour
         player3Camera.GetComponent<Camera>().rect = new Rect(xVal(arrayList[2]), yVal(arrayList[2]), 0.5f, 0.5f);
         player4Camera.GetComponent<Camera>().rect = new Rect(xVal(arrayList[3]), yVal(arrayList[3]), 0.5f, 0.5f);
 
-       
+        //reset values
+        Trapped = false;
+        bloodStained = false;
+        wimpKilled = false;
+
     }
 
     void Update()
