@@ -452,8 +452,8 @@ public class Controls : MonoBehaviour
             }
 
 
-            if (canMove && dead == false && exited == false)
-            {
+        if (canMove && dead == false && exited == false)
+        {
             if (GameOverTextManager.gameOver == false)
             {
                 //turn off movement of murderer during certain times
@@ -464,68 +464,69 @@ public class Controls : MonoBehaviour
                         playerSpeed = 0;
                     }
 
-                    if (MurdererScripts.thrill == true && ShittyPossum.possumed == false && MurdererScripts.washingClothes == false && MurdererScripts.diseased == false) {
+                    if (MurdererScripts.thrill == true && ShittyPossum.possumed == false && MurdererScripts.washingClothes == false && MurdererScripts.diseased == false)
+                    {
                         playerSpeed = thrillSpeedBoost + speedWhileNotCarryOrb;
                     }
 
                     //restore movement of murder if above conditions dont apply after
-                    if (ShittyPossum.possumed == false && MurdererScripts.washingClothes == false && MurdererScripts.diseased == false 
+                    if (ShittyPossum.possumed == false && MurdererScripts.washingClothes == false && MurdererScripts.diseased == false
                         && MurdererScripts.thrill == false && speedIncreased == false)
                     {
                         playerSpeed = speedWhileNotCarryOrb;
                     }
                 }
             }
-                // Create a ray down checking if there is anything underneath the player
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
-                // If ray hit something player is on ground
-                if (hit.collider != null)
+            // Create a ray down checking if there is anything underneath the player
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
+            // If ray hit something player is on ground
+            if (hit.collider != null)
+            {
+                if (hit.collider.tag == "Ground" && hit.distance < 12f)//1.3
                 {
-                    if (hit.collider.tag == "Ground" && hit.distance < 12f)//1.3
-                    {
-                        onGround = true;
-                        TorsoAnimator.SetBool("Jumping", false);
-                        LegsAnimator.SetBool("Jumping", false);
-                        //allow use of abilities while on ground
-                        SetNoAbilityOrOrbUseZone(false);
-                    }
-                    // otherwise the player is in the air
-                    else if (hit.distance >= 12f)//1.3
-                    {
-                        onGround = false;
-                        TorsoAnimator.SetBool("Jumping", true);
-                        LegsAnimator.SetBool("Jumping", true);
-                        //disable use of abilities while on ground
-                        SetNoAbilityOrOrbUseZone(true);
+                    onGround = true;
+                    TorsoAnimator.SetBool("Jumping", false);
+                    LegsAnimator.SetBool("Jumping", false);
+                    //allow use of abilities while on ground
+                    SetNoAbilityOrOrbUseZone(false);
                 }
-                }
-                // Create move vector
-                move = new Vector3(Input.GetAxis(horizontal), 0, 0);
-                //set movement bounds on player
-                if (transform.position.x <= -95)
+                // otherwise the player is in the air
+                else if (hit.distance >= 12f)//1.3
                 {
-                    transform.position = new Vector3(-95, transform.position.y, transform.position.z);
+                    onGround = false;
+                    TorsoAnimator.SetBool("Jumping", true);
+                    LegsAnimator.SetBool("Jumping", true);
+                    //disable use of abilities while on ground
+                    SetNoAbilityOrOrbUseZone(true);
                 }
+            }
+            // Create move vector
+            move = new Vector3(Input.GetAxis(horizontal), 0, 0);
+            //set movement bounds on player
+            if (transform.position.x <= -95)
+            {
+                transform.position = new Vector3(-95, transform.position.y, transform.position.z);
+            }
 
-                if (transform.position.x >= 815)
-                {
-                    transform.position = new Vector3(815, transform.position.y, transform.position.z);
-                }
+            if (transform.position.x >= 815)
+            {
+                transform.position = new Vector3(815, transform.position.y, transform.position.z);
+            }
 
-                if (transform.position.y <= -447.5f)
-                {
-                    transform.position = new Vector3(transform.position.x, -447.5f, transform.position.z);
-                }
+            if (transform.position.y <= -447.5f)
+            {
+                transform.position = new Vector3(transform.position.x, -447.5f, transform.position.z);
+            }
 
-                if (transform.position.y >= 447.5f)
-                {
-                    transform.position = new Vector3(transform.position.x, 447.5f, transform.position.z);
-                }
+            if (transform.position.y >= 447.5f)
+            {
+                transform.position = new Vector3(transform.position.x, 447.5f, transform.position.z);
+            }
 
-                // Move the player
-                transform.position += move * playerSpeed * Time.deltaTime;
+            // Move the player
+            transform.position += move * playerSpeed * Time.deltaTime;
 
-           //murderer animations
+            //murderer animations
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
 
@@ -574,20 +575,21 @@ public class Controls : MonoBehaviour
                     }
                 }
 
-                else {
+                else
+                {
                     ShirtAnimator.SetBool("MurdererIdle", false);
                     ShirtAnimator.SetBool("MurdererJumping", false);
                 }
             }
 
             //player animations
-           if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" 
-                && gameObject.tag != "Murderer4" && currentPlayerTrapped == false)
-           {
+            if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3"
+                 && gameObject.tag != "Murderer4" && currentPlayerTrapped == false)
+            {
                 //prevent sprite flipping and other animations from  playing while scaredy cat is active
-                if(scaredCat == true)
+                if (scaredCat == true)
                 {
-                    if(ScaredCat.scaredCatRunning == true)
+                    if (ScaredCat.scaredCatRunning == true)
                     {
                         this.transform.eulerAngles = gameObject.GetComponent<ScaredCat>().facing;
                     }
@@ -601,8 +603,8 @@ public class Controls : MonoBehaviour
                 if (scaredCat == false)
                 {
                     PlayerAnimations();
-                }    
-           }
+                }
+            }
 
             // If player is on ground and space button hit -> jump
             if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" &&
@@ -618,24 +620,24 @@ public class Controls : MonoBehaviour
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" ||
             gameObject.tag == "Murderer4")
             {
-                if (Input.GetButtonDown(jump) && (onGround) && MurdererScripts.diseased == false 
+                if (Input.GetButtonDown(jump) && (onGround) && MurdererScripts.diseased == false
                     && MurdererScripts.washingClothes == false)
                 {
                     rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
                 }
             }
-
-            //reset current level
-            if (Input.GetKeyUp(KeyCode.R))
-                {
-                    SceneManager.LoadScene(4); // load level generator
-                }
-            }
+        }
         
         //go to main menu
         if (Input.GetKey(KeyCode.Escape))
         {
             SceneManager.LoadScene(0);
+        }
+
+        //reset current level
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(4); // load level generator
         }
 
         if (moveCameraLeft || moveCameraRight || moveCameraToCenter)

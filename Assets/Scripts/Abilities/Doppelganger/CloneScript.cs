@@ -39,7 +39,7 @@ public class CloneScript : MonoBehaviour
 
         //stop clone from moving after it reaches x distance from the player
         if (this.transform.position.x >= startPosition.x + 100 || this.transform.position.x <= startPosition.x - 100 ||
-            transform.position.x >= 570 || transform.position.x <= -570)
+            transform.position.x >= 815 || transform.position.x <= -95)
         {
             Doppelganger.cloneMoving = false;
         }
