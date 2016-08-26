@@ -376,7 +376,7 @@ public class RandomSpawnPlayers : MonoBehaviour {
             camera2.GetComponent<Camera>().cullingMask |= (1 << 18);
             camera3.GetComponent<Camera>().cullingMask |= (1 << 18);
             camera4.GetComponent<Camera>().cullingMask |= (1 << 18);
-            abilityText.text = "Squeler";
+            abilityText.text = "Squealer";
         }
         if (randomPlayerAbility == 3)
         {
