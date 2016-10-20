@@ -249,7 +249,12 @@ public class Controls : MonoBehaviour
         //reset current level
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(0); // load level generator
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
+        }
+
+        //allow murderer to attack again after delay
+        if (wimpKilled == true) {
+            Invoke("RechargeWeapon", MurdererWeaponCooldown);
         }
 
         if (scaredCat == true && ScaredCat.scaredCatOnLadder == true)
@@ -635,10 +640,10 @@ public class Controls : MonoBehaviour
         }
         
         //go to main menu
-        if (Input.GetKey(KeyCode.Escape))
+        /*if (Input.GetKey(KeyCode.Escape))
         {
             SceneManager.LoadScene(0);
-        }
+        }*/
 
         if (moveCameraLeft || moveCameraRight || moveCameraToCenter)
         {
@@ -1071,8 +1076,6 @@ public class Controls : MonoBehaviour
                     }
                     if (revivetimepassed > revivetime)
                     {
-                        TorsoAnimator.SetBool("Reviving", false);
-                        LegsAnimator.SetBool("Reviving", false);
                         other.gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
                         Debug.Log("Reviving Done");
                         switch (other.gameObject.tag)
@@ -1097,7 +1100,8 @@ public class Controls : MonoBehaviour
                         revivetimepassed = 0;
                         wimpsDowned -= 1;
                     }
-                    
+                    TorsoAnimator.SetBool("Reviving", false);
+                    LegsAnimator.SetBool("Reviving", false);
                 }
             }
 
@@ -1384,7 +1388,6 @@ public class Controls : MonoBehaviour
     void RechargeWeapon()
     {
         wimpKilled = false;
-        Debug.Log("knife reset");
     }
 
     //grap teleport vector locations for crazed alchemist red potion

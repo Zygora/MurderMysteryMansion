@@ -61,6 +61,6 @@ public class GameOverTextManager : MonoBehaviour {
 
     void ResetLevel()
     {
-        SceneManager.LoadScene(0); // load level generator
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
