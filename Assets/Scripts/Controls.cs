@@ -246,6 +246,12 @@ public class Controls : MonoBehaviour
 
     void Update()
     {
+        //reset current level
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(0); // load level generator
+        }
+
         if (scaredCat == true && ScaredCat.scaredCatOnLadder == true)
         {
             playerClimbSpeed = 120;
@@ -632,12 +638,6 @@ public class Controls : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             SceneManager.LoadScene(0);
-        }
-
-        //reset current level
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(4); // load level generator
         }
 
         if (moveCameraLeft || moveCameraRight || moveCameraToCenter)
@@ -1384,6 +1384,7 @@ public class Controls : MonoBehaviour
     void RechargeWeapon()
     {
         wimpKilled = false;
+        Debug.Log("knife reset");
     }
 
     //grap teleport vector locations for crazed alchemist red potion

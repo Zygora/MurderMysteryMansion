@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameOverTextManager : MonoBehaviour {
@@ -18,6 +19,7 @@ public class GameOverTextManager : MonoBehaviour {
         GameLengthMinutes = GameLengthMinutes * 60;
         Controls.wimpsDowned = 0;
         OrbCount.wimpsExited = 0;
+        gameOver = false;
 	}
 	
 	// Update is called once per frame
@@ -53,6 +55,12 @@ public class GameOverTextManager : MonoBehaviour {
         gameOverTextP3.GetComponent<Text>().enabled = true;
         gameOverTextP4.GetComponent<Text>().enabled = true;
 
+        Invoke("ResetLevel", 5.0f);
         gameOver = true;
+    }
+
+    void ResetLevel()
+    {
+        SceneManager.LoadScene(0); // load level generator
     }
 }
