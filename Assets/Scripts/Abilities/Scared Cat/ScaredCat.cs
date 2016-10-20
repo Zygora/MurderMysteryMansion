@@ -14,7 +14,7 @@ public class ScaredCat : MonoBehaviour {
     public float scaredyCatSpeed = 165;
     public float coolDown = 15;
     public float timeSinceAbilityUse;
-    public float cameraSpeed = 335;
+    public float cameraSpeed = 340;
 
     public bool canUseAbility = true;
     public static bool scaredCatOnLadder = false;
@@ -142,59 +142,62 @@ public class ScaredCat : MonoBehaviour {
         //reset camera speed and stop running on arrival of destination
         if (scaredCatTargetRoom.transform.position.x > startingPosition.x)
         {
-            if (scaredCatOnLadder) {
-                if (this.transform.position.x >= scaredCatTargetRoom.transform.position.x - 240)
+                if (scaredCatOnLadder)
                 {
-                    if (this.transform.position.y >= scaredCatTargetRoom.transform.position.y + 117
-                        && scaredCatGoingUp == true)
+                    if (this.transform.position.x >= scaredCatTargetRoom.transform.position.x - 240)
                     {
-                        StopScaredyCat();
-                    }
+                        if (this.transform.position.y >= scaredCatTargetRoom.transform.position.y + 117
+                            && scaredCatGoingUp == true)
+                        {
+                            StopScaredyCat();
+                        }
 
-                    if (this.transform.position.y <= scaredCatTargetRoom.transform.position.y -117
-                        && scaredCatGoingDown == true)
-                    {
-                        StopScaredyCat();
+                        if (this.transform.position.y <= scaredCatTargetRoom.transform.position.y - 117
+                            && scaredCatGoingDown == true)
+                        {
+                            StopScaredyCat();
+                        }
                     }
                 }
-            }
 
 
-           else if (this.transform.position.x >= scaredCatTargetRoom.transform.position.x)
-            {
-                StopScaredyCat();
-            }
+                else if (this.transform.position.x >= scaredCatTargetRoom.transform.position.x)
+                {
+                    StopScaredyCat();
+                }
         }
 
         //reset camera speed and stop running on arrival of destination
         if (scaredCatTargetRoom.transform.position.x < startingPosition.x)
         {
-            if (scaredCatOnLadder)
-            {
-                if (this.transform.position.x <= scaredCatTargetRoom.transform.position.x + 240)
+                if (scaredCatOnLadder)
                 {
-                    if (this.transform.position.y >= scaredCatTargetRoom.transform.position.y + 117
-                         && scaredCatGoingUp == true)
+                    if (this.transform.position.x <= scaredCatTargetRoom.transform.position.x + 240)
                     {
-                        StopScaredyCat();
-                    }
+                        if (this.transform.position.y >= scaredCatTargetRoom.transform.position.y + 117
+                             && scaredCatGoingUp == true)
+                        {
+                            StopScaredyCat();
+                        }
 
-                    if (this.transform.position.y <= scaredCatTargetRoom.transform.position.y - 117
-                        && scaredCatGoingDown == true)
-                    {
-                        StopScaredyCat();
+                        if (this.transform.position.y <= scaredCatTargetRoom.transform.position.y - 117
+                            && scaredCatGoingDown == true)
+                        {
+                            StopScaredyCat();
+                        }
                     }
                 }
-            }
 
-            else if (this.transform.position.x <= scaredCatTargetRoom.transform.position.x)
-            {
-                StopScaredyCat();
-            }
+                else if (this.transform.position.x <= scaredCatTargetRoom.transform.position.x)
+                {
+                    StopScaredyCat();
+                }
         }
 
-
-
+        if (transform.position.x <= -95 || transform.position.x >= 815)
+        {
+            StopScaredyCat();
+        }
     }
 
     //FUNCTIONS
@@ -206,16 +209,16 @@ public class ScaredCat : MonoBehaviour {
             scaredCatTargetRoomLocation.y = currentPos.y;
             if (currentPos.x + 2 <= 3)
             {
-                scaredCatTargetRoomLocation.x = currentPos.x + 2;
                 this.transform.eulerAngles = new Vector3(0, 0, 0);
+                scaredCatTargetRoomLocation.x = currentPos.x + 2;
                 facing = new Vector3(0, 0, 0);
                 startingPosition = this.transform.position;
             }
 
             else if (currentPos.x - 2 >= 0)
             {
-                scaredCatTargetRoomLocation.x = currentPos.x - 2;
                 this.transform.eulerAngles = new Vector3(0, 180, 0);
+                scaredCatTargetRoomLocation.x = currentPos.x - 2;
                 facing = new Vector3(0, 180, 0);
                 startingPosition = this.transform.position;
             }
@@ -259,10 +262,10 @@ public class ScaredCat : MonoBehaviour {
 
     void StopScaredyCat()
     {
-        scaredCatRunning = false;
         scaredCatOnLadder = false;
         scaredCatGoingUp = false;
         scaredCatGoingDown = false;
+        scaredCatRunning = false;
         this.gameObject.GetComponent<Controls>().cameraSpeed = 70;
     }
 

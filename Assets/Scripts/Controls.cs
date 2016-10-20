@@ -513,6 +513,11 @@ public class Controls : MonoBehaviour
             }
             // Create move vector
             move = new Vector3(Input.GetAxis(horizontal), 0, 0);
+
+            if (scaredCat && ScaredCat.scaredCatRunning) {
+                move = new Vector3(0, 0, 0);
+            }
+
             //set movement bounds on player
             if (transform.position.x <= -95)
             {
@@ -825,26 +830,43 @@ public class Controls : MonoBehaviour
             }
             if ((goDown) && (Input.GetAxis(vertical) > 0))
             {
-                GameObject buffer;
-                buffer = currentRoom;
-                currentRoom = lastRoom;
-                lastRoom = buffer;
-                direction *= -1;
-                canMove = false;
-                goDown = false;
-                goUp = true;
+                //disable transitioning while scaredy cat is active
+                if (scaredCat == true && ScaredCat.scaredCatRunning == true)
+                {
+
+                }
+
+                else
+                {
+                    GameObject buffer;
+                    buffer = currentRoom;
+                    currentRoom = lastRoom;
+                    lastRoom = buffer;
+                    direction *= -1;
+                    canMove = false;
+                    goDown = false;
+                    goUp = true;
+                }
             }
             if ((goUp) && (Input.GetAxis(vertical) < 0))
             {
-                GameObject buffer;
-                buffer = currentRoom;
-                currentRoom = lastRoom;
-                lastRoom = buffer;
-                direction *= -1;
+                //disable transitioning while scaredy cat is active
+                if (scaredCat == true && ScaredCat.scaredCatRunning == true)
+                {
 
-                canMove = false;
-                goDown = true;
-                goUp = false;
+                }
+
+                else
+                {
+                    GameObject buffer;
+                    buffer = currentRoom;
+                    currentRoom = lastRoom;
+                    lastRoom = buffer;
+                    direction *= -1;
+                    canMove = false;
+                    goDown = true;
+                    goUp = false;
+                }
             }
             if (Input.GetAxis(horizontal) < 0 && (direction.x == 1) && (!goDown) && (!goUp))
             {
@@ -1475,7 +1497,12 @@ public class Controls : MonoBehaviour
                 LegsAnimator.SetBool("Idle", false);
                 transform.eulerAngles = new Vector3(0, 180, 0);
             }
-            direction = -1;
+            if (scaredCat && ScaredCat.scaredCatRunning) {
+
+            }
+            else  
+                direction = -1;
+            
         }
         // Change animation from idle to run and flip the sprite
         if (Input.GetAxis(horizontal) > 0.1f)
@@ -1488,7 +1515,12 @@ public class Controls : MonoBehaviour
                 LegsAnimator.SetBool("Idle", false);
                 transform.eulerAngles = new Vector3(0, 0, 0);
             }
-            direction = 1;
+            if (scaredCat && ScaredCat.scaredCatRunning)
+            {
+
+            }
+            else
+                direction = 1;
         }
     }
 
