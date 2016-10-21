@@ -157,7 +157,10 @@ public class MurdererScripts : MonoBehaviour {
             else if (hit.distance >= 12f)
             {
                 // Debug.Log(hit.distance);
-                ShirtAnimator.SetBool("MurdererJumping", true);
+                if (Controls.murderTransitioning == false)
+                {
+                    ShirtAnimator.SetBool("MurdererJumping", true);
+                }
             }
         }
     }

@@ -709,8 +709,16 @@ public class Controls : MonoBehaviour
         // if player hits upArrow on the ladder go up
         if (Input.GetAxis(vertical) > 0 && (canGoUp) && (!gameObject.tag.Contains("DownedWimp")))
         {
+
+            if (ShittyPossum.possumed == true)
+            {
+                if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+                {
+                }
+            }
+
             //disable transitioning while scaredy cat is active
-            if (scaredCat == true && ScaredCat.scaredCatRunning == true)
+            else if (scaredCat == true && ScaredCat.scaredCatRunning == true)
             {
 
             }
@@ -760,13 +768,20 @@ public class Controls : MonoBehaviour
         // if player hits downArrow on the ladder go up
         if (Input.GetAxis(vertical) < 0 && (canGoDown) && (!gameObject.tag.Contains("DownedWimp")))
         {
+            if (ShittyPossum.possumed == true)
+            {
+                if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+                {
+                }
+            }
+
             //disable transitioning while scaredy cat is active
-            if (scaredCat == true && ScaredCat.scaredCatRunning == true)
+            else if (scaredCat == true && ScaredCat.scaredCatRunning == true)
             {
 
             }
 
-            else
+            else 
             {
                 goDown = true;
                 gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
@@ -945,7 +960,8 @@ public class Controls : MonoBehaviour
                     LegsAnimator.SetBool("Jumping", false);
                     TorsoAnimator.SetBool("Idle", false);
                     LegsAnimator.SetBool("Idle", false);
-                    ShirtAnimator.SetBool("Jumping", false);
+                    ShirtAnimator.SetBool("MurdererJumping", false);
+                    ShirtAnimator.SetBool("MurdererIdle", false);
                 }
                 
                 transform.position += direction * playerSpeed / 4 * Time.deltaTime * speedMultiplier;

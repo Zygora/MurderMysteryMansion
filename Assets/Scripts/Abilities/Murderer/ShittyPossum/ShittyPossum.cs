@@ -38,7 +38,7 @@ public class ShittyPossum : MonoBehaviour {
         {
             //turn on colliders
             gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-            gameObject.GetComponent<Collider2D>().isTrigger = false;
+            gameObject.GetComponent<Collider2D>().enabled = true;
             //turn on bloody shirt animtors
             BloodShirtToggle(true);
             possumed = false;
@@ -50,7 +50,7 @@ public class ShittyPossum : MonoBehaviour {
         {
             // turn off colliders
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-            gameObject.GetComponent<Collider2D>().isTrigger = true;
+            gameObject.GetComponent<Collider2D>().enabled = false;
             //turn off bloody shirt animators
             BloodShirtToggle(false);
             possumed = true;
