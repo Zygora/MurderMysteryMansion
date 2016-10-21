@@ -71,6 +71,7 @@ public class Controls : MonoBehaviour
     public static bool player4NoDropOrbZone = false;
     public static bool Trapped = false;
     public static bool murderTransitioning = false;
+    public static bool murdererOnLadder = false;
     public static bool bloodStained = false;
     public static bool wimpKilled = false;
     public bool canMove = true;
@@ -789,8 +790,18 @@ public class Controls : MonoBehaviour
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
             {
                 ShirtAnimator.SetBool("MurdererJumping", true);
+                murdererOnLadder = true;
             }
         }
+
+        if (goDown == false && goUp == false)
+        {
+            if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+            {
+                murdererOnLadder = false;
+            }
+        }
+
         // If camera transitioning between rooms
         if (moveCamera)
         {
@@ -957,7 +968,7 @@ public class Controls : MonoBehaviour
                     //keep track of when the murderer is transitioning
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
-                        murderTransitioning = false;
+                            murderTransitioning = false;
                     }
                     }
             }
@@ -978,7 +989,7 @@ public class Controls : MonoBehaviour
                     //keep track of when the murderer is transitioning
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
-                        murderTransitioning = false;
+                            murderTransitioning = false;
                     }
                 }
             }
@@ -999,7 +1010,7 @@ public class Controls : MonoBehaviour
                     //keep track of when the murderer is transitioning
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
-                        murderTransitioning = false;
+                            murderTransitioning = false;
                     }
                 }
             }
@@ -1020,7 +1031,7 @@ public class Controls : MonoBehaviour
                     //keep track of when the murderer is transitioning
                     if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
                     {
-                        murderTransitioning = false;
+                            murderTransitioning = false;
                     }
                 }
             }

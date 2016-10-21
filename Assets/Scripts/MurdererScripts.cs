@@ -134,7 +134,8 @@ public class MurdererScripts : MonoBehaviour {
         //play attack animations for murderer
         if (Controls.murderTransitioning == false)
         {
-            if (Input.GetButtonDown(attack) && Controls.wimpKilled == false && GameOverTextManager.gameOver == false)
+            if (Input.GetButtonDown(attack) && Controls.wimpKilled == false && GameOverTextManager.gameOver == false 
+                && Controls.murdererOnLadder == false)
             {
                 TorsoAnimator.Play("TorsoMurdererAttack");
                 LegsAnimator.Play("LegsMurdererAttack");
