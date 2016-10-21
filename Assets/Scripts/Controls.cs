@@ -514,10 +514,6 @@ public class Controls : MonoBehaviour
             // Create move vector
             move = new Vector3(Input.GetAxis(horizontal), 0, 0);
 
-            if (scaredCat && ScaredCat.scaredCatRunning) {
-                move = new Vector3(0, 0, 0);
-            }
-
             //set movement bounds on player
             if (transform.position.x <= -95)
             {
@@ -539,8 +535,16 @@ public class Controls : MonoBehaviour
                 transform.position = new Vector3(transform.position.x, 447.5f, transform.position.z);
             }
 
-            // Move the player
-            transform.position += move * playerSpeed * Time.deltaTime;
+
+
+            if (scaredCat && ScaredCat.scaredCatRunning)
+            {
+
+            }
+
+            else
+                // Move the player
+                transform.position += move * playerSpeed * Time.deltaTime;
 
             //murderer animations
             if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
@@ -600,7 +604,7 @@ public class Controls : MonoBehaviour
 
             //player animations
             if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3"
-                 && gameObject.tag != "Murderer4" && currentPlayerTrapped == false)
+                 && gameObject.tag != "Murderer4" && currentPlayerTrapped == false && moveCamera == false)
             {
                 //prevent sprite flipping and other animations from  playing while scaredy cat is active
                 if (scaredCat == true)
@@ -628,6 +632,8 @@ public class Controls : MonoBehaviour
             {
                 if (Input.GetButtonDown(jump) && (onGround) && currentPlayerTrapped == false && dead == false)
                 {
+                    TorsoAnimator.SetBool("Jumping", true);
+                    LegsAnimator.SetBool("Jumping", true);
                     rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
                 }
             }
@@ -639,6 +645,8 @@ public class Controls : MonoBehaviour
                 if (Input.GetButtonDown(jump) && (onGround) && MurdererScripts.diseased == false
                     && MurdererScripts.washingClothes == false)
                 {
+                    TorsoAnimator.SetBool("Jumping", true);
+                    LegsAnimator.SetBool("Jumping", true);
                     rb.AddForce(Vector2.up * playerJumpForce, ForceMode2D.Impulse);
                 }
             }
@@ -705,8 +713,12 @@ public class Controls : MonoBehaviour
             {
 
             }
-            goUp = true;
-            gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+
+            else
+            {
+                goUp = true;
+                gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+            }
         }
 
         // ladder collision for scaredy cat when scaredy cat is running
@@ -738,10 +750,10 @@ public class Controls : MonoBehaviour
         // Go up
         if ((goUp)&& (!gameObject.tag.Contains("DownedWimp")))
         {
-            canMove = false;
-            groundCheck.GetComponent<Collider2D>().enabled = false;
-            gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-            transform.position += new Vector3(0, 1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
+                canMove = false;
+                groundCheck.GetComponent<Collider2D>().enabled = false;
+                gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+                transform.position += new Vector3(0, 1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
         }
 
         // if player hits downArrow on the ladder go up
@@ -752,16 +764,20 @@ public class Controls : MonoBehaviour
             {
 
             }
-            goDown = true;
-            gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+
+            else
+            {
+                goDown = true;
+                gameObject.transform.position = new Vector3(ladder.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+            }
         }
         // Go down
         if ((goDown)&&(!gameObject.tag.Contains("DownedWimp")))
         {
-            canMove = false;
-            groundCheck.GetComponent<Collider2D>().enabled = false;
-            gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-            transform.position += new Vector3(0, -1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
+                canMove = false;
+                groundCheck.GetComponent<Collider2D>().enabled = false;
+                gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+                transform.position += new Vector3(0, -1, 0) * playerClimbSpeed * Time.deltaTime * speedMultiplier;
         }
         // Change player animation to jump while transitioning up or down
         if (goDown || goUp)
@@ -778,12 +794,12 @@ public class Controls : MonoBehaviour
         // If camera transitioning between rooms
         if (moveCamera)
         {
-            
             Vector3 nextRoomCamPos = currentRoom.transform.position;
+            nextRoomCamPos.z = -10;
+            canMove = false;
             Vector3 direction;
             direction = new Vector3(currentRoom.transform.position.x - gameObject.transform.position.x, 0, 0);
             direction.Normalize();
-            nextRoomCamPos.z = -10;
             //change player camera according to player
             if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
             {
@@ -804,31 +820,8 @@ public class Controls : MonoBehaviour
             {
                 player4Camera.transform.position = Vector3.MoveTowards(player4Camera.transform.position, nextRoomCamPos, cameraSpeed * Time.deltaTime);
             }
-            canMove = false;
-                // Change player animation to run while transitioning left or right
-                if ((!goUp) && (!goDown))
-            {
-                SetNoAbilityOrOrbUseZone(true);
-                SetKillZone(true);
-                if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
-                {
 
-                    TorsoAnimator.SetBool("Running", true);
-                    LegsAnimator.SetBool("Running", true);
-                    TorsoAnimator.SetBool("Idle", false);
-                    LegsAnimator.SetBool("Idle", false);
-                }
-                
-                if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
-                {
-                    murderTransitioning = true;
-                    TorsoAnimator.SetBool("MurdererRunning", true);
-                    LegsAnimator.SetBool("Running", true);
-                }
-                
-                transform.position += direction * playerSpeed / 4 * Time.deltaTime * speedMultiplier;
-            }
-            if ((goDown) && (Input.GetAxis(vertical) > 0))
+           /* if ((goDown) && (Input.GetAxis(vertical) > 0))
             {
                 //disable transitioning while scaredy cat is active
                 if (scaredCat == true && ScaredCat.scaredCatRunning == true)
@@ -891,6 +884,7 @@ public class Controls : MonoBehaviour
                     }
                 }
             }
+
             if (Input.GetAxis(horizontal) > 0 && (direction.x == -1) && (!goDown) && (!goUp))
             {
                 //disable transitioning while scaredy cat is active
@@ -913,7 +907,39 @@ public class Controls : MonoBehaviour
                         speedMultiplier = 2;
                     }
                 }
+            }*/
+
+            // Change player animation to run while transitioning left or right
+            if ((!goUp) && (!goDown))
+            {
+                SetNoAbilityOrOrbUseZone(true);
+                SetKillZone(true);
+                if (gameObject.tag != "Murderer1" && gameObject.tag != "Murderer2" && gameObject.tag != "Murderer3" && gameObject.tag != "Murderer4")
+                {
+
+                    TorsoAnimator.SetBool("Running", true);
+                    LegsAnimator.SetBool("Running", true);
+                    TorsoAnimator.SetBool("Idle", false);
+                    LegsAnimator.SetBool("Idle", false);
+                    TorsoAnimator.SetBool("Jumping", false);
+                    LegsAnimator.SetBool("Jumping", false);
+                }
+                
+                if (gameObject.tag == "Murderer1" || gameObject.tag == "Murderer2" || gameObject.tag == "Murderer3" || gameObject.tag == "Murderer4")
+                {
+                    murderTransitioning = true;
+                    TorsoAnimator.SetBool("MurdererRunning", true);
+                    LegsAnimator.SetBool("Running", true);
+                    TorsoAnimator.SetBool("Jumping", false);
+                    LegsAnimator.SetBool("Jumping", false);
+                    TorsoAnimator.SetBool("Idle", false);
+                    LegsAnimator.SetBool("Idle", false);
+                    ShirtAnimator.SetBool("Jumping", false);
+                }
+                
+                transform.position += direction * playerSpeed / 4 * Time.deltaTime * speedMultiplier;
             }
+            
 
             if (gameObject.tag == "Player1" || gameObject.tag == "Murderer1")
             {
@@ -1098,6 +1124,8 @@ public class Controls : MonoBehaviour
                     }
                     if (revivetimepassed > revivetime)
                     {
+                        TorsoAnimator.SetBool("Reviving", false);
+                        LegsAnimator.SetBool("Reviving", false);
                         other.gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
                         Debug.Log("Reviving Done");
                         switch (other.gameObject.tag)
@@ -1122,8 +1150,6 @@ public class Controls : MonoBehaviour
                         revivetimepassed = 0;
                         wimpsDowned -= 1;
                     }
-                    TorsoAnimator.SetBool("Reviving", false);
-                    LegsAnimator.SetBool("Reviving", false);
                 }
             }
 
@@ -1210,14 +1236,14 @@ public class Controls : MonoBehaviour
             moveCamera = true;
         }
         //interaction with blue potion of crazed alchemist
-        if (other.tag == "BluePotion" && dead == false)
+        if (other.tag == "BluePotion" && dead == false && moveCamera == false)
         {
             playerSpeed *= 2;
             speedIncreased = true;
             Destroy(other.gameObject);
         }
         //interaction with red potion of crazed alchemist
-        if (other.tag == "RedPotion" && dead == false)
+        if (other.tag == "RedPotion" && dead == false && moveCamera == false)
         {
             // Teleport to another room
             while(teleported ==false){
@@ -1318,6 +1344,8 @@ public class Controls : MonoBehaviour
 
                     TorsoAnimator.SetBool("Dead", true);
                     LegsAnimator.SetBool("Dead", true);
+                    TorsoAnimator.SetBool("Reviving", false);
+                    LegsAnimator.SetBool("Reviving", false);
                     gameObject.layer = 8;
                     dead = true;
                     wimpKilled = true;
@@ -1360,7 +1388,14 @@ public class Controls : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "BotLadder")
+        if (other.gameObject.tag == "DownedWimp1" || other.gameObject.tag == "DownedWimp2" || other.gameObject.tag == "DownedWimp3" || other.gameObject.tag == "DownedWimp4")
+        {
+            revivetimepassed = 0;
+            TorsoAnimator.SetBool("Reviving", false);
+            LegsAnimator.SetBool("Reviving", false);
+        }
+
+            if (other.tag == "BotLadder")
         {
             canGoDown = false;
             canGoUp = false;
@@ -1495,8 +1530,14 @@ public class Controls : MonoBehaviour
                 LegsAnimator.SetBool("Running", true);
                 TorsoAnimator.SetBool("Idle", false);
                 LegsAnimator.SetBool("Idle", false);
-                transform.eulerAngles = new Vector3(0, 180, 0);
+                if (scaredCat && ScaredCat.scaredCatRunning)
+                {
+
+                }
+                else
+                    transform.eulerAngles = new Vector3(0, 180, 0);
             }
+
             if (scaredCat && ScaredCat.scaredCatRunning) {
 
             }
@@ -1513,8 +1554,14 @@ public class Controls : MonoBehaviour
                 LegsAnimator.SetBool("Running", true);
                 TorsoAnimator.SetBool("Idle", false);
                 LegsAnimator.SetBool("Idle", false);
-                transform.eulerAngles = new Vector3(0, 0, 0);
+                if (scaredCat && ScaredCat.scaredCatRunning)
+                {
+
+                }
+                else
+                    transform.eulerAngles = new Vector3(0, 0, 0);
             }
+
             if (scaredCat && ScaredCat.scaredCatRunning)
             {
 
